@@ -1,0 +1,23 @@
+ h2{
+  padding: 20px;
+  text-align: center;
+  font-family: Poppins,serif;
+  font-size: 4rem;
+  font-weight: 1000;
+  color: #5f2eea;
+}
+
+.header {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  background-image: linear-gradient(to right, rgb(247, 36, 81) , rgb(255, 196, 0));
+}
+
+div{
+  padding: 2rem;
+}
+
+
+* {
+  font-family: Poppins,serif;
+  color: #2e2a38;
+}
