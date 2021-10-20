@@ -12,12 +12,9 @@
   background-image: linear-gradient(to right, rgb(247, 36, 81) , rgb(255, 196, 0));
 }
 
-div{
-  padding: 2rem;
-}
-
-
 * {
   font-family: Poppins,serif;
   color: #2e2a38;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
