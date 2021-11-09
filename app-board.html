@@ -7,14 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="weather.js" defer></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="stylesheet_app.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     
 </head>
   <body>
 
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" id="navbar-brand">Administranto</a>
+      <a class="navbar-brand" id="navbar-brand" >
+        <img src="img/logo.png" width="auto" height="50" class="d-inline-block align-top" alt="">
+      </a>
       <form class="form-inline">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -27,20 +29,95 @@
       </form>
     </nav>
 
-    <div class="jumbotron">
-      <h1 class="display-8">Project-Name</h1>
-      <hr class="my-4">
-
-      <div class="row">
-        <div class="col">col</div>
-        <div class="col">col</div>
-        <div class="w-100"></div>
-        <div class="col">col</div>
-        <div class="col">col</div>
+    <!-- App Board -->
+  <main class="app-board">
+    <header class="board-header">
+      <div class="left">
+        <div class="title">Your board title</div>
+        <div class="btn"><i class="far fa-star"></i></div>
+        <div class="btn">Personal</div>
+        <div class="btn btn-text"><i class="fas fa-lock"></i> Private</div>
       </div>
-      
+      <div class="right">
+        <div class="btn btn-text"><i class="fas fa-male"></i> Butler</div>
+        <div class="btn btn-text"><i class="fas fa-ellipsis-h"></i> Menu</div>
+      </div>
+    </header>
+    
+    <!-- Board -->
+    <section class="board-body">
+      <div class="wrap-lists">  
+        <div class="board-col">
+          <div class="list">
+            <h4 class="list-title">List title</h4>
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <div class="card">Card 4</div>
+            <div class="card">Card 5</div>
+            <div class="card">Card 6</div>
+            <div class="card">Card 7</div>
+            <div class="card">Card 8</div>
+            <div class="card">Card 9</div>
+            <div class="card">Card 10</div>
+            <a class="btn-list" href="#">+ Add another card</a>
+          </div>
+        </div>
+        <div class="board-col">
+          <div class="list">
+            <h4 class="list-title">List title</h4>
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <div class="card">Card 4</div>
+            <div class="card">Card 5</div>
+            <div class="card">Card 6</div>
+            <a class="btn-list" href="#">+ Add another card</a>
+          </div>
+        </div>
+        <div class="board-col">
+          <div class="list">
+            <h4 class="list-title">List title</h4>
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <div class="card">Card 4</div>
+            <a class="btn-list" href="#">+ Add another card</a>
+          </div>
+        </div>
+        <div class="board-col">
+          <div class="list">
+            <h4 class="list-title">List title</h4>
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <div class="card">Card 4</div>
+            <div class="card">Card 5</div>
+            <div class="card">Card 6</div>
+            <div class="card">Card 7</div>
+            <a class="btn-list" href="#">+ Add another card</a>
+          </div>
+        </div>
+        <div class="board-col">
+          <div class="list">
+            <h4 class="list-title">List title</h4>
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <a class="btn-list" href="#">+ Add another card</a>
+          </div>
+        </div>
+        <div class="board-col">
+          <div class="list">
+            <a class="btn-list" href="#">+ Add another list</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
 
-    </div>
+</div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
