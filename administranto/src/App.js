@@ -2,6 +2,8 @@ import React, {useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
+import {BsThreeDots} from 'react-icons/bs';
+import {AiOutlinePlus} from 'react-icons/ai';
 
 const itemsFromBackend = [
   {id: uuid(), content: 'First task'},
@@ -11,11 +13,15 @@ const itemsFromBackend = [
 const columnsFromBackEnd = 
   {
     [uuid()]: {
-      name: 'Todo',
+      name: 'BackLog',
       items: itemsFromBackend
     },
     [uuid()]: {
-      name: 'inProgress',
+      name: 'Sprint Backlog',
+      items: []
+    },
+    [uuid()]: {
+      name: 'Some Col',
       items: []
     }
   };
@@ -64,10 +70,12 @@ function App() {
       <header className="App-header">
         <img src={companyLogo} alt='logo'/>
       </header>
+      
 
       <div className="App-body">
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns)}>
-        {Object.entries(columns).map(([id, column])=>{
+        <div className='backlog'> <h2>Backlog</h2>
+        {Object.entries(columns).slice(0,1).map(([id, column])=>{
           return(
             <div className='Column-Header'>
             <h2>{column.name}</h2>
@@ -93,6 +101,7 @@ function App() {
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
+                                
                                 style={{
                                   userSelect: 'none',
                                   padding: 16,
@@ -102,7 +111,8 @@ function App() {
                                   ...provided.draggableProps.style
                                 }}
                               >      
-                                {item.content}                   
+                                {item.content}
+                                <button className='button-task'><BsThreeDots /></button>  
                               </div>
                             )
                           }}
@@ -110,6 +120,7 @@ function App() {
                       )
                     })}
                     {provided.placeholder}
+                    <div className='add-item'><AiOutlinePlus/> Add New Item </div> 
                   </div>
                 )
               }}
@@ -117,6 +128,72 @@ function App() {
             </div>
           )
         })}
+        </div> 
+        <div className='sprint'> 
+        <h2>Sprint</h2>
+          <div className='column-container'> 
+          {Object.entries(columns).slice(1).map(([id, column])=>{
+            return(
+              <div className='Column-Header'>
+              <h2>{column.name}</h2>
+              <Droppable droppableId={id} key={id}>
+                {(provided, snapshot) => {
+                  return (
+                    <div className='Column-body'
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      style={{
+                        background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                        padding: 4,
+                        width: 250,
+                        minHeight: 500
+                      }}
+                    >
+                      {column.items.map((item,index)=> {
+                        return(
+                          <Draggable key={item.id} draggableId={item.id} index={index}>
+                            {(provided, snapshot)=> {
+                              return(
+                                <div className='Task'
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  
+                                  style={{
+                                    userSelect: 'none',
+                                    padding: 16,
+                                    margin: '0 0 8px 0',
+                                    minHeight: '50px',
+                                    backgroundColor: snapshot.isDragging ? 'rgb(186, 190, 194)' : 'rgb(236, 241, 245)',
+                                    ...provided.draggableProps.style
+                                  }}
+                                >      
+                                  {item.content}
+                                  <button className='button-task'><BsThreeDots /></button>  
+                                </div>
+                              )
+                            }}
+                          </Draggable>
+                        )
+                      })}
+                      {provided.placeholder}
+                    </div>
+                  )
+                }}
+              </Droppable>
+              </div>
+            )
+          })}
+          <div className='sprint-ui'>
+            <h2>Sprint Menu</h2>
+            <label for='sprint-start-input'>Start</label>
+            <input id='sprint-start-input' placeholder="Day/Month" />
+            <label for='sprint-end-input'>End</label>
+            <input id='sprint-end-input' placeholder="Day/Month"/>
+            <button className='ui-button button-primary ' disabled={false} >Start Sprint</button>
+          </div>
+          </div> 
+        </div>
       </DragDropContext>
       </div>
 

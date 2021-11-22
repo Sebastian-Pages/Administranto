@@ -9,6 +9,39 @@ img {
     height: auto;
 }
 
+.button-primary {
+    background-color: rgb(95, 46, 234);
+    color: white;
+    border-radius: 2rem;
+    padding: 1rem;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    height: min-content;
+}
+
+.button-primary:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: rgb(134, 99, 231);
+}
+
+.button-task {
+    background-color: rgb(236, 241, 245);
+    color: lightgrey;
+    padding: 1rem;
+    display: flex;
+    float: right;
+    border-radius: 0.3rem;
+    border: solid 1px lightgrey;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+}
+
+.button-task:hover {
+    background-color: rgb(210, 214, 218);
+    color: gray;
+}
+
 .App {
     margin: 0px;
     padding: 0;
@@ -28,9 +61,9 @@ img {
 }
 
 .App-body {
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(216, 216, 216);
     display: flex;
-    justify-content: center;
+    justify-content: left;
     height: 100%;
 }
 
@@ -46,13 +79,90 @@ img {
 
 .Column-body {
     border-radius: 0rem 0rem 1rem 1rem;
+    border: solid 2px rgb(182, 182, 182);
 }
 
 .Task {
     color: rgb(60, 61, 63);
     font-family: 'Roboto', sans-serif;
-    ;
-    background-color: rgb(186, 190, 194);
+    background-color: rgb(236, 241, 245);
     border-radius: 0.25rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.add-item {
+    color: rgb(170, 170, 170);
+    font-family: 'Roboto', sans-serif;
+    background-color: none;
+    border-radius: 0.25rem;
+    padding: 16px;
+    margin: 1 1 8px 1;
+    border: solid 2px rgb(182, 182, 182);
+}
+
+.add-item:hover {
+    border: solid 2px rgb(173, 172, 172);
+    background-color: rgba(88, 88, 88, 0.151);
+}
+
+.backlog {
+    background-color: rgb(236, 241, 245);
+    width: 300px;
+    color: rgb(41, 41, 41);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    border-radius: 1rem;
+    border: solid 2px lightgray;
+}
+
+.sprint {
+    color: rgb(41, 41, 41);
+    background-color: rgb(246, 250, 253);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    margin: 1rem;
+    border: solid 2px lightgray;
+}
+
+.column-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.sprint-ui {
+    color: rgb(41, 41, 41);
+    background-color: rgb(245, 245, 245);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 16px;
+    height: 580px;
+    width: 250px;
+    border: solid 2px lightgray;
+}
+
+label,
+.ui-button {
+    margin-top: 2rem;
+}
+
+input {
+    border: solid 2px lightgray;
+    height: 2rem;
+    width: 200px;
+    color: rgb(41, 41, 41);
+    font-size: 1.2em;
+    padding: 6px;
+}
+
+::placeholder {
+    color: lightgray;
 }
