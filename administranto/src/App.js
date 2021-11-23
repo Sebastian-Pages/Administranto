@@ -4,6 +4,7 @@ import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
 import {BsThreeDots} from 'react-icons/bs';
 import {AiOutlinePlus} from 'react-icons/ai';
+import { TaskMenu,Form } from './components.js';
 
 const itemsFromBackend = [
   {id: uuid(), content: 'First task'},
@@ -71,7 +72,7 @@ function App() {
         <img src={companyLogo} alt='logo'/>
       </header>
       
-
+      <TaskMenu />
       <div className="App-body">
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns)}>
         <div className='backlog'> <h2>Backlog</h2>
@@ -191,6 +192,7 @@ function App() {
             <label for='sprint-end-input'>End</label>
             <input id='sprint-end-input' placeholder="Day/Month"/>
             <button className='ui-button button-primary ' disabled={false} >Start Sprint</button>
+            <Form />
           </div>
           </div> 
         </div>
@@ -198,6 +200,7 @@ function App() {
       </div>
 
     </div>
+    
   );
 }
 
