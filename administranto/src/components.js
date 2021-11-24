@@ -88,10 +88,10 @@ function ColorPicker(props) {
   
   const colorStyle = {backgroundColor: color};
 
-  function handleColor(param) {
+  function handleColor(event) {
     // Here, we invoke the callback with the new value
-    props.onChange(param);
-    console.log("ok: ",param)
+    props.onChange(event.target.value);
+    console.log("ok: ",event.target.value)
   }
 
   return (
@@ -100,11 +100,11 @@ function ColorPicker(props) {
       {colorNames.map((colorName)=>(
         <div
             className='palette-cell'
-            // onClick={() => setColor(colorName)} 
+            onClick={() => setColor(colorName)} 
             key={colorName}
             style={{backgroundColor:colorName}}
             taskColor={props.taskColor}
-            onClick={handleColor(color)} 
+            onChange={handleColor} 
             >
             
               {/* {colorName} */}
