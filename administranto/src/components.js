@@ -3,60 +3,62 @@ import {AiOutlineClose} from 'react-icons/ai';
 
 export const TaskMenu = () => {
 
-    const [showTaskMenu, setShowTaskMenu] = React.useState(true)
-    
-    const toggleTaskMenu = () => showTaskMenu ? setShowTaskMenu(false) : setShowTaskMenu(true)
+  const [showTaskMenu, setShowTaskMenu] = React.useState(true)
+  
+  const [taskColor, setColor] = React.useState('green')
+  function handleColor(newColor) {
+    setColor(newColor);
+    console.log(newColor)
+  }
+  
+  const toggleTaskMenu = () => showTaskMenu ? setShowTaskMenu(false) : setShowTaskMenu(true)
 
-    const overlayed = {
-        position: 'fixed',
-        zIndex: '1'
-    };
-    return ( 
-        showTaskMenu ?
-            <div className='overlay' style={overlayed}>
-                <div className='task-menu' >
-                    <div className='task-menu-header' >
-                        <h2>Task {showTaskMenu}</h2>
-                        <button className='exit-task-menu' onClick={toggleTaskMenu}><AiOutlineClose /></button>  
-                    </div>
-                    <div className='task-menu-body'>
-                        <div class="row">
-                            <div class="column-left">
-                                <h3>Title</h3>
-                                <h3>Description</h3>
-                                <h3>Estimation</h3>
-                                <h3>Color</h3>
-                            </div>
-                            <div class="column-right">
-                                <Form />
-                                <Form />
-                                <Form />
-                                <ColorPicker />
-                            </div>
-                            <div className='testme'>
-                                je comprend pas pq ya pas de style là
-                            </div>
-                            <div>
-                                <button className='button-primary'>Create Task</button>
-                            </div>
+  const overlayed = {
+      position: 'fixed',
+      zIndex: '1'
+  };
 
+  return ( 
+      showTaskMenu ?
+          <div className='overlay' style={overlayed}>
+              <div className='task-menu' >
+                  <div className='task-menu-header' >
+                      <h2 style={{backgroundColor:'red'}}>Task {taskColor}</h2>
+                      <button className='exit-task-menu' onClick={toggleTaskMenu}><AiOutlineClose /></button>  
+                  </div>
+                  <div className='task-menu-body'>
+                      <div class="row">
+                          <div class="column-left">
+                              <h3>Title</h3>
+                              <h3>Description</h3>
+                              <h3>Estimation</h3>
+                              <h3>Color</h3>
+                          </div>
+                          <div class="column-right">
+                              <Form />
+                              <Form />
+                              <Form />
+                              <ColorPicker taskColor={taskColor} onChange={handleColor}/>
+                          </div>
                         </div>
-                    </div>
-                </div>
+                        {/* <div className='testme'>
+                            je comprend pas pq ya pas de style là
+                        </div> */}
+                        <div style={{textAlign: 'center'}}>
+                            <button className='button-primary' onClick='CreateTask'>Create Task</button>
+                        </div>
 
-            </div>
-        : null 
-    );
+
+                  </div>
+              </div>
+
+          </div>
+      : null 
+  );
 };
 
 export function Form(props) {
   const [name, setName] = useState("");
-  const [submit, setSubmit] = React.useState(false)
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert('The name you entered was: ');
-  }
 
   const spacing = {
     padding: 10,
@@ -64,21 +66,8 @@ export function Form(props) {
     };
 
   return (
-    submit ?
-    <form onSubmit={handleSubmit}>
-      <label style={spacing} >{props.label}
-        <input 
-          type="text" 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          style={spacing}
-        />
-      </label>
-      <input type="submit" />
-    </form>
-    :
-    <form>
-      <label style={spacing} >{props.label}
+    <form >
+      <label style={spacing} >{props.label}{name}
         <input 
           type="text" 
           value={name}
@@ -90,27 +79,39 @@ export function Form(props) {
   )
 }
 
-const colorNames = ['Aquamarine', 'BlueViolet', 'Chartreuse', 'CornflowerBlue', 'Thistle', 'SpringGreen', 'SaddleBrown', 'PapayaWhip', 'MistyRose','White'];
+function ColorPicker(props) {
 
-export default function ColorPicker() {
+  const colorNames = ['White','Springgreen', 'Tomato', 'Lightskyblue',
+   'Orchid', 'Gold', 'mediumslateblue'];
+  
   const [color, setColor] = useState('White');
+  
+  const colorStyle = {backgroundColor: color};
 
- const colorStyle = {backgroundColor: color};
+  function handleColor(param) {
+    // Here, we invoke the callback with the new value
+    props.onChange(param);
+    console.log("ok: ",param)
+  }
 
   return (
-    <div style={colorStyle} className='palette'>
+    <div style={colorStyle} className='palette'  >
       {/* <p>Selected color: {color}</p> */}
       {colorNames.map((colorName)=>(
         <div
             className='palette-cell'
-            onClick={() => setColor(colorName)} 
+            // onClick={() => setColor(colorName)} 
             key={colorName}
-            style={{backgroundColor:colorName}}>
+            style={{backgroundColor:colorName}}
+            taskColor={props.taskColor}
+            onClick={handleColor(color)} 
+            >
             
-       	    {/* {colorName} */}
-      	</div>
+              {/* {colorName} */}
+        </div>
       ))}
     </div>
   );
 }
+
 

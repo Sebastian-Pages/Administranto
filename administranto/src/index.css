@@ -215,7 +215,6 @@ input {
 }
 
 .task-menu-body {
-    background-color: lawngreen;
     width: 100%;
 }
 
@@ -227,14 +226,12 @@ input {
     float: left;
     width: 30%;
     padding: 10px;
-    background-color: burlywood;
 }
 
 .column-right {
     float: left;
     width: 60%;
     padding: 10px;
-    background-color: cadetblue;
 }
 
 .row:after {
@@ -244,7 +241,7 @@ input {
 }
 
 h3 {
-    height: 2.2rem;
+    height: 2.04rem;
 }
 
 .palette {
