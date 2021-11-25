@@ -7,8 +7,19 @@ import {AiOutlinePlus} from 'react-icons/ai';
 import { TaskMenu,Form } from './components.js';
 
 const itemsFromBackend = [
-  {id: uuid(), content: 'First task'},
-  {id: uuid(), content: 'Second task'}
+  { id: uuid(), 
+    content: 'First task',
+    description:'desc...',
+    estimation:0,
+    color:'tomato'
+  },
+
+  { id: uuid(), 
+    content: 'Second task',
+    description:'desc...',
+    estimation:0,
+    color:'blue'
+  }
 ];
 
 const columnsFromBackEnd = 
@@ -62,8 +73,19 @@ const onDragEnd = (result, columns, setColumns)=>{
     }
   })
   }
-
 };
+
+const addItem = (data)=>{
+  console.log("add item",data);
+  // const newItem = { id: uuid(), 
+  //   content: data.content,
+  //   description:data.description,
+  //   estimation:data.estimation,
+  //   color:data.color
+  // }
+}
+
+
 function App() {
   const [columns, setColumns] = useState(columnsFromBackEnd);
   return (
@@ -72,7 +94,7 @@ function App() {
         <img src={companyLogo} alt='logo'/>
       </header>
       
-      <TaskMenu />
+      <TaskMenu func={addItem}/>
       <div className="App-body">
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns)}>
         <div className='backlog'> <h2>Backlog</h2>

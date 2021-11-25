@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import {AiOutlineClose} from 'react-icons/ai';
 
-export const TaskMenu = () => {
+export const TaskMenu = (props) => {
 
   const [showTaskMenu, setShowTaskMenu] = React.useState(true)
+  const [taskColor, setTaskColor] = React.useState('Tomato')
+  const [item, setItem] = React.useState('Tomato')
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [estimation, setEstimation] = useState("");
+    
+  props.func({item});
+
+  const pull_data = (data) => {
+    if (data.color !== taskColor)
+        setTaskColor(data.color) 
+  }
+
+  const toggleTaskMenu = () => showTaskMenu ? setShowTaskMenu(false) : setShowTaskMenu(true)
   
-  const [taskColor, setColor] = React.useState('green')
-  function handleColor(newColor) {
-    setColor(newColor);
-    console.log(newColor)
+  const CreateTask = () => {
+      setItem('new Item');
   }
   
-  const toggleTaskMenu = () => showTaskMenu ? setShowTaskMenu(false) : setShowTaskMenu(true)
-
   const overlayed = {
       position: 'fixed',
       zIndex: '1'
@@ -22,8 +32,8 @@ export const TaskMenu = () => {
       showTaskMenu ?
           <div className='overlay' style={overlayed}>
               <div className='task-menu' >
-                  <div className='task-menu-header' >
-                      <h2 style={{backgroundColor:'red'}}>Task {taskColor}</h2>
+                  <div className='task-menu-header' style={{backgroundColor:taskColor}}>
+                      <h2 >Task</h2>
                       <button className='exit-task-menu' onClick={toggleTaskMenu}><AiOutlineClose /></button>  
                   </div>
                   <div className='task-menu-body'>
@@ -35,17 +45,18 @@ export const TaskMenu = () => {
                               <h3>Color</h3>
                           </div>
                           <div class="column-right">
-                              <Form />
-                              <Form />
-                              <Form />
-                              <ColorPicker taskColor={taskColor} onChange={handleColor}/>
+                              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                              <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
+                              <input type="text" value={estimation} onChange={(e) => setEstimation(e.target.value)}/>
+        
+                              <ColorPicker func={pull_data} />
                           </div>
                         </div>
                         {/* <div className='testme'>
                             je comprend pas pq ya pas de style là
                         </div> */}
                         <div style={{textAlign: 'center'}}>
-                            <button className='button-primary' onClick='CreateTask'>Create Task</button>
+                            <button className='button-primary' onClick={CreateTask}>Create Task</button>
                         </div>
 
 
@@ -86,16 +97,10 @@ function ColorPicker(props) {
   
   const [color, setColor] = useState('White');
   
-  const colorStyle = {backgroundColor: color};
-
-  function handleColor(event) {
-    // Here, we invoke the callback with the new value
-    props.onChange(event.target.value);
-    console.log("ok: ",event.target.value)
-  }
+  props.func({color});
 
   return (
-    <div style={colorStyle} className='palette'  >
+    <div className='palette'  >
       {/* <p>Selected color: {color}</p> */}
       {colorNames.map((colorName)=>(
         <div
@@ -104,9 +109,7 @@ function ColorPicker(props) {
             key={colorName}
             style={{backgroundColor:colorName}}
             taskColor={props.taskColor}
-            onChange={handleColor} 
             >
-            
               {/* {colorName} */}
         </div>
       ))}

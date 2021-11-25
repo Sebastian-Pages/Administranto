@@ -249,7 +249,7 @@ h3 {
     justify-content: center;
     padding: 5px 10px 5px 10px;
     margin: 10px;
-    margin-left: 28px;
+    margin-left: 10px;
     border: solid 2px lightgray;
     border-radius: 0.2rem;
 }
@@ -267,10 +267,7 @@ h3 {
     outline-offset: -2px;
 }
 
-.testme {
-    height: 100px;
-    width: 600px;
-    color: 'blue';
-    border: solid 2px lightgray;
-    background-color: 'blue';
+input {
+    padding: 10px;
+    margin: 10px;
 }
