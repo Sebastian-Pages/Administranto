@@ -2,8 +2,8 @@ import React, {useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
-import {BsThreeDots} from 'react-icons/bs';
-import {AiOutlinePlus} from 'react-icons/ai';
+import {RiDeleteBin5Line } from 'react-icons/ri';
+import {AiOutlinePlus, AiOutlineClose} from 'react-icons/ai';
 import { TaskMenu,Form } from './components.js';
 
 const itemsFromBackend = [
@@ -39,8 +39,27 @@ let columnsFromBackEnd =
   };
 
 const onDragEnd = (result, columns, setColumns)=>{
+
   if(!result.destination) return;
   const {source, destination} = result;
+  if (result.destination.droppableId ==="42"){ 
+    console.log("delete: ",result.destination );
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
+    const sourceItems = [...sourceColumn.items];
+    const destItems = [];
+
+    const [removed] = sourceItems.splice(source.index,1);
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...sourceColumn,
+        items: sourceItems
+      },
+
+    })
+    return;
+  }
   if(source.droppableId !== destination.droppableId){
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -159,7 +178,7 @@ function App() {
                       background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
                       padding: 4,
                       width: 250,
-                      minHeight: 500
+                      minHeight: (column.name!=='Backlog') ? 370 : 500
                     }}
                   >
                     {column.items.map((item,index)=> {
@@ -182,7 +201,6 @@ function App() {
                                 }}
                               >      
                                 {item.content}
-                                <button className='button-task'><BsThreeDots /></button>  
                               </div>
                             )
                           }}
@@ -195,9 +213,34 @@ function App() {
                 )
               }}
             </Droppable>
+
+
             </div>
           )
         })}
+        {/* Poubelle */}
+        <Droppable droppableId={"42"} key={"42"}>
+          {(provided, snapshot) => {
+            return (
+              <div className='Column-delete'
+                ref={provided.innerRef}
+                style={{
+                  background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                  padding: 4,
+                  width: 250,
+                  minHeight: 100, 
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  
+                }}
+              >
+                <RiDeleteBin5Line style={{color:'rgb(223, 223, 223)',fontSize:'4rem',margin:10}}/>
+                {provided.placeholder}
+              </div>
+            )
+          }}
+        </Droppable>
         </div> 
         <div className='sprint'> 
         <h2>Sprint</h2>
@@ -239,7 +282,6 @@ function App() {
                                   }}
                                 >      
                                   {item.content}
-                                  <button className='button-task'><BsThreeDots /></button>  
                                 </div>
                               )
                             }}

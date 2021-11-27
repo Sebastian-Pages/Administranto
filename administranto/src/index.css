@@ -81,6 +81,11 @@ img {
     border: solid 2px rgb(182, 182, 182);
 }
 
+.Column-delete{
+    border-radius: 1rem 1rem 1rem 1rem;
+    border: solid 2px rgb(182, 182, 182);
+}
+
 .Task {
     color: rgb(60, 61, 63);
     font-family: 'Roboto', sans-serif;
@@ -198,20 +203,20 @@ input {
 }
 
 .exit-task-menu {
-    background-color: tomato;
-    color: white;
+    background-color: none;
+    color: tomato;
     padding: 0.4rem;
     border-radius: 0.6rem;
-    border: solid 1px lightgrey;
+    border: solid 3px tomato;
     font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    height: 40px;
-    margin-left: 70%;
-    margin-top: 30px;
+    font-size: 1rem;
+    display: flex;
+    float: right;
 }
 
 .exit-task-menu:hover {
     background-color: rgb(250, 141, 121);
+    color: white;
 }
 
 .task-menu-body {
