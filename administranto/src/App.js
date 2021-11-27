@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
 import {RiDeleteBin5Line } from 'react-icons/ri';
-import {AiOutlinePlus, AiOutlineClose} from 'react-icons/ai';
+import {AiOutlinePlus} from 'react-icons/ai';
 import { TaskMenu,Form } from './components.js';
 
 const itemsFromBackend = [
@@ -32,10 +32,6 @@ let columnsFromBackEnd =
       name: 'Sprint Backlog',
       items: []
     },
-    [uuid()]: {
-      name: 'Some Col',
-      items: []
-    }
   };
 
 const onDragEnd = (result, columns, setColumns)=>{
@@ -201,6 +197,13 @@ function App() {
                                 }}
                               >      
                                 {item.content}
+                                <div style={{
+                                  padding: 10,
+                                  borderRadius:10,
+                                  width:40,
+                                  backgroundColor:item.color,
+                                }}></div>
+
                               </div>
                             )
                           }}
@@ -282,6 +285,12 @@ function App() {
                                   }}
                                 >      
                                   {item.content}
+                                  <div style={{
+                                  padding: 10,
+                                  borderRadius:10,
+                                  width:40,
+                                  backgroundColor:item.color,
+                                }}></div>
                                 </div>
                               )
                             }}
