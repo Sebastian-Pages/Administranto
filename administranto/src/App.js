@@ -120,7 +120,7 @@ function App() {
       name: newColName,
       items: []
     }
-    console.log("We add col: ",newCol)
+    console.log("We add col2: ",newCol)
     Object.entries(columns).push(newCol);
     console.log(columns)
   }
