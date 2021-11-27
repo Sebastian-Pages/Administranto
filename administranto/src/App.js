@@ -93,10 +93,9 @@ function App() {
 
   const addNewItem = ()=>{
     console.log("Going to push: ",newItem);
-    Object.entries(columnsFromBackEnd).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
+    Object.entries(columns).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
     console.log("items: ",Object.entries(columns).slice(0,1).map( ([key, value]) => value.items ));
-    console.log(columnsFromBackEnd)
-    setTasktoggle(false)
+    console.log(columns)
     toggleUi()
   }
 
@@ -108,7 +107,7 @@ function App() {
     </div>
   </div>;
   const toggleUi = ()=>{
-    console.log("hi: ",task_menu)
+    // console.log("hi: ",task_menu)
     if (tasktoggle) {
       task_menu = 
       <div>
@@ -124,8 +123,8 @@ function App() {
     else {
       task_menu = <h1></h1>
     }
-      setTasktoggle(!tasktoggle)
-      console.log("hi: ",task_menu)
+      setTasktoggle(!tasktoggle);
+      // console.log("hi: ",task_menu)
   }
 
   function Button(props) {
