@@ -22,7 +22,7 @@ const itemsFromBackend = [
   }
 ];
 
-const columnsFromBackEnd = 
+let columnsFromBackEnd = 
   {
     [uuid()]: {
       name: 'BackLog',
@@ -74,34 +74,75 @@ const onDragEnd = (result, columns, setColumns)=>{
   })
   }
 };
-
+let newItem;
 const getNewItem = (data)=>{
-  (data.item==='Tomato') ? void(0):console.log("update item",data);
-  const newItem = { id: uuid(), 
-    content: data.content,
-    description:data.description,
-    estimation:data.estimation,
-    color:data.color
+  (data.item==='Tomato') ? void(0):console.log("update item",data.item);
+  newItem = { id: uuid(), 
+    content: data.item.content,
+    description:data.item.description,
+    estimation:data.item.estimation,
+    color:data.item.color
   }
 }
-const addNewItem = ()=>{console.log("u")}
+
 
 
 function App() {
-  const [columns, setColumns] = useState(columnsFromBackEnd);
+  const [columns, setColumns] = useState(columnsFromBackEnd)
+  const [tasktoggle, setTasktoggle] = useState(false)
+
+  const addNewItem = ()=>{
+    console.log("Going to push: ",newItem);
+    Object.entries(columnsFromBackEnd).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
+    console.log("items: ",Object.entries(columns).slice(0,1).map( ([key, value]) => value.items ));
+    console.log(columnsFromBackEnd)
+    setTasktoggle(false)
+    toggleUi()
+  }
+
+  let task_menu= 
+  <div>
+    <TaskMenu func={getNewItem} visibility={tasktoggle}/>
+    <div style={{textAlign: 'center',position: 'fixed',zIndex: '1',margin:'45% 0 0 45%'}}>
+          <Button  visibility={tasktoggle}/>
+    </div>
+  </div>;
+  const toggleUi = ()=>{
+    console.log("hi: ",task_menu)
+    if (tasktoggle) {
+      task_menu = 
+      <div>
+        <TaskMenu func={getNewItem} visibility={tasktoggle}/>
+        <div style={{textAlign: 'center',position: 'fixed',zIndex: '1',margin:'45% 0 0 45%'}}>
+              <button className='button-primary' 
+                  onClick={ addNewItem}>
+                  Create Task 
+              </button>
+          </div>
+      </div>
+    }
+    else {
+      task_menu = <h1></h1>
+    }
+      setTasktoggle(!tasktoggle)
+      console.log("hi: ",task_menu)
+  }
+
+  function Button(props) {
+    return (props.visibility ?
+            <button className='button-primary' 
+                onClick={ addNewItem}>
+                Create Task 
+            </button>:null
+    )
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={companyLogo} alt='logo'/>
       </header>
-      
-      <TaskMenu func={getNewItem}/>
-      <div style={{textAlign: 'center',position: 'fixed',zIndex: '1',margin:'45% 0 0 45%'}}>
-          <button className='button-primary' 
-              onClick={ addNewItem }>
-              Create Task 
-          </button>
-      </div>
+      {task_menu}
       <div className="App-body">
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns)}>
         <div className='backlog'> <h2>Backlog</h2>
@@ -150,7 +191,7 @@ function App() {
                       )
                     })}
                     {provided.placeholder}
-                    <div className='add-item'><AiOutlinePlus/> Add New Item </div> 
+                    <div className='add-item' onClick={toggleUi}><AiOutlinePlus/> Add New Item </div> 
                   </div>
                 )
               }}
@@ -232,5 +273,6 @@ function App() {
     
   );
 }
+
 
 export default App;

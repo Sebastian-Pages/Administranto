@@ -3,7 +3,6 @@ import {AiOutlineClose} from 'react-icons/ai';
 
 export const TaskMenu = (props) => {
 
-  const [showTaskMenu, setShowTaskMenu] = React.useState(true)
   const [taskColor, setTaskColor] = React.useState('Tomato')
   const [item, setItem] = React.useState('Tomato')
   const [title, setTitle] = useState("");
@@ -17,7 +16,6 @@ export const TaskMenu = (props) => {
         setTaskColor(data.color) 
   }
 
-  const toggleTaskMenu = () => showTaskMenu ? setShowTaskMenu(false) : setShowTaskMenu(true)
   
   const CreateTask = () => {
     setItem({content:title, description:description, estimation:estimation, color:taskColor});
@@ -29,12 +27,12 @@ export const TaskMenu = (props) => {
   };
 
   return ( 
-      showTaskMenu ?
+      props.visibility ?
           <div className='overlay' style={overlayed}>
               <div className='task-menu' >
                   <div className='task-menu-header' style={{backgroundColor:taskColor}}>
                       <h2 >Task</h2>
-                      <button className='exit-task-menu' onClick={toggleTaskMenu}><AiOutlineClose /></button>  
+                      {/* <button className='exit-task-menu' onClick={toggleTaskMenu}><AiOutlineClose /></button>   */}
                   </div>
                   <div className='task-menu-body'>
                       <div class="row">
@@ -109,5 +107,4 @@ function ColorPicker(props) {
     </div>
   );
 }
-
 

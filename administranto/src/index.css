@@ -252,6 +252,7 @@ h3 {
     margin-left: 10px;
     border: solid 2px lightgray;
     border-radius: 0.2rem;
+    width: 60%;
 }
 
 .palette-cell {
@@ -265,9 +266,11 @@ h3 {
 .palette-cell:hover {
     outline: solid 2px lightgray;
     outline-offset: -2px;
+
 }
 
 input {
     padding: 10px;
     margin: 10px;
+    width: 60%;
 }
