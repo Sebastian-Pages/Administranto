@@ -20,6 +20,24 @@ img {
     height: min-content;
 }
 
+.button-add-col{
+    background-color: rgb(202, 202, 202);
+    color: white;
+    border-radius: 2rem;
+    padding: 1rem;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    height: min-content;
+    width: 100px;
+    border: solid 2px rgb(182, 182, 182);
+}
+
+.button-add-col:hover{
+    background-color: rgb(160, 159, 159);
+
+}
+
 .button-primary:hover {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background-color: rgb(134, 99, 231);
@@ -278,4 +296,19 @@ input {
     padding: 10px;
     margin: 10px;
     width: 60%;
+}
+
+.new-col {
+    border-radius: 1rem;
+    border: solid 2px rgb(182, 182, 182);
+    width: 150px;
+    height: 590px;
+    padding: 10px;
+    display: flexbox;
+    justify-content: center;
+    margin: 10px;
+    background-color: rgb(238, 238, 238);
+
+
+
 }

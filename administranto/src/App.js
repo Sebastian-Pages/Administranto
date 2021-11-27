@@ -100,11 +100,10 @@ const getNewItem = (data)=>{
   }
 }
 
-
-
 function App() {
   const [columns, setColumns] = useState(columnsFromBackEnd)
   const [tasktoggle, setTasktoggle] = useState(false)
+  const [sprint, setSprint] = useState(false)
 
   const addNewItem = ()=>{
     console.log("Going to push: ",newItem);
@@ -112,6 +111,11 @@ function App() {
     console.log("items: ",Object.entries(columns).slice(0,1).map( ([key, value]) => value.items ));
     console.log(columns)
     toggleUi()
+  }
+
+  const startSprint= ()=>{
+    setSprint(!sprint);
+    console.log("Start Sprint");
   }
 
   let task_menu= 
@@ -148,6 +152,30 @@ function App() {
                 onClick={ addNewItem}>
                 Create Task 
             </button>:null
+    )
+  }
+
+  function Sprint_menu(props) {
+    return (props.visibility ?
+      <div className='sprint-ui'>
+      <h2>Sprint Menu</h2>
+      <label for='sprint-start-input'>Start</label>
+      <input id='sprint-start-input' placeholder="Day/Month" />
+      <label for='sprint-end-input'>End</label>
+      <input id='sprint-end-input' placeholder="Day/Month"/>
+      <button className='ui-button button-primary ' onClick={startSprint} >Start Sprint</button>
+    </div>:null
+    )
+  }
+
+  function NewCol(props) {
+    return (props.visibility ?
+      <div className='new-col'>
+        <input id='sprint-start-input' placeholder="Name" style={{padding:'15px'}}/>
+        <div style={{display:'flex',justifyContent: 'center',marginTop:'100px'}}>
+          <button className='button-add-col' onClick={startSprint} ><AiOutlinePlus /></button>
+        </div>
+      </div>:null
     )
   }
 
@@ -305,20 +333,12 @@ function App() {
               </div>
             )
           })}
-          <div className='sprint-ui'>
-            <h2>Sprint Menu</h2>
-            <label for='sprint-start-input'>Start</label>
-            <input id='sprint-start-input' placeholder="Day/Month" />
-            <label for='sprint-end-input'>End</label>
-            <input id='sprint-end-input' placeholder="Day/Month"/>
-            <button className='ui-button button-primary ' disabled={false} >Start Sprint</button>
-            <Form />
-          </div>
+          <Sprint_menu visibility={!sprint} />
+          <NewCol visibility={sprint} />
           </div> 
         </div>
       </DragDropContext>
       </div>
-
     </div>
     
   );
