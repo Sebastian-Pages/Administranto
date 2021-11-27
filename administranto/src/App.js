@@ -104,6 +104,7 @@ function App() {
   const [columns, setColumns] = useState(columnsFromBackEnd)
   const [tasktoggle, setTasktoggle] = useState(false)
   const [sprint, setSprint] = useState(false)
+  const [newColName, setNewColName] = useState("");
 
   const addNewItem = ()=>{
     console.log("Going to push: ",newItem);
@@ -111,6 +112,17 @@ function App() {
     console.log("items: ",Object.entries(columns).slice(0,1).map( ([key, value]) => value.items ));
     console.log(columns)
     toggleUi()
+  }
+
+  const addNewCol = ()=>{
+    console.log("We add col: ",newColName)
+    let newCol = { id: uuid(), 
+      name: newColName,
+      items: []
+    }
+    console.log("We add col: ",newCol)
+    Object.entries(columns).push(newCol);
+    console.log(columns)
   }
 
   const startSprint= ()=>{
@@ -171,9 +183,11 @@ function App() {
   function NewCol(props) {
     return (props.visibility ?
       <div className='new-col'>
-        <input id='sprint-start-input' placeholder="Name" style={{padding:'15px'}}/>
+        {/* <input id='sprint-start-input' placeholder="Name" style={{padding:'15px'}}  type="text" value={newColName} onChange={(e) => {setNewColName(e.target.value)}}/> */}
+        <input type="text" value={newColName} onChange={(e) => {setNewColName(e.target.value)}}/>
+
         <div style={{display:'flex',justifyContent: 'center',marginTop:'100px'}}>
-          <button className='button-add-col' onClick={startSprint} ><AiOutlinePlus /></button>
+          <button className='button-add-col' onClick={addNewCol} ><AiOutlinePlus /></button>
         </div>
       </div>:null
     )
