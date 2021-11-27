@@ -20,8 +20,8 @@ export const TaskMenu = (props) => {
   const toggleTaskMenu = () => showTaskMenu ? setShowTaskMenu(false) : setShowTaskMenu(true)
   
   const CreateTask = () => {
-      setItem('new Item');
-  }
+    setItem({content:title, description:description, estimation:estimation, color:taskColor});
+}
   
   const overlayed = {
       position: 'fixed',
@@ -45,20 +45,13 @@ export const TaskMenu = (props) => {
                               <h3>Color</h3>
                           </div>
                           <div class="column-right">
-                              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-                              <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
-                              <input type="text" value={estimation} onChange={(e) => setEstimation(e.target.value)}/>
+                              <input type="text" value={title} onChange={(e) => {setTitle(e.target.value);CreateTask()}}/>
+                              <input type="text" value={description} onChange={(e) => {setDescription(e.target.value);CreateTask()}}/>
+                              <input type="text" value={estimation} onChange={(e) => {setEstimation(e.target.value);CreateTask()}}/>
         
                               <ColorPicker func={pull_data} />
                           </div>
                         </div>
-                        {/* <div className='testme'>
-                            je comprend pas pq ya pas de style là
-                        </div> */}
-                        <div style={{textAlign: 'center'}}>
-                            <button className='button-primary' onClick={CreateTask}>Create Task</button>
-                        </div>
-
 
                   </div>
               </div>

@@ -75,15 +75,16 @@ const onDragEnd = (result, columns, setColumns)=>{
   }
 };
 
-const addItem = (data)=>{
-  console.log("add item",data);
-  // const newItem = { id: uuid(), 
-  //   content: data.content,
-  //   description:data.description,
-  //   estimation:data.estimation,
-  //   color:data.color
-  // }
+const getNewItem = (data)=>{
+  (data.item==='Tomato') ? void(0):console.log("update item",data);
+  const newItem = { id: uuid(), 
+    content: data.content,
+    description:data.description,
+    estimation:data.estimation,
+    color:data.color
+  }
 }
+const addNewItem = ()=>{console.log("u")}
 
 
 function App() {
@@ -94,7 +95,13 @@ function App() {
         <img src={companyLogo} alt='logo'/>
       </header>
       
-      <TaskMenu func={addItem}/>
+      <TaskMenu func={getNewItem}/>
+      <div style={{textAlign: 'center',position: 'fixed',zIndex: '1',margin:'45% 0 0 45%'}}>
+          <button className='button-primary' 
+              onClick={ addNewItem }>
+              Create Task 
+          </button>
+      </div>
       <div className="App-body">
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns)}>
         <div className='backlog'> <h2>Backlog</h2>
