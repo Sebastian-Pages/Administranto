@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
 import {RiDeleteBin5Line } from 'react-icons/ri';
-import {AiOutlinePlus} from 'react-icons/ai';
+import {AiOutlinePlus,AiOutlineClose} from 'react-icons/ai';
 import { TaskMenu,Form } from './components.js';
 
 const itemsFromBackend = [
@@ -298,10 +298,68 @@ function App() {
         <div className='sprint'> 
         <h2>Sprint</h2>
           <div className='column-container'> 
-          {Object.entries(columns).slice(1).map(([id, column])=>{
+          {Object.entries(columns).slice(1,2).map(([id, column])=>{
+            return(
+              <div className='Column-Header'>
+              <h2 style={{width:'240px'}}>{column.name}</h2>
+              <Droppable droppableId={id} key={id}>
+                {(provided, snapshot) => {
+                  return (
+                    <div className='Column-body'
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      style={{
+                        background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                        padding: 4,
+                        width: 250,
+                        minHeight: 500
+                      }}
+                    >
+                      {column.items.map((item,index)=> {
+                        return(
+                          <Draggable key={item.id} draggableId={item.id} index={index}>
+                            {(provided, snapshot)=> {
+                              return(
+                                <div className='Task'
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  
+                                  style={{
+                                    userSelect: 'none',
+                                    padding: 16,
+                                    margin: '0 0 8px 0',
+                                    minHeight: '50px',
+                                    backgroundColor: snapshot.isDragging ? 'rgb(186, 190, 194)' : 'rgb(236, 241, 245)',
+                                    ...provided.draggableProps.style
+                                  }}
+                                >      
+                                  {item.content}
+                                  <div style={{
+                                  padding: 10,
+                                  borderRadius:10,
+                                  width:40,
+                                  backgroundColor:item.color,
+                                }}></div>
+                                </div>
+                              )
+                            }}
+                          </Draggable>
+                        )
+                      })}
+                      {provided.placeholder}
+                    </div>
+                  )
+                }}
+              </Droppable>
+              </div>
+            )
+          })}
+          {Object.entries(columns).slice(2).map(([id, column])=>{
             return(
               <div className='Column-Header'>
               <h2>{column.name}</h2>
+              <button className='exit'> <AiOutlineClose /></button>
               <Droppable droppableId={id} key={id}>
                 {(provided, snapshot) => {
                   return (

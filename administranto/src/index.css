@@ -20,7 +20,7 @@ img {
     height: min-content;
 }
 
-.button-add-col{
+.button-add-col {
     background-color: rgb(202, 202, 202);
     color: white;
     border-radius: 1rem;
@@ -33,9 +33,8 @@ img {
     border: solid 2px rgb(182, 182, 182);
 }
 
-.button-add-col:hover{
+.button-add-col:hover {
     background-color: rgb(160, 159, 159);
-
 }
 
 .button-primary:hover {
@@ -88,9 +87,7 @@ img {
     margin: 1rem;
     border-radius: 1rem 1rem 2rem 2rem;
     color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: inline-block;
     background: rgb(95, 46, 234);
 }
 
@@ -99,9 +96,15 @@ img {
     border: solid 2px rgb(182, 182, 182);
 }
 
-.Column-delete{
+.Column-delete {
     border-radius: 1rem 1rem 1rem 1rem;
     border: solid 2px rgb(182, 182, 182);
+}
+
+h2 {
+    display: inline-block;
+    padding-left: 15px;
+    width: 200px;
 }
 
 .Task {
@@ -220,19 +223,20 @@ input {
     justify-content: center;
 }
 
-.exit-task-menu {
-    background-color: none;
-    color: tomato;
+.exit {
+    background-color: tomato;
+    color: white;
     padding: 0.4rem;
-    border-radius: 0.6rem;
+    border-radius: 1rem;
     border: solid 3px tomato;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
-    display: flex;
-    float: right;
+    display: inline-block;
+    position: relative;
+    top: -20px;
 }
 
-.exit-task-menu:hover {
+.exit:hover {
     background-color: rgb(250, 141, 121);
     color: white;
 }
@@ -289,7 +293,6 @@ h3 {
 .palette-cell:hover {
     outline: solid 2px lightgray;
     outline-offset: -2px;
-
 }
 
 input {
@@ -308,7 +311,4 @@ input {
     justify-content: center;
     margin: 10px;
     background-color: rgb(238, 238, 238);
-
-
-
 }
