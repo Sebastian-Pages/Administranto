@@ -116,13 +116,21 @@ function App() {
 
   const addNewCol = ()=>{
     console.log("We add col: ",newColName)
-    let newCol = { id: uuid(), 
-      name: newColName,
-      items: []
-    }
+    let newCol = {
+      [uuid()]: {
+        name: newColName,
+        items: []
+      },
+    };
     console.log("We add col2: ",newCol)
-    Object.entries(columns).push(newCol);
-    console.log(columns)
+    setColumns({
+      ...columns,
+      [uuid()]:{
+        name: newColName,
+        items: []
+      }
+    })
+    console.log("Columns: ",columns)
   }
 
   const startSprint= ()=>{
