@@ -3,8 +3,8 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
 import {RiDeleteBin5Line } from 'react-icons/ri';
-import {AiOutlinePlus,AiOutlineClose} from 'react-icons/ai';
-import { TaskMenu,Form } from './components.js';
+import {AiOutlinePlus,AiOutlineClose } from 'react-icons/ai';
+import { TaskMenu } from './components.js';
 
 const itemsFromBackend = [
   { id: uuid(), 
@@ -105,6 +105,7 @@ function App() {
   const [tasktoggle, setTasktoggle] = useState(false)
   const [sprint, setSprint] = useState(false)
   const [newColName, setNewColName] = useState("");
+  const [colToDelete,setColToDelete] = useState("");
 
   const addNewItem = ()=>{
     console.log("Going to push: ",newItem);
@@ -132,6 +133,17 @@ function App() {
     })
     console.log("Columns: ",columns)
   }
+
+  const deleteCol = (key)=>{
+    console.log("key",key)
+    const copyColumns = columns
+    delete copyColumns[key]
+    console.log("col",columns, "copy ",copyColumns)
+
+  }
+  // Object.entries(columns).map(([id, column])=>{return(column!==col ? column : null)})
+  // setColumns(columns.splice(colToDelete))
+
 
   const startSprint= ()=>{
     setSprint(!sprint);
@@ -207,6 +219,17 @@ function App() {
         <img src={companyLogo} alt='logo'/>
       </header>
       {task_menu}
+      {/* <div className='button-menu' style={{display:'inline-block'}}>             
+            <input 
+              type="text" 
+              value={colToDelete}
+              onChange={(e) => setColToDelete(e.target.value)}
+              style={{display:'inline-block', width:'50px',paddingRight:0,marginRight:0}}
+            />  
+            <button type="submit" style={{height:'3rem',padding: '10px',border: 'solid 2px lightgray'}}
+            onClick={() => { console.log("delete col:",colToDelete) }}
+            ><RiDeleteBin5Line style={{color:'grey',fontSize:'1.2rem'}}/></button>
+          </div> */}
       <div className="App-body">
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns)}>
         <div className='backlog'> <h2>Backlog</h2>
@@ -296,7 +319,11 @@ function App() {
         </Droppable>
         </div> 
         <div className='sprint'> 
-        <h2>Sprint</h2>
+        <div className='sprint-header'>       
+
+          <h2 style={{display:'inline-block'}}>Sprint</h2>
+        </div>
+
           <div className='column-container'> 
           {Object.entries(columns).slice(1,2).map(([id, column])=>{
             return(
@@ -359,7 +386,7 @@ function App() {
             return(
               <div className='Column-Header'>
               <h2>{column.name}</h2>
-              <button className='exit'> <AiOutlineClose /></button>
+              <button className='exit' onClick={() => { deleteCol(id) }}> <AiOutlineClose /></button>
               <Droppable droppableId={id} key={id}>
                 {(provided, snapshot) => {
                   return (
