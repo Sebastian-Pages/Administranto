@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useState,useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
@@ -100,12 +100,23 @@ const getNewItem = (data)=>{
   }
 }
 
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue(value => value + 1); // update the state to force render
+}
+
 function App() {
   const [columns, setColumns] = useState(columnsFromBackEnd)
   const [tasktoggle, setTasktoggle] = useState(false)
   const [sprint, setSprint] = useState(false)
   const [newColName, setNewColName] = useState("");
   const [colToDelete,setColToDelete] = useState("");
+
+  const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    console.log("UseEffects",columns)
+  }, [columns]);
 
   const addNewItem = ()=>{
     console.log("Going to push: ",newItem);
@@ -138,7 +149,12 @@ function App() {
     console.log("key",key)
     const copyColumns = columns
     delete copyColumns[key]
-    console.log("col",columns, "copy ",copyColumns)
+    // console.log("col",columns, "copy ",copyColumns)
+    console.log("col before",columns)
+    setColumns(copyColumns);
+    forceUpdate();
+    console.log("col after",columns)
+
 
   }
   // Object.entries(columns).map(([id, column])=>{return(column!==col ? column : null)})
@@ -386,7 +402,7 @@ function App() {
             return(
               <div className='Column-Header'>
               <h2>{column.name}</h2>
-              <button className='exit' onClick={() => { deleteCol(id) }}> <AiOutlineClose /></button>
+              <button className='exit' onClick={(e) => { deleteCol(id) }}> <AiOutlineClose /></button>
               <Droppable droppableId={id} key={id}>
                 {(provided, snapshot) => {
                   return (
