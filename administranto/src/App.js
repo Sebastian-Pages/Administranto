@@ -5,6 +5,7 @@ import companyLogo from './logo.png';
 import {RiDeleteBin5Line } from 'react-icons/ri';
 import {AiOutlinePlus,AiOutlineClose } from 'react-icons/ai';
 import { TaskMenu } from './components.js';
+import useForm from "./useForm";
 
 const itemsFromBackend = [
   { id: uuid(), 
@@ -24,7 +25,7 @@ const itemsFromBackend = [
 
 let columnsFromBackEnd = 
   {
-    [uuid()]: {
+    ["100"]: {
       name: 'BackLog',
       items: itemsFromBackend
     },
@@ -34,10 +35,24 @@ let columnsFromBackEnd =
     },
   };
 
-const onDragEnd = (result, columns, setColumns)=>{
+const onDragEnd = (result, columns, setColumns,sprint)=>{
 
   if(!result.destination) return;
   const {source, destination} = result;
+
+  if (sprint && result.destination.droppableId ==="100"){
+    console.log("Tried to put task in backlog during Sprint",result.destination.droppableId)
+    return;
+  }
+  if (sprint && result.source.droppableId ==="100" && result.destination.droppableId !=="42"){
+    console.log("Tried to take task out of backlog during Sprint",result.destination.droppableId)
+    return;
+  }
+  if (sprint && result.source.droppableId !=="100" && result.destination.droppableId =="42"){
+    console.log("Tried to delete task during Sprint",result.destination.droppableId)
+    alert("You must complete task or archive it!");
+    return;
+  }
   if (result.destination.droppableId ==="42"){ 
     console.log("delete: ",result.destination );
     const sourceColumn = columns[source.droppableId];
@@ -105,12 +120,18 @@ function useForceUpdate(){
   return () => setValue(value => value + 1); // update the state to force render
 }
 
+const visible = {visibility:'visible'};
+const invisible = {visibility:'invisible'};
+
 function App() {
   const [columns, setColumns] = useState(columnsFromBackEnd)
   const [tasktoggle, setTasktoggle] = useState(false)
   const [sprint, setSprint] = useState(false)
   const [newColName, setNewColName] = useState("");
   const [colToDelete,setColToDelete] = useState("");
+  const [formValue, Form] = useForm("", "Start");
+  const [formValue2, Form2] = useForm("", "End   ");
+
 
   const forceUpdate = useForceUpdate();
 
@@ -146,25 +167,52 @@ function App() {
   }
 
   const deleteCol = (key)=>{
+  
     console.log("key",key)
     const copyColumns = columns
-    delete copyColumns[key]
-    // console.log("col",columns, "copy ",copyColumns)
-    console.log("col before",columns)
-    setColumns(copyColumns);
-    forceUpdate();
-    console.log("col after",columns)
-
+    let res = Object.entries(copyColumns[key]).map( ([key, value]) =>{{return value}});
+    console.log("res: ",res[1])
+    
+    if (res[1].length===0){
+      delete copyColumns[key]
+      console.log("col before",columns)
+      setColumns(copyColumns);
+      forceUpdate();
+      console.log("col after",columns)
+    }
+    else{
+      alert("You still have items in that column")
+    }
 
   }
-  // Object.entries(columns).map(([id, column])=>{return(column!==col ? column : null)})
-  // setColumns(columns.splice(colToDelete))
 
+  const resetCols =()=>{
+    console.log("DELETING");
+
+    // Object.entries(columns).slice(2).forEach(element => {
+    //   deleteCol(element.id);
+    //   console.log("a");
+    // });
+    Object.entries(columns).slice(2).map( ([key, value]) => deleteCol(key));
+    console.log("DELETING: ",columns.length);
+    
+  }
 
   const startSprint= ()=>{
-    setSprint(!sprint);
-    console.log("Start Sprint");
+    if (formValue==="" || formValue2===""){
+      alert("You must give a start and end to your sprint");
+    }
+    else{
+      setSprint(!sprint);
+      console.log("Start Sprint");
+    }
   }
+
+  const endSprint= ()=>{
+    setSprint(!sprint);
+    resetCols();
+    console.log("End Sprint");
+  } 
 
   let task_menu= 
   <div>
@@ -207,11 +255,23 @@ function App() {
     return (props.visibility ?
       <div className='sprint-ui'>
       <h2>Sprint Menu</h2>
-      <label for='sprint-start-input'>Start</label>
-      <input id='sprint-start-input' placeholder="Day/Month" />
-      <label for='sprint-end-input'>End</label>
-      <input id='sprint-end-input' placeholder="Day/Month"/>
+      {/* <label for='sprint-start-input'>Start</label> */}
+      {Form}
+      {Form2}
+      {/* <input id='sprint-start-input' placeholder="Start Date" value={debutSprint} onChange={(e) => {setDebutSprint(e.target.value)}} /> */}
+      {/* <label for='sprint-end-input'>End</label>
+      <input id='sprint-end-input' placeholder="End Date"/> */}
       <button className='ui-button button-primary ' onClick={startSprint} >Start Sprint</button>
+    </div>:null
+    )
+  }
+
+  function Sprint_info(props) {
+    return (props.visibility ?
+    <div>
+      <h2 className="date-display">from {formValue} to {formValue2}</h2>
+      <button className="button-primary" onClick={endSprint} style={{marginRight:'10px'}}>End Sprint</button>
+
     </div>:null
     )
   }
@@ -247,7 +307,7 @@ function App() {
             ><RiDeleteBin5Line style={{color:'grey',fontSize:'1.2rem'}}/></button>
           </div> */}
       <div className="App-body">
-      <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns)}>
+      <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,sprint)}>
         <div className='backlog'> <h2>Backlog</h2>
         {Object.entries(columns).slice(0,1).map(([id, column])=>{
           return(
@@ -335,9 +395,9 @@ function App() {
         </Droppable>
         </div> 
         <div className='sprint'> 
-        <div className='sprint-header'>       
-
+        <div className='sprint-header' style={{display:'flex'}}>       
           <h2 style={{display:'inline-block'}}>Sprint</h2>
+          <Sprint_info visibility={sprint}/>
         </div>
 
           <div className='column-container'> 
