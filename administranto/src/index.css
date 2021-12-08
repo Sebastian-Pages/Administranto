@@ -319,3 +319,82 @@ h3 {
  outline-offset: 10px;
  margin-right: 30px;
 }
+.App-header-project {
+    width: 100%;
+    margin-bottom: 30px;
+    border: solid 2px lightgray;
+    background-image: linear-gradient(to right, rgb(95, 46, 234), rgba(0, 0, 0, 0.3));
+    display: flex;
+    justify-content: center;
+}
+
+.App-body-project {
+    background-color: rgb(216, 216, 216);
+    display:contents;
+    justify-content: left;
+}
+
+.button-plus {
+    background-color: rgb(95, 46, 234);
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    height: min-content;
+}
+
+.button-plus:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: rgb(134, 99, 231);
+}
+
+.App-creating-project{
+    margin-left: 3em;
+}
+
+.new-project-titles{
+    color: rgb(95, 46, 234);
+}
+
+#new-project-name-input{
+    border-radius: 0.5rem;
+}
+
+#new-project-start-input{
+    border-radius: 0.5rem;
+}
+
+#new-project-end-input{
+    border-radius: 0.5rem;
+}
+
+.App-listing-project{
+    margin-left: 3em;
+}
+
+.App-listing-project-listed{
+    border: solid rgb(95, 46, 234);
+    border-radius: 0.2em;
+    padding: 10px;
+    width: 60%;
+}
+
+.button-listed {
+    background-color: rgb(95, 46, 234);
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin : 0px 0px 0px 10px;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    height: min-content;
+    width: 4%;
+}
+
+.button-listed:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: rgb(134, 99, 231);
+}
