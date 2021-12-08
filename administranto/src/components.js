@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
-import {AiOutlineClose} from 'react-icons/ai';
+
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue(value => value + 1); // update the state to force render
+}
 
 export const TaskMenu = (props) => {
+  const forceUpdate = useForceUpdate();
 
   const [taskColor, setTaskColor] = React.useState('Tomato')
   const [item, setItem] = React.useState('Tomato')
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [estimation, setEstimation] = useState("");
-    
+
+
+  const titleHandler = async function (e){
+    await setTitle(e.target.value);
+    await CreateTask();
+    forceUpdate();
+
+  }
+  const descriptionHandler = (e) => {
+    setDescription(e.target.value);
+  }
+  const estimationHandler = (e) => {
+    setEstimation(e.target.value);
+  }
+  const colorHandler = (e) => {
+    setTaskColor(e.target.value);
+  }
+
   props.func({item});
 
   const pull_data = (data) => {
@@ -17,9 +39,10 @@ export const TaskMenu = (props) => {
   }
 
   
-  const CreateTask = () => {
-    setItem({content:title, description:description, estimation:estimation, color:taskColor});
-}
+  const CreateTask = async() => {
+    await setItem({content:title, description:description, estimation:estimation, color:taskColor});
+
+  }
   
   const overlayed = {
       position: 'fixed',
@@ -43,7 +66,7 @@ export const TaskMenu = (props) => {
                               <h3>Color</h3>
                           </div>
                           <div class="column-right">
-                              <input type="text" value={title} onChange={(e) => {setTitle(e.target.value);CreateTask()}}/>
+                              <input type="text" value={title} onChange={titleHandler}/>
                               <input type="text" value={description} onChange={(e) => {setDescription(e.target.value);CreateTask()}}/>
                               <input type="text" value={estimation} onChange={(e) => {setEstimation(e.target.value);CreateTask()}}/>
         
@@ -82,7 +105,6 @@ export function Form(props) {
 }
 
 function ColorPicker(props) {
-
   const colorNames = ['White','Springgreen', 'Tomato', 'Lightskyblue',
    'Orchid', 'Gold', 'mediumslateblue'];
   
@@ -96,7 +118,7 @@ function ColorPicker(props) {
       {colorNames.map((colorName)=>(
         <div
             className='palette-cell'
-            onClick={() => setColor(colorName)} 
+            onClick={() =>{ setColor(colorName); }} 
             key={colorName}
             style={{backgroundColor:colorName}}
             taskColor={props.taskColor}
