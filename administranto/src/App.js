@@ -166,14 +166,14 @@ function App() {
     console.log("Columns: ",columns)
   }
 
-  const deleteCol = (key)=>{
+  const deleteCol = (key,bypass)=>{
   
     console.log("key",key)
     const copyColumns = columns
     let res = Object.entries(copyColumns[key]).map( ([key, value]) =>{{return value}});
     console.log("res: ",res[1])
     
-    if (res[1].length===0){
+    if (res[1].length===0 || bypass){
       delete copyColumns[key]
       console.log("col before",columns)
       setColumns(copyColumns);
@@ -193,7 +193,7 @@ function App() {
     //   deleteCol(element.id);
     //   console.log("a");
     // });
-    Object.entries(columns).slice(2).map( ([key, value]) => deleteCol(key));
+    Object.entries(columns).slice(2).map( ([key, value]) => deleteCol(key,true));
     console.log("DELETING: ",columns.length);
     
   }
@@ -462,7 +462,7 @@ function App() {
             return(
               <div className='Column-Header'>
               <h2>{column.name}</h2>
-              <button className='exit' onClick={(e) => { deleteCol(id) }}> <AiOutlineClose /></button>
+              <button className='exit' onClick={(e) => { deleteCol(id,false) }}> <AiOutlineClose /></button>
               <Droppable droppableId={id} key={id}>
                 {(provided, snapshot) => {
                   return (
