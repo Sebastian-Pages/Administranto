@@ -3,9 +3,20 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
 import {RiDeleteBin5Line } from 'react-icons/ri';
-import {AiOutlinePlus,AiOutlineClose } from 'react-icons/ai';
+import {AiOutlineMinus,AiOutlinePlus,AiOutlineClose } from 'react-icons/ai';
 import { TaskMenu } from './components.js';
 import useForm from "./useForm";
+
+/* VARIALBLES DECLARATION */
+const projectsFromBackEnd = [
+  { id: uuid(), 
+    name: 'Project 1'
+  },
+
+  { id: uuid(), 
+    name: 'Project 2'
+  }
+];
 
 const itemsFromBackend = [
   { id: uuid(), 
@@ -34,6 +45,8 @@ let columnsFromBackEnd =
       items: []
     },
   };
+
+/* IMPORTANT FUNCTIONS */
 
 const onDragEnd = (result, columns, setColumns,sprint)=>{
 
@@ -115,6 +128,13 @@ const getNewItem = (data)=>{
   }
 }
 
+let newProject;
+const getNewProject = (data)=>{
+  console.log("update item",data);
+  newProject = { id: uuid(), 
+    name: data.name}
+}
+
 function useForceUpdate(){
   const [value, setValue] = useState(0); // integer state
   return () => setValue(value => value + 1); // update the state to force render
@@ -123,15 +143,21 @@ function useForceUpdate(){
 const visible = {visibility:'visible'};
 const invisible = {visibility:'invisible'};
 
+
+
+/* APPLICATION */
 function App() {
   const [columns, setColumns] = useState(columnsFromBackEnd)
   const [tasktoggle, setTasktoggle] = useState(false)
   const [sprint, setSprint] = useState(false)
+  const [projectMenu, setProjectMenu] = useState(false)
   const [newColName, setNewColName] = useState("");
   const [colToDelete,setColToDelete] = useState("");
   const [formValue, Form] = useForm("", "Start");
   const [formValue2, Form2] = useForm("", "End   ");
 
+  const [newProjectName, setNewProjectName] = useState("");
+  const [project, setProject] = useState(projectsFromBackEnd)
 
   const forceUpdate = useForceUpdate();
 
@@ -188,14 +214,8 @@ function App() {
 
   const resetCols =()=>{
     console.log("DELETING");
-
-    // Object.entries(columns).slice(2).forEach(element => {
-    //   deleteCol(element.id);
-    //   console.log("a");
-    // });
     Object.entries(columns).slice(2).map( ([key, value]) => deleteCol(key,true));
-    console.log("DELETING: ",columns.length);
-    
+    console.log("DELETING: ",columns.length);  
   }
 
   const startSprint= ()=>{
@@ -214,6 +234,38 @@ function App() {
     console.log("End Sprint");
   } 
 
+   //destroy
+   const destroyProject = (index)=>{
+    console.log("projs before",project)
+    const copyProjects = project
+    delete copyProjects[index]
+    setProject(copyProjects);
+    forceUpdate();
+    console.log("projs after",project)
+  }
+
+  //add
+  const addNewProject = ()=>{
+    let newProj = {
+      id:uuid(),
+      name: "newproject"//newProjectNam
+    };
+    console.log("We add proj: ",newProj)
+    setProject({
+      ...project,
+      id:uuid(),
+      name: "newproject"//newProjectName
+    })
+    console.log("Project: ",project)
+  }
+
+  //go
+  const GoToProject = (index)=>{
+    console.log("going to project :",project[index])
+    setProjectMenu(true);
+    forceUpdate();
+  }
+
   let task_menu= 
   <div>
     <TaskMenu func={getNewItem} visibility={tasktoggle}/>
@@ -222,7 +274,6 @@ function App() {
     </div>
   </div>;
   const toggleUi = ()=>{
-    // console.log("hi: ",task_menu)
     if (tasktoggle) {
       task_menu = 
       <div>
@@ -289,7 +340,9 @@ function App() {
     )
   }
 
+  /* APPLICATION DISPLAY*/
   return (
+    projectMenu ?
     <div className="App">
       <header className="App-header">
         <img src={companyLogo} alt='logo'/>
@@ -521,6 +574,41 @@ function App() {
           </div> 
         </div>
       </DragDropContext>
+      </div>
+    </div>
+    :
+
+    <div className="App">
+      <header className="App-header">
+        <img src={companyLogo} alt='logo'/>
+      </header>
+      <div className="App-header-project"> 
+        <h1>Project Menu</h1>
+      </div>
+      <div className="App-body-project"> 
+        <div className="App-creating-project"> 
+        <h1 className='new-project-titles'>New Project</h1>
+        <input id='new-project-name-input' placeholder="New project name" value={newProjectName} onChange={(e) => {setNewProjectName(e.target.value)}}/>
+        <input id='new-project-start-input' placeholder="starting date : DD/MM/YYYY"/>
+        <input id='new-project-end-input' placeholder="ending date : DD/MM/YYYY"/>
+            <button className='button-plus' onClick={addNewProject}>
+            <AiOutlinePlus/> 
+            </button>
+        </div>
+        <div className="App-listing-project">
+        <h1 className='new-project-titles'>Your Projects</h1>
+        <div className="App-listing-project-list">
+        {project.map((item,index)=> {
+          return(
+            <div>
+            <h2 className='App-listing-project-listed'>{item.name}</h2>
+            <div className='button-listed' onClick={(e) => { GoToProject(index) }}>GO </div>
+            <div className='button-listed' onClick={(e) => { destroyProject(index) }}><AiOutlineMinus/></div>
+          </div>
+          )
+        })}
+        </div>
+        </div>
       </div>
     </div>
     
