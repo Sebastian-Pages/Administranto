@@ -22,6 +22,7 @@ button:hover {
     font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
     height: min-content;
+    margin: 10px;
 }
 
 .button-add-col {
@@ -72,19 +73,21 @@ button:hover {
 }
 
 .App-header {
-    padding: 0.5rem;
+    padding: 0rem;
     background-color: rgb(71, 105, 255);
     background-image: linear-gradient(to right, rgb(214, 73, 132), rgb(255, 145, 0));
     display: flex;
     padding-left: 1rem;
     color: honeydew;
-    height: 100px;
+    height: 90px;
 }
 
 .App-body {
     background-color: rgb(216, 216, 216);
     display: flex;
     justify-content: left;
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .Column-Header {
@@ -313,24 +316,27 @@ h3 {
     background-color: rgb(238, 238, 238);
 }
 
-.date-display{
- border-radius: 0.8rem;
- outline: solid 2px lightgray;
- outline-offset: 10px;
- margin-right: 30px;
+.date-display {
+    border-radius: 0.8rem;
+    outline: solid 2px lightgray;
+    outline-offset: 10px;
+    margin-right: 30px;
 }
+
 .App-header-project {
     width: 100%;
-    margin-bottom: 30px;
-    border: solid 2px lightgray;
-    background-image: linear-gradient(to right, rgb(95, 46, 234), rgba(0, 0, 0, 0.3));
+    color: rgb(53, 53, 53);
+    /* margin-bottom: 30px; */
+    /* border: solid 2px lightgray; */
+    /* background-image: linear-gradient(to right, rgb(95, 46, 234), rgba(0, 0, 0, 0.3)); */
     display: flex;
     justify-content: center;
+    text-shadow: 0px 0px 13px rgba(30, 32, 38, 0.43);
 }
 
 .App-body-project {
     background-color: rgb(216, 216, 216);
-    display:contents;
+    display: contents;
     justify-content: left;
 }
 
@@ -343,6 +349,8 @@ h3 {
     font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
     height: min-content;
+    display: block;
+    margin: 0.6rem;
 }
 
 .button-plus:hover {
@@ -350,51 +358,100 @@ h3 {
     background-color: rgb(134, 99, 231);
 }
 
-.App-creating-project{
+.App-creating-project {
+    background-color: rgb(241, 241, 241);
+    border-radius: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     margin-left: 3em;
+    margin-right: 3em;
+    padding: 15px;
 }
 
-.new-project-titles{
+.inputs {
+    display: block;
+    padding: 1px;
+}
+
+.new-project-titles {
     color: rgb(95, 46, 234);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#new-project-name-input{
+#new-project-name-input {
     border-radius: 0.5rem;
 }
 
-#new-project-start-input{
+#new-project-start-input {
     border-radius: 0.5rem;
 }
 
-#new-project-end-input{
+#new-project-end-input {
     border-radius: 0.5rem;
 }
 
-.App-listing-project{
-    margin-left: 3em;
+.App-listing-project {
+    background-color: rgb(241, 241, 241);
+    border-radius: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    margin: 3em;
+    padding: 15px;
 }
 
-.App-listing-project-listed{
+.App-listing-project-title {
     border: solid rgb(95, 46, 234);
-    border-radius: 0.2em;
+    background-color: white;
+    border-radius: 0.2em 0 0 0.2em;
     padding: 10px;
-    width: 60%;
+    width: 40%;
+    display: inline-flex;
+}
+
+.App-listing-project-list {
+    /* border: solid rgb(32, 156, 49);
+    border-radius: 0.2em; */
+    padding: 0rem;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button-listed {
     background-color: rgb(95, 46, 234);
     color: white;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    margin : 0px 0px 0px 10px;
+    /* border-radius: 0.5rem; */
     border: none;
     font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
-    height: min-content;
-    width: 4%;
+    height: 68px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-listed-right {
+    background-color: rgb(95, 46, 234);
+    color: white;
+    border-radius: 0 0.2em 0.2em 0;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    height: 68px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid grey;
 }
 
 .button-listed:hover {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background-color: rgb(134, 99, 231);
+}
+
+.buttons-menu {
+    margin: 10px;
 }

@@ -10,41 +10,101 @@ import useForm from "./useForm";
 /* VARIALBLES DECLARATION */
 const projectsFromBackEnd = [
   { id: uuid(), 
-    name: 'Project 1'
+    name: 'Bakery Project',
+    active:{
+              ["100"]: {
+                name: 'BackLog',
+                items: [
+                          { id: uuid(), 
+                            content: 'Make Dought',
+                            description:'desc...',
+                            estimation:0,
+                            color:'gold'
+                          },
+
+                          { id: uuid(), 
+                            content: 'Cook the Dought',
+                            description:'desc...',
+                            estimation:0,
+                            color:'blue'
+                          }
+                        ]
+              },
+              [uuid()]: {
+                name: 'Sprint Backlog',
+                items: []
+              },
+              [uuid()]: {
+                name: 'Done',
+                items: [
+                  { id: uuid(), 
+                            content: 'Buy Hoven',
+                            description:'desc...',
+                            estimation:0,
+                            color:'Salmon'
+                          }
+                ]
+              },
+            },
+    sprints:{
+      [uuid()]: {
+        name: 'Sprint Backlog',
+        items: []
+      },
+      [uuid()]: {
+        name: 'Done',
+        items: [
+          { id: uuid(), 
+                    content: 'Old Item',
+                    description:'desc...',
+                    estimation:10,
+                    color:'Lightblue'
+                  }
+        ]
+      },
+    }
   },
 
   { id: uuid(), 
-    name: 'Project 2'
-  }
-];
-
-const itemsFromBackend = [
-  { id: uuid(), 
-    content: 'First task',
-    description:'desc...',
-    estimation:0,
-    color:'tomato'
+    name: 'Web Project',
+    active:{},
+    sprints:{
+      [uuid()]: {
+        name: 'Sprint Backlog',
+        items: [
+          { id: uuid(), 
+                    content: 'publish website',
+                    description:'desc...',
+                    estimation:10,
+                    color:'Tomato'
+                  }
+        ]
+      },
+      [uuid()]: {
+        name: 'To test',
+        items: [
+          { id: uuid(), 
+                    content: 'make a index.html',
+                    description:'desc...',
+                    estimation:10,
+                    color:'Lightblue'
+                  }
+        ]
+      },
+      [uuid()]: {
+        name: 'Done',
+        items: [
+          { id: uuid(), 
+                    content: 'brainstorm ideas',
+                    description:'desc...',
+                    estimation:1,
+                    color:'green'
+                  }
+        ]
+      },
+    }
   },
-
-  { id: uuid(), 
-    content: 'Second task',
-    description:'desc...',
-    estimation:0,
-    color:'blue'
-  }
 ];
-
-let columnsFromBackEnd = 
-  {
-    ["100"]: {
-      name: 'BackLog',
-      items: itemsFromBackend
-    },
-    [uuid()]: {
-      name: 'Sprint Backlog',
-      items: []
-    },
-  };
 
 /* IMPORTANT FUNCTIONS */
 
@@ -147,7 +207,11 @@ const invisible = {visibility:'invisible'};
 
 /* APPLICATION */
 function App() {
-  const [columns, setColumns] = useState(columnsFromBackEnd)
+
+  const [projects, setProjects] = useState(projectsFromBackEnd)
+  const [project, setProject] = useState()
+  const [columns, setColumns] = useState([])
+
   const [tasktoggle, setTasktoggle] = useState(false)
   const [sprint, setSprint] = useState(false)
   const [projectMenu, setProjectMenu] = useState(false)
@@ -155,9 +219,9 @@ function App() {
   const [colToDelete,setColToDelete] = useState("");
   const [formValue, Form] = useForm("", "Start");
   const [formValue2, Form2] = useForm("", "End   ");
-
   const [newProjectName, setNewProjectName] = useState("");
-  const [project, setProject] = useState(projectsFromBackEnd)
+
+  
 
   const forceUpdate = useForceUpdate();
 
@@ -236,12 +300,12 @@ function App() {
 
    //destroy
    const destroyProject = (index)=>{
-    console.log("projs before",project)
-    const copyProjects = project
+    console.log("projs before",projects)
+    const copyProjects = projects
     delete copyProjects[index]
     setProject(copyProjects);
     forceUpdate();
-    console.log("projs after",project)
+    console.log("projs after",projects)
   }
 
   //add
@@ -252,19 +316,46 @@ function App() {
     };
     console.log("We add proj: ",newProj)
     setProject({
-      ...project,
+      ...projects,
       id:uuid(),
       name: "newproject"//newProjectName
     })
-    console.log("Project: ",project)
+    console.log("Project: ",projects)
   }
 
   //go
   const GoToProject = (index)=>{
-    console.log("going to project :",project[index])
+    let p = projects[index]
+    // console.log("going to project :",p)
+    console.log(Object.entries(p).map( ([key, value]) => `My key is ${key} ` ) )
+    console.log("Opening",p["name"])
+ 
+    setProject(p)
+    if (Object.entries(p["active"]).length === 0){
+      console.log("length 0 !")
+      setColumns({["100"]: {
+                name: 'BackLog',
+                items: []
+              },
+              [uuid()]: {
+                name: 'Sprint Backlog',
+                items: []
+              }})
+      setSprint(false)
+    }
+    else{
+      console.log("length: ",Object.entries(p["active"]).length)
+      setColumns(p["active"])
+      setSprint(true)
+    }
+    
     setProjectMenu(true);
     forceUpdate();
   }
+  const goToProjects = ()=>{
+    setProjectMenu(false);
+  }
+  
 
   let task_menu= 
   <div>
@@ -359,7 +450,12 @@ function App() {
             onClick={() => { console.log("delete col:",colToDelete) }}
             ><RiDeleteBin5Line style={{color:'grey',fontSize:'1.2rem'}}/></button>
           </div> */}
+      <div className="buttons-menu">
+        <button className="button-primary" onClick={goToProjects}>Projects Menu</button>
+        <button className="button-primary">View Old Sprints</button>
+      </div>
       <div className="App-body">
+
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,sprint)}>
         <div className='backlog'> <h2>Backlog</h2>
         {Object.entries(columns).slice(0,1).map(([id, column])=>{
@@ -587,27 +683,30 @@ function App() {
       </div>
       <div className="App-body-project"> 
         <div className="App-creating-project"> 
-        <h1 className='new-project-titles'>New Project</h1>
-        <input id='new-project-name-input' placeholder="New project name" value={newProjectName} onChange={(e) => {setNewProjectName(e.target.value)}}/>
-        <input id='new-project-start-input' placeholder="starting date : DD/MM/YYYY"/>
-        <input id='new-project-end-input' placeholder="ending date : DD/MM/YYYY"/>
-            <button className='button-plus' onClick={addNewProject}>
-            <AiOutlinePlus/> 
-            </button>
+          <h1 className='new-project-titles'>New Project</h1>
+          <div className='inputs'>
+            <input id='new-project-name-input' placeholder="New project name" value={newProjectName} onChange={(e) => {setNewProjectName(e.target.value)}}/>
+            <input id='new-project-start-input' placeholder="starting date : DD/MM/YYYY"/>
+            <input id='new-project-end-input' placeholder="ending date : DD/MM/YYYY"/>
+                <button className='button-plus' onClick={addNewProject}>
+                <AiOutlinePlus/> 
+                </button>
+          </div>
+          
         </div>
         <div className="App-listing-project">
-        <h1 className='new-project-titles'>Your Projects</h1>
-        <div className="App-listing-project-list">
-        {project.map((item,index)=> {
-          return(
-            <div>
-            <h2 className='App-listing-project-listed'>{item.name}</h2>
-            <div className='button-listed' onClick={(e) => { GoToProject(index) }}>GO </div>
-            <div className='button-listed' onClick={(e) => { destroyProject(index) }}><AiOutlineMinus/></div>
+          <h1 className='new-project-titles'>Your Projects</h1>
+          <div >
+          {projects.map((item,index)=> {
+            return(
+              <div  className="App-listing-project-list">
+                <h2 className='App-listing-project-title'>{item.name}</h2>
+                <div className='button-listed' onClick={(e) => { GoToProject(index) }}>GO </div>
+                <div className='button-listed-right' onClick={(e) => { destroyProject(index) }}><AiOutlineMinus/></div>
+              </div>
+            )
+          })}
           </div>
-          )
-        })}
-        </div>
         </div>
       </div>
     </div>
