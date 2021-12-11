@@ -1,462 +1,494 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 img {
-    padding: 1.5rem;
-    width: 100 px;
-    height: auto;
+  padding: 1.5rem;
+  width: 100 px;
+  height: auto;
 }
 
 button:hover {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .button-primary {
-    background-color: rgb(95, 46, 234);
-    color: white;
-    border-radius: 2rem;
-    padding: 1rem;
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    height: min-content;
-    margin: 10px;
+  background-color: rgb(95, 46, 234);
+  color: white;
+  border-radius: 2rem;
+  padding: 1rem;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  height: min-content;
+  margin: 10px;
 }
 
 .button-add-col {
-    background-color: rgb(202, 202, 202);
-    color: white;
-    border-radius: 1rem;
-    padding: 1rem;
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    height: min-content;
-    width: 100px;
-    border: solid 2px rgb(182, 182, 182);
+  background-color: rgb(202, 202, 202);
+  color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  height: min-content;
+  width: 100px;
+  border: solid 2px rgb(182, 182, 182);
 }
 
 .button-add-col:hover {
-    background-color: rgb(160, 159, 159);
+  background-color: rgb(160, 159, 159);
 }
 
 .button-primary:hover {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    background-color: rgb(134, 99, 231);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  background-color: rgb(134, 99, 231);
 }
 
 .button-task {
-    background-color: rgb(236, 241, 245);
-    color: lightgrey;
-    padding: 1rem;
-    display: flex;
-    float: right;
-    border-radius: 0.3rem;
-    border: solid 1px lightgrey;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
+  background-color: rgb(236, 241, 245);
+  color: lightgrey;
+  padding: 1rem;
+  display: flex;
+  float: right;
+  border-radius: 0.3rem;
+  border: solid 1px lightgrey;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
 }
 
 .button-task:hover {
-    background-color: rgb(210, 214, 218);
-    color: gray;
+  background-color: rgb(210, 214, 218);
+  color: gray;
 }
 
 .App {
-    margin: 0px;
-    padding: 0;
-    font-family: Roboto;
-    font-size: 1.5em;
-    background-color: white;
+  margin: 0px;
+  padding: 0;
+  font-family: Roboto;
+  font-size: 1.5em;
+  background-color: white;
 }
 
 .App-header {
-    padding: 0rem;
-    background-color: rgb(71, 105, 255);
-    background-image: linear-gradient(to right, rgb(214, 73, 132), rgb(255, 145, 0));
-    display: flex;
-    padding-left: 1rem;
-    color: honeydew;
-    height: 90px;
+  padding: 0rem;
+  background-color: rgb(71, 105, 255);
+  background-image: linear-gradient(
+    to right,
+    rgb(214, 73, 132),
+    rgb(255, 145, 0)
+  );
+  display: flex;
+  padding-left: 1rem;
+  color: honeydew;
+  height: 90px;
 }
 
 .App-body {
-    background-color: rgb(216, 216, 216);
-    display: flex;
-    justify-content: left;
-    border-radius: 1rem 1rem 0 0;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: rgb(216, 216, 216);
+  display: flex;
+  justify-content: left;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .Column-Header {
-    margin: 1rem;
-    border-radius: 1rem 1rem 2rem 2rem;
-    color: rgb(255, 255, 255);
-    display: inline-block;
-    background: rgb(95, 46, 234);
+  margin: 1rem;
+  border-radius: 1rem 1rem 2rem 2rem;
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  background: rgb(95, 46, 234);
 }
 
 .Column-body {
-    border-radius: 0rem 0rem 1rem 1rem;
-    border: solid 2px rgb(182, 182, 182);
+  border-radius: 0rem 0rem 1rem 1rem;
+  border: solid 2px rgb(182, 182, 182);
 }
 
 .Column-delete {
-    border-radius: 1rem 1rem 1rem 1rem;
-    border: solid 2px rgb(182, 182, 182);
+  border-radius: 1rem 1rem 1rem 1rem;
+  border: solid 2px rgb(182, 182, 182);
 }
 
 h2 {
-    display: inline-block;
-    padding-left: 15px;
-    width: 200px;
+  display: inline-block;
+  padding-left: 15px;
+  width: 200px;
 }
 
 .Task {
-    color: rgb(60, 61, 63);
-    font-family: 'Roboto', sans-serif;
-    background-color: rgb(236, 241, 245);
-    border-radius: 0.25rem;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  color: rgb(60, 61, 63);
+  font-family: "Roboto", sans-serif;
+  background-color: rgb(236, 241, 245);
+  border-radius: 0.25rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .add-item {
-    color: rgb(170, 170, 170);
-    font-family: 'Roboto', sans-serif;
-    background-color: none;
-    border-radius: 0.25rem;
-    padding: 16px;
-    margin: 1 1 8px 1;
-    border: solid 2px rgb(182, 182, 182);
+  color: rgb(170, 170, 170);
+  font-family: "Roboto", sans-serif;
+  background-color: none;
+  border-radius: 0.25rem;
+  padding: 16px;
+  margin: 1 1 8px 1;
+  border: solid 2px rgb(182, 182, 182);
 }
 
 .add-item:hover {
-    border: solid 2px rgb(173, 172, 172);
-    background-color: rgba(88, 88, 88, 0.151);
+  border: solid 2px rgb(173, 172, 172);
+  background-color: rgba(88, 88, 88, 0.151);
 }
 
 .backlog {
-    background-color: rgb(236, 241, 245);
-    width: 300px;
-    color: rgb(41, 41, 41);
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 1rem;
-    border-radius: 1rem;
-    border: solid 2px lightgray;
+  background-color: rgb(236, 241, 245);
+  width: 300px;
+  color: rgb(41, 41, 41);
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+  border-radius: 1rem;
+  border: solid 2px lightgray;
 }
 
 .sprint {
-    color: rgb(41, 41, 41);
-    background-color: rgb(246, 250, 253);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 1rem;
-    margin: 1rem;
-    border: solid 2px lightgray;
+  color: rgb(41, 41, 41);
+  background-color: rgb(246, 250, 253);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  margin: 1rem;
+  border: solid 2px lightgray;
 }
 
 .column-container {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .sprint-ui {
-    color: rgb(41, 41, 41);
-    background-color: rgb(245, 245, 245);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 1rem;
-    margin: 1rem;
-    padding: 16px;
-    height: 580px;
-    width: 250px;
-    border: solid 2px lightgray;
+  color: rgb(41, 41, 41);
+  background-color: rgb(245, 245, 245);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 16px;
+  height: 580px;
+  width: 250px;
+  border: solid 2px lightgray;
 }
 
 label,
 .ui-button {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 input {
-    border: solid 2px lightgray;
-    height: 1.5rem;
-    width: 200px;
-    color: rgb(41, 41, 41);
-    font-size: 1.2em;
-    margin: 10px;
-    padding: 10px;
-    width: 60%;
+  border: solid 2px lightgray;
+  height: 1.5rem;
+  width: 200px;
+  color: rgb(41, 41, 41);
+  font-size: 1.2em;
+  margin: 10px;
+  padding: 10px;
+  width: 60%;
 }
 
 ::placeholder {
-    color: lightgray;
+  color: lightgray;
 }
 
 .overlay {
-    background-color: rgba(5, 5, 5, 0.705);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+  background-color: rgba(5, 5, 5, 0.705);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .task-menu {
-    color: rgb(41, 41, 41);
-    background-color: rgb(246, 250, 253);
-    border-radius: 1rem;
-    width: 60%;
-    height: 70%;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: solid 2px lightgray;
+  color: rgb(41, 41, 41);
+  background-color: rgb(246, 250, 253);
+  border-radius: 1rem;
+  width: 60%;
+  height: 70%;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid 2px lightgray;
 }
 
 .task-menu-header {
-    width: 100%;
-    border-radius: 1rem 1rem 0rem 0rem;
-    border: solid 2px lightgray;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  border-radius: 1rem 1rem 0rem 0rem;
+  border: solid 2px lightgray;
+  display: flex;
+  justify-content: center;
 }
 
 .exit {
-    background-color: tomato;
-    color: white;
-    padding: 0.4rem;
-    border-radius: 1rem;
-    border: solid 3px tomato;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    display: inline-block;
-    position: relative;
-    top: -20px;
+  background-color: tomato;
+  color: white;
+  padding: 0.4rem;
+  border-radius: 1rem;
+  border: solid 3px tomato;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  display: inline-block;
+  position: relative;
+  top: -20px;
 }
 
 .exit:hover {
-    background-color: rgb(250, 141, 121);
-    color: white;
+  background-color: rgb(250, 141, 121);
+  color: white;
 }
 
 .task-menu-body {
-    width: 100%;
+  width: 100%;
 }
 
 .row {
-    height: 40px;
+  height: 40px;
 }
 
 .column-left {
-    float: left;
-    width: 30%;
-    padding: 10px;
+  float: left;
+  width: 30%;
+  padding: 10px;
 }
 
 .column-right {
-    float: left;
-    width: 60%;
-    padding: 10px;
+  float: left;
+  width: 60%;
+  padding: 10px;
 }
 
 .row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 h3 {
-    height: 2.04rem;
+  height: 2.04rem;
 }
 
 .palette {
-    display: inline-flex;
-    justify-content: center;
-    padding: 5px 10px 5px 10px;
-    margin: 10px;
-    margin-left: 10px;
-    border: solid 2px lightgray;
-    border-radius: 0.2rem;
-    width: 60%;
+  display: inline-flex;
+  justify-content: center;
+  padding: 5px 10px 5px 10px;
+  margin: 10px;
+  margin-left: 10px;
+  border: solid 2px lightgray;
+  border-radius: 0.2rem;
+  width: 60%;
 }
 
 .palette-cell {
-    margin: 4px;
-    width: 25px;
-    height: 25px;
-    border-radius: 0.2rem;
-    outline-offset: -5px;
+  margin: 4px;
+  width: 25px;
+  height: 25px;
+  border-radius: 0.2rem;
+  outline-offset: -5px;
 }
 
 .palette-cell:hover {
-    outline: solid 2px lightgray;
-    outline-offset: -2px;
+  outline: solid 2px lightgray;
+  outline-offset: -2px;
 }
 
 .new-col {
-    border-radius: 1rem;
-    border: solid 2px rgb(182, 182, 182);
-    width: 150px;
-    height: 590px;
-    padding: 10px;
-    display: flexbox;
-    justify-content: center;
-    margin: 10px;
-    background-color: rgb(238, 238, 238);
+  border-radius: 1rem;
+  border: solid 2px rgb(182, 182, 182);
+  width: 150px;
+  height: 590px;
+  padding: 10px;
+  display: flexbox;
+  justify-content: center;
+  margin: 10px;
+  background-color: rgb(238, 238, 238);
 }
 
 .date-display {
-    border-radius: 0.8rem;
-    outline: solid 2px lightgray;
-    outline-offset: 10px;
-    margin-right: 30px;
+  border-radius: 0.8rem;
+  outline: solid 2px lightgray;
+  outline-offset: 10px;
+  margin-right: 30px;
 }
 
 .App-header-project {
-    width: 100%;
-    color: rgb(53, 53, 53);
-    /* margin-bottom: 30px; */
-    /* border: solid 2px lightgray; */
-    /* background-image: linear-gradient(to right, rgb(95, 46, 234), rgba(0, 0, 0, 0.3)); */
-    display: flex;
-    justify-content: center;
-    text-shadow: 0px 0px 13px rgba(30, 32, 38, 0.43);
+  width: 100%;
+  color: rgb(53, 53, 53);
+  /* margin-bottom: 30px; */
+  /* border: solid 2px lightgray; */
+  /* background-image: linear-gradient(to right, rgb(95, 46, 234), rgba(0, 0, 0, 0.3)); */
+  display: flex;
+  justify-content: center;
+  text-shadow: 0px 0px 13px rgba(30, 32, 38, 0.43);
 }
 
 .App-body-project {
-    background-color: rgb(216, 216, 216);
-    display: contents;
-    justify-content: left;
+  background-color: rgb(216, 216, 216);
+  display: contents;
+  justify-content: left;
 }
 
 .button-plus {
-    background-color: rgb(95, 46, 234);
-    color: white;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    height: min-content;
-    display: block;
-    margin: 0.6rem;
+  background-color: rgb(95, 46, 234);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  height: min-content;
+  display: block;
+  margin: 0.6rem;
 }
 
 .button-plus:hover {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    background-color: rgb(134, 99, 231);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  background-color: rgb(134, 99, 231);
 }
 
 .App-creating-project {
-    background-color: rgb(241, 241, 241);
-    border-radius: 1rem;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    margin-left: 3em;
-    margin-right: 3em;
-    padding: 15px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 1rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin-left: 3em;
+  margin-right: 3em;
+  padding: 15px;
 }
 
 .inputs {
-    display: block;
-    padding: 1px;
+  display: block;
+  padding: 1px;
 }
 
 .new-project-titles {
-    color: rgb(95, 46, 234);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  color: rgb(95, 46, 234);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #new-project-name-input {
-    border-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 #new-project-start-input {
-    border-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 #new-project-end-input {
-    border-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .App-listing-project {
-    background-color: rgb(241, 241, 241);
-    border-radius: 1rem;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    margin: 3em;
-    padding: 15px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 1rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin: 3em;
+  padding: 15px;
 }
 
 .App-listing-project-title {
-    border: solid rgb(95, 46, 234);
-    background-color: white;
-    border-radius: 0.2em 0 0 0.2em;
-    padding: 10px;
-    width: 40%;
-    display: inline-flex;
+  border: solid rgb(95, 46, 234);
+  background-color: white;
+  border-radius: 0.2em 0 0 0.2em;
+  padding: 10px;
+  width: 40%;
+  display: inline-flex;
 }
 
 .App-listing-project-list {
-    /* border: solid rgb(32, 156, 49);
+  /* border: solid rgb(32, 156, 49);
     border-radius: 0.2em; */
-    padding: 0rem;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 0rem;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button-listed {
-    background-color: rgb(95, 46, 234);
-    color: white;
-    /* border-radius: 0.5rem; */
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    height: 68px;
-    width: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: rgb(95, 46, 234);
+  color: white;
+  /* border-radius: 0.5rem; */
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  height: 68px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button-listed-right {
-    background-color: rgb(95, 46, 234);
-    color: white;
-    border-radius: 0 0.2em 0.2em 0;
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    height: 68px;
-    width: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-left: 1px solid grey;
+  background-color: rgb(95, 46, 234);
+  color: white;
+  border-radius: 0 0.2em 0.2em 0;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  height: 68px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid grey;
 }
 
 .button-listed:hover {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    background-color: rgb(134, 99, 231);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  background-color: rgb(134, 99, 231);
 }
 
 .button-listed-right:hover {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    background-color: rgb(134, 99, 231);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  background-color: rgb(134, 99, 231);
 }
 
 .buttons-menu {
-    margin: 10px;
+  margin: 10px;
+}
+
+.sign {
+  background-color: rgb(95, 46, 234);
+  color: white;
+  border-radius: 0.5rem;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  float: right;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 10px;
+}
+
+.sign:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  background-color: rgb(134, 99, 231);
 }

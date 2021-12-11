@@ -49,7 +49,9 @@ const getNewProject = (data) => {
 //Fonction SIGNOUT
 function SignOut() {
   return auth.currentUser && (
-    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+    <div>
+      <button className="sign" onClick={() => auth.signOut()}>Log Out</button>
+    </div>
   )
 }
 
@@ -60,10 +62,12 @@ function SignIn() {
     auth.signInWithPopup(provider);
   }
   return (
-    <>
-      <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
-      <p>Do not violate the community guidelines or you will be banned for life!</p>
-    </>
+      <div className="App">
+      <header className="App-header">
+        <img src={companyLogo} alt='logo'/>
+        <button className="sign" onClick={signInWithGoogle}>Log In</button>
+      </header>
+      </div>
   )
 }
 
