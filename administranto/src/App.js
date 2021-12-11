@@ -148,10 +148,16 @@ function App() {
     setProjectMenu(false);
   }
   const addNewItem = ()=>{
-    console.log("Going to push: ",newItem);
-    Object.entries(columns).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
-    console.log("items: ",Object.entries(columns).slice(0,1).map( ([key, value]) => value.items ));
-    console.log(columns)
+    // console.log("Going to push: ",newItem);
+    // Object.entries(columns).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
+    // console.log("items: ",Object.entries(columns).slice(0,1).map( ([key, value]) => value.items ));
+    
+    console.log(projects.filter(p=> p.id==project.id)[0]["backlog"]["backlog"]["items"])
+    let copyBacklogItems = projects.filter(p=> p.id==project.id)[0]["backlog"]["backlog"]["items"];
+    // firestore.collection("projects").document(project.id).update({
+    // "age": 13,
+    // });
+
     toggleUi()
   }
 
