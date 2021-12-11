@@ -1,4 +1,4 @@
-import React, {useState,useEffect } from 'react';
+import React, {useState} from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
@@ -7,228 +7,96 @@ import {AiOutlineMinus,AiOutlinePlus,AiOutlineClose } from 'react-icons/ai';
 import { TaskMenu } from './components.js';
 import useForm from "./useForm";
 
-/* VARIALBLES DECLARATION */
-const projectsFromBackEnd = [
-  { id: uuid(), 
-    name: 'Bakery Project',
-    active:{
-              ["100"]: {
-                name: 'BackLog',
-                items: [
-                          { id: uuid(), 
-                            content: 'Make Dought',
-                            description:'desc...',
-                            estimation:0,
-                            color:'gold'
-                          },
-
-                          { id: uuid(), 
-                            content: 'Cook the Dought',
-                            description:'desc...',
-                            estimation:0,
-                            color:'blue'
-                          }
-                        ]
-              },
-              [uuid()]: {
-                name: 'Sprint Backlog',
-                items: []
-              },
-              [uuid()]: {
-                name: 'Done',
-                items: [
-                  { id: uuid(), 
-                            content: 'Buy Hoven',
-                            description:'desc...',
-                            estimation:0,
-                            color:'Salmon'
-                          }
-                ]
-              },
-            },
-    sprints:{
-      [uuid()]: {
-        name: 'Sprint Backlog',
-        items: []
-      },
-      [uuid()]: {
-        name: 'Done',
-        items: [
-          { id: uuid(), 
-                    content: 'Old Item',
-                    description:'desc...',
-                    estimation:10,
-                    color:'Lightblue'
-                  }
-        ]
-      },
-    }
-  },
-
-  { id: uuid(), 
-    name: 'Web Project',
-    active:{},
-    sprints:{
-      [uuid()]: {
-        name: 'Sprint Backlog',
-        items: [
-          { id: uuid(), 
-                    content: 'publish website',
-                    description:'desc...',
-                    estimation:10,
-                    color:'Tomato'
-                  }
-        ]
-      },
-      [uuid()]: {
-        name: 'To test',
-        items: [
-          { id: uuid(), 
-                    content: 'make a index.html',
-                    description:'desc...',
-                    estimation:10,
-                    color:'Lightblue'
-                  }
-        ]
-      },
-      [uuid()]: {
-        name: 'Done',
-        items: [
-          { id: uuid(), 
-                    content: 'brainstorm ideas',
-                    description:'desc...',
-                    estimation:1,
-                    color:'green'
-                  }
-        ]
-      },
-    }
-  },
-];
+import firebase from 'firebase/compat/app';
+import { getFirestore} from 'firebase/firestore/lite';
+import 'firebase/compat/auth' ;
+import 'firebase/compat/firestore' ;
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 /* IMPORTANT FUNCTIONS */
+import {onDragEnd,useForceUpdate,initializeProject} from "./Functions"
 
-const onDragEnd = (result, columns, setColumns,sprint)=>{
 
-  if(!result.destination) return;
-  const {source, destination} = result;
+/* VARIALBLES DECLARATION */
+import {projectsFromBackEnd,visible,invisible,firebaseConfig} from "./Variables"
 
-  if (sprint && result.destination.droppableId ==="100"){
-    console.log("Tried to put task in backlog during Sprint",result.destination.droppableId)
-    return;
-  }
-  if (sprint && result.source.droppableId ==="100" && result.destination.droppableId !=="42"){
-    console.log("Tried to take task out of backlog during Sprint",result.destination.droppableId)
-    return;
-  }
-  if (sprint && result.source.droppableId !=="100" && result.destination.droppableId =="42"){
-    console.log("Tried to delete task during Sprint",result.destination.droppableId)
-    alert("You must complete task or archive it!");
-    return;
-  }
-  if (result.destination.droppableId ==="42"){ 
-    console.log("delete: ",result.destination );
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [];
+const app = firebase.initializeApp(firebaseConfig);
+const firestore = firebase.firestore();
+const auth = firebase.auth();
 
-    const [removed] = sourceItems.splice(source.index,1);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems
-      },
-
-    })
-    return;
-  }
-  if(source.droppableId !== destination.droppableId){
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index,1);
-    destItems.splice(destination.index,0,removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems
-      }
-    })
-
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index,1);
-    copiedItems.splice(destination.index,0,removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]:{
-        ...column,
-        items: copiedItems
-    }
-  })
-  }
-};
 let newItem;
-const getNewItem = (data)=>{
-  (data.item==='Tomato') ? void(0):console.log("update item",data.item);
-  newItem = { id: uuid(), 
-    content: data.item.content,
-    description:data.item.description,
-    estimation:data.item.estimation,
-    color:data.item.color
-  }
+const getNewItem = (data) => {
+    (data.item === 'Tomato') ? void(0): console.log("update item", data.item);
+    newItem = {
+        id: uuid(),
+        content: data.item.content,
+        description: data.item.description,
+        estimation: data.item.estimation,
+        color: data.item.color
+    }
 }
 
 let newProject;
-const getNewProject = (data)=>{
-  console.log("update item",data);
-  newProject = { id: uuid(), 
-    name: data.name}
+const getNewProject = (data) => {
+    console.log("update item", data);
+    newProject = {
+        id: uuid(),
+        name: data.name
+    }
 }
-
-function useForceUpdate(){
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue(value => value + 1); // update the state to force render
-}
-
-const visible = {visibility:'visible'};
-const invisible = {visibility:'invisible'};
-
 
 
 /* APPLICATION */
 function App() {
 
-  const [projects, setProjects] = useState(projectsFromBackEnd)
-  const [project, setProject] = useState()
-  const [columns, setColumns] = useState([])
-
-  const [tasktoggle, setTasktoggle] = useState(false)
-  const [sprint, setSprint] = useState(false)
+  /*FireBase*/
+  const projectsRef = firestore.collection('projects');
+  const query = projectsRef.orderBy('createdAt').limit(25);
+  const [projects] = useCollectionData(query, { idField: 'id' });
+  
+  /*Project Menu*/
   const [projectMenu, setProjectMenu] = useState(false)
+  const [newProjectName, setNewProjectName] = useState("");
+  const [newProjectStart, setNewProjectStart] = useState("");
+  const [newProjectEnd, setNewProjectEnd] = useState("");
+
+  //ancien; il faut voir lequel on garde
+  const [project, setProject] = useState()
+  const [projectName, setProjectName] = useState()
+  const [columns, setColumns] = useState([])
+  const [backlog, setBacklog] = useState([])
+
+  const [isItemCreationMenuVisible, setisItemCreationMenuVisible] = useState(false)
+  const [isSprintActive, setIsSprintActive] = useState(false)
   const [newColName, setNewColName] = useState("");
   const [colToDelete,setColToDelete] = useState("");
   const [formValue, Form] = useForm("", "Start");
   const [formValue2, Form2] = useForm("", "End   ");
-  const [newProjectName, setNewProjectName] = useState("");
 
-  
-
+  /*fonctions qui marche bien*/ 
   const forceUpdate = useForceUpdate();
-
-  useEffect(() => {
-    console.log("UseEffects",columns)
-  }, [columns]);
-
+  const createNewProject = async (e,namearg, startarg, endarg)=>{
+    // const { uid, photoURL } = auth.currentUser;
+    const uid =  2;
+    await projectsRef.add({
+      id: uuid(),
+      name: namearg,
+      start: startarg,
+      end: endarg,
+      lastSprintIsActive: false,
+      backlog: {
+        ["backlog"]: {
+            name: 'BackLog',
+            items: []
+        },
+      },
+      sprints: [],
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+    })
+  }
+  /*les fonctions ci dessous ne sont pas garantis de marcher*/ 
   const addNewItem = ()=>{
     console.log("Going to push: ",newItem);
     Object.entries(columns).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
@@ -287,19 +155,19 @@ function App() {
       alert("You must give a start and end to your sprint");
     }
     else{
-      setSprint(!sprint);
+      setIsSprintActive(!isSprintActive);
+      ///remove columsfrom sprints
       console.log("Start Sprint");
     }
   }
 
   const endSprint= ()=>{
-    setSprint(!sprint);
+    setIsSprintActive(!isSprintActive);
     resetCols();
     console.log("End Sprint");
   } 
-
-   //destroy
-   const destroyProject = (index)=>{
+  //destroy
+  const destroyProject = (index)=>{
     console.log("projs before",projects)
     const copyProjects = projects
     delete copyProjects[index]
@@ -323,55 +191,67 @@ function App() {
     console.log("Project: ",projects)
   }
 
-  //go
+  /*Open kanban menu from project selection manu*/
   const GoToProject = (index)=>{
     let p = projects[index]
     // console.log("going to project :",p)
-    console.log(Object.entries(p).map( ([key, value]) => `My key is ${key} ` ) )
-    console.log("Opening",p["name"])
- 
+    // console.log(Object.entries(p).map( ([key, value]) => `My key is ${key} ` ) )
+    // console.log("Opening",p["name"])
+
+    /*initilaize components states*/
     setProject(p)
-    if (Object.entries(p["active"]).length === 0){
-      console.log("length 0 !")
-      setColumns({["100"]: {
-                name: 'BackLog',
-                items: []
-              },
-              [uuid()]: {
-                name: 'Sprint Backlog',
-                items: []
-              }})
-      setSprint(false)
+    setBacklog(p["backlog"])
+    setProjectName(p["name"])
+    //TODO set dates
+
+    if (Object.entries(p["lastSprintIsActive"])){
+      setIsSprintActive(true)
+      setColumns(p["sprints"][p["sprints"].length-1])
     }
     else{
-      console.log("length: ",Object.entries(p["active"]).length)
-      setColumns(p["active"])
-      setSprint(true)
+      setIsSprintActive(true)
+      setColumns({
+            ["100"]: {
+                name: 'BackLog',
+                items: [{
+                        id: uuid(),
+                        content: 'Make Dought',
+                        description: 'desc...',
+                        estimation: 0,
+                        color: 'gold'
+                    },
+
+                    {
+                        id: uuid(),
+                        content: 'Cook the Dought',
+                        description: 'desc...',
+                        estimation: 0,
+                        color: 'blue'
+                    }
+                ]
+            },
+        })
     }
     
     setProjectMenu(true);
     forceUpdate();
   }
-  const goToProjects = ()=>{
+  /* Go back to project selection menu */
+  const goToProjects = ()=>{        
+    console.log(projects[project]["active"]);//=columns;
     setProjectMenu(false);
   }
   
-
-  let task_menu= 
-  <div>
-    <TaskMenu func={getNewItem} visibility={tasktoggle}/>
-    <div style={{textAlign: 'center',position: 'fixed',zIndex: '1',margin:'45% 0 0 45%'}}>
-          <Button  visibility={tasktoggle}/>
-    </div>
-  </div>;
+  //HTLM VARIABLES
+  let task_menu= <div><TaskMenu func={getNewItem} visibility={isItemCreationMenuVisible}/><div style={{textAlign: 'center',position: 'fixed',zIndex: '1',margin:'45% 0 0 45%'}}><Button  visibility={isItemCreationMenuVisible}/></div></div>;
   const toggleUi = ()=>{
-    if (tasktoggle) {
+    if (isItemCreationMenuVisible) {
       task_menu = 
       <div>
-        <TaskMenu func={getNewItem} visibility={tasktoggle}/>
+        <TaskMenu func={getNewItem} visibility={isItemCreationMenuVisible}/>
         <div style={{textAlign: 'center',position: 'fixed',zIndex: '1',margin:'45% 0 0 45%'}}>
               <button className='button-primary' 
-                  onClick={ addNewItem}>
+                  onClick={addNewItem}>
                   Create Task 
               </button>
           </div>
@@ -380,7 +260,7 @@ function App() {
     else {
       task_menu = <h1></h1>
     }
-      setTasktoggle(!tasktoggle);
+      setisItemCreationMenuVisible(!isItemCreationMenuVisible);
       // console.log("hi: ",task_menu)
   }
 
@@ -456,7 +336,7 @@ function App() {
       </div>
       <div className="App-body">
 
-      <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,sprint)}>
+      <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,isSprintActive)}>
         <div className='backlog'> <h2>Backlog</h2>
         {Object.entries(columns).slice(0,1).map(([id, column])=>{
           return(
@@ -546,7 +426,7 @@ function App() {
         <div className='sprint'> 
         <div className='sprint-header' style={{display:'flex'}}>       
           <h2 style={{display:'inline-block'}}>Sprint</h2>
-          <Sprint_info visibility={sprint}/>
+          <Sprint_info visibility={isSprintActive}/>
         </div>
 
           <div className='column-container'> 
@@ -665,8 +545,8 @@ function App() {
               </div>
             )
           })}
-          <Sprint_menu visibility={!sprint} />
-          <NewCol visibility={sprint} />
+          <Sprint_menu visibility={!isSprintActive} />
+          <NewCol visibility={isSprintActive} />
           </div> 
         </div>
       </DragDropContext>
@@ -686,9 +566,9 @@ function App() {
           <h1 className='new-project-titles'>New Project</h1>
           <div className='inputs'>
             <input id='new-project-name-input' placeholder="New project name" value={newProjectName} onChange={(e) => {setNewProjectName(e.target.value)}}/>
-            <input id='new-project-start-input' placeholder="starting date : DD/MM/YYYY"/>
-            <input id='new-project-end-input' placeholder="ending date : DD/MM/YYYY"/>
-                <button className='button-plus' onClick={addNewProject}>
+            <input id='new-project-start-input' placeholder="starting date : DD/MM/YYYY" value={newProjectStart} onChange={(e) => {setNewProjectStart(e.target.value)}}/>
+            <input id='new-project-end-input' placeholder="ending date : DD/MM/YYYY" value={newProjectEnd} onChange={(e) => {setNewProjectEnd(e.target.value)}}/>
+                <button className='button-plus' onClick={(e)=>{createNewProject(e,newProjectName,newProjectStart,newProjectEnd)}}>
                 <AiOutlinePlus/> 
                 </button>
           </div>
@@ -697,15 +577,11 @@ function App() {
         <div className="App-listing-project">
           <h1 className='new-project-titles'>Your Projects</h1>
           <div >
-          {projects.map((item,index)=> {
-            return(
-              <div  className="App-listing-project-list">
+          {projects && projects.map(item => <div  className="App-listing-project-list">
                 <h2 className='App-listing-project-title'>{item.name}</h2>
-                <div className='button-listed' onClick={(e) => { GoToProject(index) }}>GO </div>
-                <div className='button-listed-right' onClick={(e) => { destroyProject(index) }}><AiOutlineMinus/></div>
-              </div>
-            )
-          })}
+                <div className='button-listed' onClick={(e) => { GoToProject(item.id) }}>GO </div>
+                <div className='button-listed-right' onClick={(e) => { destroyProject(item.id) }}><AiOutlineMinus/></div>
+              </div>)}  
           </div>
         </div>
       </div>
