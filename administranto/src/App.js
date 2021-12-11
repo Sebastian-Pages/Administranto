@@ -46,9 +46,33 @@ const getNewProject = (data) => {
     }
 }
 
+//Fonction SIGNOUT
+function SignOut() {
+  return auth.currentUser && (
+    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+  )
+}
+
+//Fonction SIGNIN google
+function SignIn() {
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  }
+  return (
+    <>
+      <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
+      <p>Do not violate the community guidelines or you will be banned for life!</p>
+    </>
+  )
+}
+
 
 /* APPLICATION */
 function App() {
+
+  /*Auth*/
+  const [user] = useAuthState(auth);
 
   /*FireBase*/
   const projectsRef = firestore.collection('projects');
@@ -271,10 +295,13 @@ function App() {
 
   /* APPLICATION DISPLAY*/
   return (
-    projectMenu ?
+    user ? 
+      <div className="connected">
+    {projectMenu ?
     <div className="App">
       <header className="App-header">
         <img src={companyLogo} alt='logo'/>
+        <SignOut />
       </header>
       {task_menu}
       {/* <div className='button-menu' style={{display:'inline-block'}}>             
@@ -516,6 +543,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={companyLogo} alt='logo'/>
+        <SignOut />
       </header>
       <div className="App-header-project"> 
         <h1>Project Menu</h1>
@@ -544,7 +572,9 @@ function App() {
           </div>
         </div>
       </div>
+    </div>}
     </div>
+      :  <SignIn />
     
   );
 }
