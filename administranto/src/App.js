@@ -96,6 +96,11 @@ function App() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
     })
+  };
+  const deleteProject = async (id)=>{
+    console.log('id: ',id);
+    // await deleteDoc(doc(firestore, "cities", "DC")); 
+    firestore.collection("projects").doc(id).delete();
   }
   const GoToProject = (id)=>{
     /*Open kanban menu from project selection manu*/
@@ -180,16 +185,6 @@ function App() {
     resetCols();
     console.log("End Sprint");
   } 
-  //destroy
-  const destroyProject = (index)=>{
-    console.log("projs before",projects)
-    const copyProjects = projects
-    delete copyProjects[index]
-    setProject(copyProjects);
-    forceUpdate();
-    console.log("projs after",projects)
-  }
-
   //add
   const addNewProject = ()=>{
     let newProj = {
@@ -544,7 +539,7 @@ function App() {
           {projects && projects.map(item => <div  className="App-listing-project-list">
                 <h2 className='App-listing-project-title'>{item.name}</h2>
                 <div className='button-listed' onClick={(e) => { GoToProject(item.id) }}>GO </div>
-                <div className='button-listed-right' onClick={(e) => { destroyProject(item.id) }}><AiOutlineMinus/></div>
+                <div className='button-listed-right' onClick={(e) => { deleteProject(item.id) }}><AiOutlineMinus/></div>
               </div>)}  
           </div>
         </div>
