@@ -97,7 +97,20 @@ function App() {
       uid,
     })
   }
+  const GoToProject = (id)=>{
+    /*Open kanban menu from project selection manu*/
+    let p = projects.filter(p=> p.id==id)[0]
+    setProjectMenu(true);
+    setProject(p)
+    console.log("opening: ",projects.filter(p=> p.id==id)[0]["name"])
+  }
   /*les fonctions ci dessous ne sont pas garantis de marcher*/ 
+
+  const goToProjects = ()=>{
+    /* Go back to project selection menu */        
+    //console.log(projects[project]["active"]);
+    setProjectMenu(false);
+  }
   const addNewItem = ()=>{
     console.log("Going to push: ",newItem);
     Object.entries(columns).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
@@ -190,56 +203,6 @@ function App() {
       name: "newproject"//newProjectName
     })
     console.log("Project: ",projects)
-  }
-
-  /*Open kanban menu from project selection manu*/
-  const GoToProject = (id)=>{
-    let p = projects.filter(p=> p.id==id)[0]
-    setProjectMenu(true);
-    setProject(p)
-    console.log("opening: ",projects.filter(p=> p.id==id)[0]["name"])
-    // console.log("going to project :",p)
-    // console.log(Object.entries(p).map( ([key, value]) => `My key is ${key} ` ) )
-    // console.log("Opening",p["name"])
-    /*initilaize components states*/
-     
-
-    // if (Object.entries(p["lastSprintIsActive"])){
-    //   setIsSprintActive(true)
-    //   setColumns(p["sprints"][p["sprints"].length-1])
-    // }
-    // else{
-    //   setIsSprintActive(true)
-    //   setColumns({
-    //         ["100"]: {
-    //             name: 'BackLog',
-    //             items: [{
-    //                     id: uuid(),
-    //                     content: 'Make Dought',
-    //                     description: 'desc...',
-    //                     estimation: 0,
-    //                     color: 'gold'
-    //                 },
-
-    //                 {
-    //                     id: uuid(),
-    //                     content: 'Cook the Dought',
-    //                     description: 'desc...',
-    //                     estimation: 0,
-    //                     color: 'blue'
-    //                 }
-    //             ]
-    //         },
-    //     })
-    // }
-    
-    // setProjectMenu(true);
-    // forceUpdate();
-  }
-  /* Go back to project selection menu */
-  const goToProjects = ()=>{        
-    console.log(projects[project]["active"]);//=columns;
-    setProjectMenu(false);
   }
   
   //HTLM VARIABLES
@@ -339,7 +302,7 @@ function App() {
 
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,isSprintActive)}>
         <div className='backlog'> <h2>Backlog</h2>
-        {Object.entries(columns).slice(0,1).map(([id, column])=>{
+        {Object.entries(project["backlog"]).map(([id, column])=>{
           return(
             <div className='Column-Header'>
             <h2>{column.name}</h2>
