@@ -63,6 +63,7 @@ function App() {
 
   //ancien; il faut voir lequel on garde
   const [project, setProject] = useState()
+
   const [projectName, setProjectName] = useState()
   const [columns, setColumns] = useState([])
   const [backlog, setBacklog] = useState([])
@@ -192,49 +193,48 @@ function App() {
   }
 
   /*Open kanban menu from project selection manu*/
-  const GoToProject = (index)=>{
-    let p = projects[index]
+  const GoToProject = (id)=>{
+    let p = projects.filter(p=> p.id==id)[0]
+    setProjectMenu(true);
+    setProject(p)
+    console.log("opening: ",projects.filter(p=> p.id==id)[0]["name"])
     // console.log("going to project :",p)
     // console.log(Object.entries(p).map( ([key, value]) => `My key is ${key} ` ) )
     // console.log("Opening",p["name"])
-
     /*initilaize components states*/
-    setProject(p)
-    setBacklog(p["backlog"])
-    setProjectName(p["name"])
-    //TODO set dates
+     
 
-    if (Object.entries(p["lastSprintIsActive"])){
-      setIsSprintActive(true)
-      setColumns(p["sprints"][p["sprints"].length-1])
-    }
-    else{
-      setIsSprintActive(true)
-      setColumns({
-            ["100"]: {
-                name: 'BackLog',
-                items: [{
-                        id: uuid(),
-                        content: 'Make Dought',
-                        description: 'desc...',
-                        estimation: 0,
-                        color: 'gold'
-                    },
+    // if (Object.entries(p["lastSprintIsActive"])){
+    //   setIsSprintActive(true)
+    //   setColumns(p["sprints"][p["sprints"].length-1])
+    // }
+    // else{
+    //   setIsSprintActive(true)
+    //   setColumns({
+    //         ["100"]: {
+    //             name: 'BackLog',
+    //             items: [{
+    //                     id: uuid(),
+    //                     content: 'Make Dought',
+    //                     description: 'desc...',
+    //                     estimation: 0,
+    //                     color: 'gold'
+    //                 },
 
-                    {
-                        id: uuid(),
-                        content: 'Cook the Dought',
-                        description: 'desc...',
-                        estimation: 0,
-                        color: 'blue'
-                    }
-                ]
-            },
-        })
-    }
+    //                 {
+    //                     id: uuid(),
+    //                     content: 'Cook the Dought',
+    //                     description: 'desc...',
+    //                     estimation: 0,
+    //                     color: 'blue'
+    //                 }
+    //             ]
+    //         },
+    //     })
+    // }
     
-    setProjectMenu(true);
-    forceUpdate();
+    // setProjectMenu(true);
+    // forceUpdate();
   }
   /* Go back to project selection menu */
   const goToProjects = ()=>{        
@@ -331,6 +331,7 @@ function App() {
             ><RiDeleteBin5Line style={{color:'grey',fontSize:'1.2rem'}}/></button>
           </div> */}
       <div className="buttons-menu">
+        <h2 style={{width:"350px"}}>{project["name"]}</h2>
         <button className="button-primary" onClick={goToProjects}>Projects Menu</button>
         <button className="button-primary">View Old Sprints</button>
       </div>
