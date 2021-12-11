@@ -120,6 +120,9 @@ function App() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
     })
+    setNewProjectName("")
+    setNewProjectStart("")
+    setNewProjectEnd("")
   };
   const deleteProject = async (id)=>{
     console.log('id: ',id);
