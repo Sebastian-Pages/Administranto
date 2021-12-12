@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {v4 as uuid} from 'uuid'
 import companyLogo from './logo.png';
@@ -131,6 +131,11 @@ function App() {
   const [formValue, Form] = useForm("", "Start");
   const [formValue2, Form2] = useForm("", "End   ");
 
+//   useEffect(() => {
+//     if(projectMenu)
+//       updateProjectBacklogAndSprint(columns,isSprintActive,project); // This is be executed when `loading` state changes
+// }, [columns])
+
   /*fonctions qui marche bien*/ 
   const forceUpdate = useForceUpdate();
   const createNewProject = async (e,namearg, startarg, endarg)=>{
@@ -233,8 +238,7 @@ if (result.destination.droppableId === "42") {
             items: sourceItems
         },
 
-    })
-    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+    },()=> updateProjectBacklogAndSprint(columns,isSprintActive, project));
     return;
 }
 if (source.droppableId !== destination.droppableId) {
@@ -254,8 +258,9 @@ if (source.droppableId !== destination.droppableId) {
             ...destColumn,
             items: destItems
         }
-    })
-    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+    },()=> updateProjectBacklogAndSprint(columns,isSprintActive, project));
+    console.log("DEBUG 5 columns: ",columns)
+    
 
 } else {
     const column = columns[source.droppableId];
@@ -269,28 +274,33 @@ if (source.droppableId !== destination.droppableId) {
             ...column,
             items: copiedItems
         }
-    })
-    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+    },()=> updateProjectBacklogAndSprint(columns,isSprintActive, project));
+    
 }
 };
 const updateProjectBacklogAndSprint= (columns,isSprintActive,project)=> {
-  // console.log("DEBUG 3: ",columns["backlog"])
+  forceUpdate()
+  console.log("DEBUG 3: ",columns)
   // console.log("DEBUG 3 : ",project.backlog)
   setProject(projects.filter(p=> p.id==project['id'])[0])
   let copyBacklog = project["backlog"];
   let copySprints = project["sprints"];
-  copyBacklog[0]["backlog"]=columns["backlog"]
+  
+  console.log("copyBacklog",copyBacklog)
+  copyBacklog[0]["backlog"]=columns["backlog"] //FIX CETTE LIGNE
+  console.log("copyBacklog[0]",copyBacklog[0])
+  console.log("col[bak]",columns["backlog"])
+
 
   let copyColumns = columns ;
   delete copyColumns["backlog"];
-  // copySprints[project.sprints[project.sprints.length-1]]=copyColumns;//CETTE LIGNE FIX
-  copySprints[project.sprints.length-1]=copyColumns;//CETTE LIGNE FIX
+  copySprints[project.sprints.length-1]=copyColumns;
   
-  console.log("copycol",copyColumns)
-  console.log("SPRINTS: ",project.sprints)
-  console.log("UPDATES SPRINTS: ",copySprints)
-  console.log("UPDATES SPRINTS: ",copySprints[project.sprints[project.sprints.length-1]])
-  console.log("UPDATES SPRINTS: ",copySprints)
+  // console.log("copycol",copyColumns)
+  // console.log("SPRINTS: ",project.sprints)
+  // console.log("UPDATES SPRINTS: ",copySprints)
+  // console.log("UPDATES SPRINTS: ",copySprints[project.sprints[project.sprints.length-1]])
+  // console.log("UPDATES SPRINTS: ",copySprints)
 
   console.log("copyBacklog**: ",copyBacklog[0])
   firestore.collection("projects").doc(project.id).update({

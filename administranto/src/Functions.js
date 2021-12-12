@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid'
-
-export const onDragEnd = (result, columns, setColumns, sprint) => {
+const onDragEnd = (result, columns, setColumns, sprint) => {
 
     if (!result.destination) return;
     const { source, destination } = result;
@@ -44,6 +43,7 @@ export const onDragEnd = (result, columns, setColumns, sprint) => {
         const destItems = [...destColumn.items];
         const [removed] = sourceItems.splice(source.index, 1);
         destItems.splice(destination.index, 0, removed);
+
         setColumns({
             ...columns,
             [source.droppableId]: {
@@ -55,6 +55,7 @@ export const onDragEnd = (result, columns, setColumns, sprint) => {
                 items: destItems
             }
         })
+
 
     } else {
         const column = columns[source.droppableId];
