@@ -29,7 +29,7 @@ const auth = firebase.auth();
 
 const updateProjectBacklogAndSprint= (columns,isSprintActive,project)=> {
   console.log("DEBUG 3: ",columns["backlog"])
-  console.log("DEBUG 3: ",project.backlog)
+  console.log("DEBUG 3 : ",project.backlog)
   // firestore.collection("projects").doc(project.id).update({
   //     "backlog": columns["backlog"],
   //   });
