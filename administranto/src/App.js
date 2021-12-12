@@ -27,87 +27,8 @@ const firestore = firebase.firestore();
 const auth = firebase.auth();
 
 
-const updateProjectBacklogAndSprint= (columns,isSprintActive,project)=> {
-  console.log("DEBUG 3: ",columns["backlog"])
-  console.log("DEBUG 3 : ",project.backlog)
-  // firestore.collection("projects").doc(project.id).update({
-  //     "backlog": columns["backlog"],
-  //   });
-};
 
-const onDragEnd = (result, columns, setColumns, isSprintActive , project) => {
 
-if (!result.destination) return;
-const { source, destination } = result;
-
-if (isSprintActive&& result.destination.droppableId === "100") {
-    console.log("Tried to put task in backlog during Sprint", result.destination.droppableId)
-    return;
-}
-if (isSprintActive && result.source.droppableId === "100" && result.destination.droppableId !== "42") {
-    console.log("Tried to take task out of backlog during Sprint", result.destination.droppableId)
-    return;
-}
-if (isSprintActive && result.source.droppableId !== "100" && result.destination.droppableId == "42") {
-    console.log("Tried to delete task during Sprint", result.destination.droppableId)
-    alert("You must complete task or archive it!");
-    return;
-}
-if (result.destination.droppableId === "42") {
-    console.log("delete: ", result.destination);
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [];
-
-    const [removed] = sourceItems.splice(source.index, 1);
-    setColumns({
-        ...columns,
-        [source.droppableId]: {
-            ...sourceColumn,
-            items: sourceItems
-        },
-
-    })
-    updateProjectBacklogAndSprint(columns,isSprintActive, project)
-    return;
-}
-if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-        ...columns,
-        [source.droppableId]: {
-            ...sourceColumn,
-            items: sourceItems
-        },
-        [destination.droppableId]: {
-            ...destColumn,
-            items: destItems
-        }
-    })
-    updateProjectBacklogAndSprint(columns,isSprintActive, project)
-
-} else {
-    const column = columns[source.droppableId];
-    console.log("DEBUG: ",columns)
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-        ...columns,
-        [source.droppableId]: {
-            ...column,
-            items: copiedItems
-        }
-    })
-    updateProjectBacklogAndSprint(columns,isSprintActive, project)
-}
-};
 
 
 
@@ -221,18 +142,33 @@ function App() {
       start: startarg,
       end: endarg,
       lastSprintIsActive: false,
-      backlog: {
+      backlog: [{
         ["backlog"]: {
             name: 'BackLog',
             items: []
         },
-      },
+      }],
       sprints: [{
         [uuid()]:{
-        name: "Sprint Backlog",
+        name: "Done 2",
         items: []
       },
-      },],
+      [uuid()]:{
+        name: "Sprint Backlog 2",
+        items: []
+      }
+      },{
+        [uuid()]:{
+        name: "Done 1 ",
+        items: []
+      },
+      [uuid()]:{
+        name: "Sprint Backlog 1",
+        items: []
+      }
+      }
+      
+    ],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
     })
@@ -250,7 +186,120 @@ function App() {
     setProjectMenu(true);
     setProject(p)
     console.log("opening: ",projects.filter(p=> p.id==id)[0]["name"])
+    if (p.lastSprintIsActive){
+      setColumns(Object.assign({},p["backlog"][0],p.sprints[p.sprints.length-1])) 
+      setIsSprintActive(true)
+    }else{
+      setColumns(Object.assign({},p["backlog"][0],p.sprints[p.sprints.length-1])) 
+      setIsSprintActive(true)
+    }
+
+
+    // console.log("sprints: ",p.sprints[p.sprints.length-1])
+    //let col_m=Object.entries(p["backlog"][0]).concat(p.sprints[p.sprints.length-1])
+    // console.log("merging: ",Object.assign({},p["backlog"][0],p.sprints[p.sprints.length-1]))
+
   }
+  const onDragEnd = (result, columns, setColumns, isSprintActive , project) => {
+
+if (!result.destination) return;
+const { source, destination } = result;
+
+if (isSprintActive&& result.destination.droppableId === "100") {
+    console.log("Tried to put task in backlog during Sprint", result.destination.droppableId)
+    return;
+}
+if (isSprintActive && result.source.droppableId === "100" && result.destination.droppableId !== "42") {
+    console.log("Tried to take task out of backlog during Sprint", result.destination.droppableId)
+    return;
+}
+if (isSprintActive && result.source.droppableId !== "100" && result.destination.droppableId == "42") {
+    console.log("Tried to delete task during Sprint", result.destination.droppableId)
+    alert("You must complete task or archive it!");
+    return;
+}
+if (result.destination.droppableId === "42") {
+    console.log("delete: ", result.destination);
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
+    const sourceItems = [...sourceColumn.items];
+    const destItems = [];
+
+    const [removed] = sourceItems.splice(source.index, 1);
+    setColumns({
+        ...columns,
+        [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems
+        },
+
+    })
+    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+    return;
+}
+if (source.droppableId !== destination.droppableId) {
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
+    const sourceItems = [...sourceColumn.items];
+    const destItems = [...destColumn.items];
+    const [removed] = sourceItems.splice(source.index, 1);
+    destItems.splice(destination.index, 0, removed);
+    setColumns({
+        ...columns,
+        [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems
+        },
+        [destination.droppableId]: {
+            ...destColumn,
+            items: destItems
+        }
+    })
+    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+
+} else {
+    const column = columns[source.droppableId];
+    console.log("DEBUG: ",columns)
+    const copiedItems = [...column.items];
+    const [removed] = copiedItems.splice(source.index, 1);
+    copiedItems.splice(destination.index, 0, removed);
+    setColumns({
+        ...columns,
+        [source.droppableId]: {
+            ...column,
+            items: copiedItems
+        }
+    })
+    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+}
+};
+const updateProjectBacklogAndSprint= (columns,isSprintActive,project)=> {
+  // console.log("DEBUG 3: ",columns["backlog"])
+  // console.log("DEBUG 3 : ",project.backlog)
+  setProject(projects.filter(p=> p.id==project['id'])[0])
+  let copyBacklog = project["backlog"];
+  let copySprints = project["sprints"];
+  copyBacklog[0]["backlog"]=columns["backlog"]
+
+  let copyColumns = columns ;
+  delete copyColumns["backlog"];
+  // copySprints[project.sprints[project.sprints.length-1]]=copyColumns;//CETTE LIGNE FIX
+  copySprints[project.sprints.length-1]=copyColumns;//CETTE LIGNE FIX
+  
+  console.log("copycol",copyColumns)
+  console.log("SPRINTS: ",project.sprints)
+  console.log("UPDATES SPRINTS: ",copySprints)
+  console.log("UPDATES SPRINTS: ",copySprints[project.sprints[project.sprints.length-1]])
+  console.log("UPDATES SPRINTS: ",copySprints)
+
+  console.log("copyBacklog**: ",copyBacklog[0])
+  firestore.collection("projects").doc(project.id).update({
+      "backlog": copyBacklog,
+      "sprints": copySprints,
+    });
+  forceUpdate()
+};
+
   /*les fonctions ci dessous ne sont pas garantis de marcher*/ 
 
   const goToProjects = ()=>{
@@ -259,22 +308,24 @@ function App() {
     setProjectMenu(false);
   }
   const addNewItem = ()=>{
-    let copyBacklogItems = projects.filter(p=> p.id==project.id)[0]["backlog"]["backlog"]["items"];
+    let copyBacklogItems = projects.filter(p=> p.id==project.id)[0]["backlog"][0]["backlog"]["items"];
     let copyBacklog = projects.filter(p=> p.id==project.id)[0]["backlog"];
     // console.log("items: " ,copyBacklog["backlog"]["items"])
-    // console.log("items: " ,Object.entries(copyBacklogItems))
-    copyBacklog["backlog"]["items"]=[...copyBacklogItems,newItem]
+    // console.log("copyBacklog items: ", copyBacklog)
+    // console.log("copyBacklog items: ", copyBacklog[0]["backlog"]["items"])
+    copyBacklog[0]["backlog"]["items"]=[...copyBacklogItems,newItem]
     // console.log("new thing: " ,[...copyBacklogItems,newItem])
     firestore.collection("projects").doc(project.id).update({
       "backlog": copyBacklog,
     });
-    setColumns(project['backlog'])
+    setColumns(Object.assign({},project["backlog"][0],project.sprints[project.sprints.length-1]))
     console.log("DEBUG2: ",project['backlog'])
     // console.log("columns: ",project['backlog'])
     // console.log("columns: ",Object.entries(project['backlog']))
     // console.log("columns: ",project['backlog']['backlog'])
     // console.log("columns: ",Object.entries(project['backlog']['backlog']))
     toggleUi()
+    forceUpdate()
   }
 
   const addNewCol = ()=>{
@@ -447,13 +498,13 @@ function App() {
       <div className="buttons-menu">
         <h2 style={{width:"350px"}}>{project["name"]}</h2>
         <button className="button-primary" onClick={goToProjects}>Projects Menu</button>
-        <button className="button-primary">View Old Sprints</button>
+        <button className="button-primary" onClick={(e) => { console.log("columns: ",columns) }}>View Old Sprints</button>
       </div>
       <div className="App-body">
 
       <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,isSprintActive,project)}>
         <div className='backlog'> <h2>Backlog</h2>
-        {Object.entries(project["backlog"]).map(([id, column])=>{
+        {Object.entries(project["backlog"][0]).map(([id, column])=>{
           return(
             <div className='Column-Header'>
             <h2>{column.name}</h2>
