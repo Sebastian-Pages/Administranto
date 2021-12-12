@@ -153,6 +153,27 @@ function SignIn() {
         <img src={companyLogo} alt='logo'/>
         <button className="sign" onClick={signInWithGoogle}>Log In</button>
       </header>
+      <div className='body-home'>
+        <div>
+          <h1 className='body-home-title'> Welcome aboard !</h1>
+          <p>
+            Programisto dispose d’une expertise complète en matière de planification, de conception et de développement, combinée à des technologies populaires, robustes et fiables qui correspondent à vos besoins.
+          </p>
+        </div>
+        <div>
+          <h1 className='body-home-title'> How does Administranto works</h1>
+          <p>
+          Programisto dispose d’une expertise complète en matière de planification, de conception et de développement, combinée à des technologies populaires, robustes et fiables qui correspondent à vos besoins.
+          </p>
+        </div>
+      </div>
+      <footer className='App-footer'>
+        <div>
+          <p>
+            Programisto dispose d’une expertise complète en matière de planification, de conception et de développement, combinée à des technologies populaires, robustes et fiables qui correspondent à vos besoins.
+          </p>
+        </div>
+      </footer>
       </div>
   )
 }
