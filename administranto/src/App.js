@@ -15,7 +15,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 /* IMPORTANT FUNCTIONS */
-import {onDragEnd,useForceUpdate,initializeProject} from "./Functions"
+import {useForceUpdate,initializeProject} from "./Functions"
+
 
 
 /* VARIALBLES DECLARATION */
@@ -24,6 +25,91 @@ import {projectsFromBackEnd,visible,invisible,firebaseConfig} from "./Variables"
 const app = firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 const auth = firebase.auth();
+
+
+const updateProjectBacklogAndSprint= (columns,isSprintActive,project)=> {
+  console.log("DEBUG 3: ",columns["backlog"])
+  console.log("DEBUG 3: ",project.backlog)
+  // firestore.collection("projects").doc(project.id).update({
+  //     "backlog": columns["backlog"],
+  //   });
+};
+
+const onDragEnd = (result, columns, setColumns, isSprintActive , project) => {
+
+if (!result.destination) return;
+const { source, destination } = result;
+
+if (isSprintActive&& result.destination.droppableId === "100") {
+    console.log("Tried to put task in backlog during Sprint", result.destination.droppableId)
+    return;
+}
+if (isSprintActive && result.source.droppableId === "100" && result.destination.droppableId !== "42") {
+    console.log("Tried to take task out of backlog during Sprint", result.destination.droppableId)
+    return;
+}
+if (isSprintActive && result.source.droppableId !== "100" && result.destination.droppableId == "42") {
+    console.log("Tried to delete task during Sprint", result.destination.droppableId)
+    alert("You must complete task or archive it!");
+    return;
+}
+if (result.destination.droppableId === "42") {
+    console.log("delete: ", result.destination);
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
+    const sourceItems = [...sourceColumn.items];
+    const destItems = [];
+
+    const [removed] = sourceItems.splice(source.index, 1);
+    setColumns({
+        ...columns,
+        [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems
+        },
+
+    })
+    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+    return;
+}
+if (source.droppableId !== destination.droppableId) {
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
+    const sourceItems = [...sourceColumn.items];
+    const destItems = [...destColumn.items];
+    const [removed] = sourceItems.splice(source.index, 1);
+    destItems.splice(destination.index, 0, removed);
+    setColumns({
+        ...columns,
+        [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems
+        },
+        [destination.droppableId]: {
+            ...destColumn,
+            items: destItems
+        }
+    })
+    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+
+} else {
+    const column = columns[source.droppableId];
+    console.log("DEBUG: ",columns)
+    const copiedItems = [...column.items];
+    const [removed] = copiedItems.splice(source.index, 1);
+    copiedItems.splice(destination.index, 0, removed);
+    setColumns({
+        ...columns,
+        [source.droppableId]: {
+            ...column,
+            items: copiedItems
+        }
+    })
+    updateProjectBacklogAndSprint(columns,isSprintActive, project)
+}
+};
+
+
 
 let newItem;
 const getNewItem = (data) => {
@@ -120,7 +206,12 @@ function App() {
             items: []
         },
       },
-      sprints: [],
+      sprints: [{
+        [uuid()]:{
+        name: "Sprint Backlog",
+        items: []
+      },
+      },],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
     })
@@ -130,7 +221,6 @@ function App() {
   };
   const deleteProject = async (id)=>{
     console.log('id: ',id);
-    // await deleteDoc(doc(firestore, "cities", "DC")); 
     firestore.collection("projects").doc(id).delete();
   }
   const GoToProject = (id)=>{
@@ -148,16 +238,21 @@ function App() {
     setProjectMenu(false);
   }
   const addNewItem = ()=>{
-    // console.log("Going to push: ",newItem);
-    // Object.entries(columns).slice(0,1).map( ([key, value]) => value.items.push(newItem) )
-    // console.log("items: ",Object.entries(columns).slice(0,1).map( ([key, value]) => value.items ));
-    
-    console.log(projects.filter(p=> p.id==project.id)[0]["backlog"]["backlog"]["items"])
     let copyBacklogItems = projects.filter(p=> p.id==project.id)[0]["backlog"]["backlog"]["items"];
-    // firestore.collection("projects").document(project.id).update({
-    // "age": 13,
-    // });
-
+    let copyBacklog = projects.filter(p=> p.id==project.id)[0]["backlog"];
+    // console.log("items: " ,copyBacklog["backlog"]["items"])
+    // console.log("items: " ,Object.entries(copyBacklogItems))
+    copyBacklog["backlog"]["items"]=[...copyBacklogItems,newItem]
+    // console.log("new thing: " ,[...copyBacklogItems,newItem])
+    firestore.collection("projects").doc(project.id).update({
+      "backlog": copyBacklog,
+    });
+    setColumns(project['backlog'])
+    console.log("DEBUG2: ",project['backlog'])
+    // console.log("columns: ",project['backlog'])
+    // console.log("columns: ",Object.entries(project['backlog']))
+    // console.log("columns: ",project['backlog']['backlog'])
+    // console.log("columns: ",Object.entries(project['backlog']['backlog']))
     toggleUi()
   }
 
@@ -335,7 +430,7 @@ function App() {
       </div>
       <div className="App-body">
 
-      <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,isSprintActive)}>
+      <DragDropContext onDragEnd={ result => onDragEnd(result, columns,setColumns,isSprintActive,project)}>
         <div className='backlog'> <h2>Backlog</h2>
         {Object.entries(project["backlog"]).map(([id, column])=>{
           return(
