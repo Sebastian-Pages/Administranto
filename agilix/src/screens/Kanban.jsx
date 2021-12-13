@@ -10,7 +10,7 @@ import Column from '../components/Column'
 import Modal from '../components/Modal'
 import AddTask from '../screens/AddTask'
 import {Add, Github} from '../components/Icons'
-import companyLogo from '../styles/logo.png';
+import companyLogo from '../styles/logo-sm.png';
 
 import useKanbanData from '../hooks/useKanbanData'
 import {debounce} from '../utils'
@@ -137,9 +137,7 @@ const Kanban = ({userId}) => {
                     
                     <main className="pb-2 h-screen w-screen">
                     <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-20'>
-                        <div className='w-10'>
-                            <img className='p-20 px-10 py-10' src={companyLogo} alt='logo'/>
-                        </div>
+                    <img className='p-5' src={companyLogo} alt='logo'/>
                     </div>
                         <div className='flex flex-col h-full'>
                             <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
@@ -181,7 +179,7 @@ const Kanban = ({userId}) => {
                                             }
                                             {provided.placeholder}
                                             <form onSubmit={addCol} autoComplete='off' className='ml-2'>
-                                                <input maxLength='20' className='truncate bg-transparent placeholder-indigo-500 text-indigo-800 bg-indigo-50 px-2 outline-none py-1 rounded-sm ring-2 focus:ring-indigo-500' type="text" name='newCol' placeholder='Add a new column' />
+                                                <input maxLength='20' className='truncate bg-transparent placeholder-purple-500 text-indigo-800 bg-indigo-50 px-2 outline-none py-1 rounded-lg ring-2 focus:ring-indigo-500' type="text" name='newCol' placeholder='Add a new column' />
                                             </form>
                                         </div>
                                     }

@@ -102,12 +102,14 @@ const TaskDetails = ({taskDetails, boardId, userId, columnDetails, closeModal}) 
 {/* Second column */}
 					<div className="col-span-2 mt-12">
 						<div className="">
-							<label className='text-gray-500 uppercase tracking-wide text-xs sm:text-sm  block' htmlFor="title">Priority:</label>
+							<label className='text-gray-500 uppercase tracking-wide text-xs sm:text-sm  block' htmlFor="title">Color:</label>
 							<div className="flex items-center">
 								<select name="priority" defaultValue={taskDetails.priority} className='select' onChange={(e)=>setPriority(e.target.value)}>
-									<option className='option' value="high">High</option>
-									<option className='option' value="medium">Medium</option>
-									<option className='option' value="low">Low</option>
+									<option className='option' value="pink">Pink</option>
+									<option className='option' value="orange">Orange</option>
+									<option className='option' value="yellow">Yellow</option>
+									<option className='option' value="green">Green</option>
+									<option className='option' value="blue">Blue</option>
 								</select>
 								{extractPriority(taskDetails.priority)}
 							</div>

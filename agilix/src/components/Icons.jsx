@@ -5,6 +5,12 @@ export const High = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2
 
 export const Low = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" ><path fill="none" d="M0 0h24v24H0z"/><path d="M13 12h7l-8 8-8-8h7V4h2z" fill="rgba(22,156,31,1)"/></svg>
 
+export const Pink = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" ><path fill="none" d="M0 0h24v24H0z"/><path d="M9.875,0.625C4.697,0.625,0.5,4.822,0.5,10s4.197,9.375,9.375,9.375S19.25,15.178,19.25,10S15.053,0.625,9.875,0.625" fill="rgba(254,128,176,1)"/></svg>
+export const Orange = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" ><path fill="none" d="M0 0h24v24H0z"/><path d="M9.875,0.625C4.697,0.625,0.5,4.822,0.5,10s4.197,9.375,9.375,9.375S19.25,15.178,19.25,10S15.053,0.625,9.875,0.625" fill="rgba(232,176,116,1)"/></svg>
+export const Yellow = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" ><path fill="none" d="M0 0h24v24H0z"/><path d="M9.875,0.625C4.697,0.625,0.5,4.822,0.5,10s4.197,9.375,9.375,9.375S19.25,15.178,19.25,10S15.053,0.625,9.875,0.625" fill="rgba(255,251,140,1)"/></svg>
+export const Green = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" ><path fill="none" d="M0 0h24v24H0z"/><path d="M9.875,0.625C4.697,0.625,0.5,4.822,0.5,10s4.197,9.375,9.375,9.375S19.25,15.178,19.25,10S15.053,0.625,9.875,0.625" fill="rgba(154,230,177,1)"/></svg>
+export const Blue = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" ><path fill="none" d="M0 0h24v24H0z"/><path d="M9.875,0.625C4.697,0.625,0.5,4.822,0.5,10s4.197,9.375,9.375,9.375S19.25,15.178,19.25,10S15.053,0.625,9.875,0.625" fill="rgba(98,179,255,1)"/></svg>
+
 
 
 export const Unchecked = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" fill="rgba(47,204,47,0.67)"/></svg>

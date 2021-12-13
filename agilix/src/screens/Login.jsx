@@ -1,30 +1,16 @@
 import companyLogo from '../styles/logo.png';
 
 const Login = ({ loginWithGoogle, signInAnon }) => {
-    return ( <
-        >
-        <
-        div className = 'bg-purple-600 w-full h-10' > < /div> <
-        div className = 'bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-300 w-full h-2/3 rounded-b-lg' >
-        <
-        img className = 'p-20 pl-24'
-        src = { companyLogo }
-        alt = 'logo' / >
-        <
-        h1 className = 'p-6 pl-32 text-3xl md:text-5xl text-gray-50 font-black' > Organise your projects with sprint and kanban < /h1> <
-        button className = 'm-16 ml-32 font-black text-3xl bg-purple-600 p-6 mr-4 text-gray-100 rounded-full transform hover:-translate-y-1 transition-transform duration-300'
-        onClick = { loginWithGoogle } > Continue with Google < /button>
-
-        <
-        /div>	
-
-        <
-        div className = 'flex justify-center relative' >
-        <
-        div className = ' w-2/3 h-52 place-content-center rounded-lg shadow-xl absolute bottom--1' >
-        insert images of tech stack here <
-        /div> <
-        /div>
+    return (<>
+        <div className = 'bg-purple-600 w-full h-10' > </div> 
+        <div className = 'bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-300 w-full h-2/3 rounded-b-lg' >
+            <img className = 'p-20 pl-24'src = { companyLogo } alt = 'logo' />
+            <h1 className = 'p-6 pl-32 text-3xl md:text-5xl text-gray-50 font-black' > Organise your projects with sprint and kanban </h1> 
+            <button className = 'm-16 ml-32 font-black text-3xl bg-purple-600 p-6 mr-4 text-gray-100 rounded-full transform hover:-translate-y-1 transition-transform duration-300' onClick = { loginWithGoogle } > Continue with Google </button>
+        </div>	
+        <div className = 'flex justify-center relative' >
+            <div className = ' w-2/3 h-52 place-content-center rounded-lg shadow-xl absolute bottom--1' >insert images of tech stack here </div> 
+        </div>
 
         {
             /* <div className='bg-gradient-to-r from-indigo-50 via-blue-50 to-red-50 flex flex-col-reverse md:flex-row md:justify-between px-5 md:px-20 py-12 md:py-24 h-screen'>
@@ -41,8 +27,7 @@ const Login = ({ loginWithGoogle, signInAnon }) => {
             	            	<img src={require('../styles/plan.png').default}  alt="plan" />
             				</div>
             	        </div> */
-        } <
-        />
+        } </>
     )
 }
 
