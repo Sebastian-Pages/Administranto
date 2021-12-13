@@ -20,7 +20,7 @@ const Kanban = ({userId}) => {
     
     const {boardId} = useParams()
     const [modal, setModal] = useState(false)
-    const {initialData, setInitialData, boardName} = useKanbanData(userId, boardId)
+    const {initialData, setInitialData, boardName , boardEndingProjectDate} = useKanbanData(userId, boardId)
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
 
@@ -170,11 +170,21 @@ const Kanban = ({userId}) => {
                                     <span className='text-xl'>
                                         <Link to='/' className=' p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Boards </Link>
                                         <input type="text" defaultValue={boardName} className='p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
-                                        
+                                        <div className='flex items-center'>
+                                            <p>ENDING DATE :  </p>
+                                            <input type="text" defaultValue={boardEndingProjectDate} />
+                                        </div>
                                         <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint</button>
                                         <input type="text" defaultValue={boardName} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <input type="text" defaultValue={boardName} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</button>
+                                        
+                                        {/* <Link to='/' className=' p-2 text-3xl text-purple-600 font-black border-4 rounded-l-lg border-purple-500 hover:text-purple-300 py-3'>Boards </Link>
+                                        <input type="text" defaultValue={boardName} className='p-2 text-3xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-500 ring-offset-1 py-3 w-1/2 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <div className='flex items-center'>
+                                            <p>ENDING DATE :  </p>
+                                            <input type="text" defaultValue={boardEndingProjectDate} />
+                                        </div> */}
                                     </span> 
                                     <div className='flex flex-wrap items-center sm:space-x-9'>
                                         {/* <div className="flex items-center mt-2 sm:mt-0 ">

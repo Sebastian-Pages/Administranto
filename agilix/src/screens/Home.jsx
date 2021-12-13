@@ -27,13 +27,13 @@ const Home = ({ logOut, userId, loginWithGoogle, name, isAnon }) => {
             .doc('columnOrder')
             .set(columnOrder)
 
-        /** Add BackLog*/
+        /** Add BackLog  *****************/
         const productBacklog = { taskIds: [], title: 'ProductBacklog' }
 
         db.collection(`users/${userId}/boards/${uid}/columns`)
             .doc('productBacklog')
             .set(productBacklog)
-        /****************/
+        /********************************/
 
         e.target.elements.boardName.value = ''
 

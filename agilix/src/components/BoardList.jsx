@@ -74,6 +74,7 @@ const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) =>
                 <label htmlFor="boardName" className='block text-xl text-purple-600 font-black text-3xl underline'>Make a new board</label>
                 <div className="flex items-center mt-2">
                     <input required type="text" name='boardName' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' placeholder='Enter a board name' />
+                    <input required type="date" name='endingProjectDate' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' />
                     <button type='submit' className='bg-purple-600 hover:bg-purple-900 text-purple-50 border border-purple-500 rounded-r-sm px-2 py-1.5' >Add</button>
                 </div>
             </form>
