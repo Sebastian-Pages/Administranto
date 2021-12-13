@@ -1,17 +1,18 @@
-import { db } from '../firebase/fbConfig'
-import { BrowserRouter, Route } from 'react-router-dom'
+import {db} from '../firebase/fbConfig'
+import {BrowserRouter, Route} from 'react-router-dom'
 import useBoards from '../hooks/useBoards'
 
 import BoardList from '../components/BoardList'
 
 import Kanban from './Kanban'
 
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 
-const Home = ({ logOut, userId, loginWithGoogle, name, isAnon }) => {
+const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) => 
+{
 
-    const boards = useBoards(userId)
+    const boards = useBoards(userId)    
 
     const addNewBoard = (e) => {
         e.preventDefault()
@@ -19,9 +20,9 @@ const Home = ({ logOut, userId, loginWithGoogle, name, isAnon }) => {
 
         db.collection(`users/${userId}/boards`)
             .doc(uid)
-            .set({ name: e.target.elements.boardName.value })
+            .set({name: e.target.elements.boardName.value , endingDate: e.target.elements.endingProjectDate.value})
 
-        const columnOrder = { id: 'columnOrder', order: ["productBacklog"] }
+        const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
 
         db.collection(`users/${userId}/boards/${uid}/columns`)
             .doc('columnOrder')
@@ -36,6 +37,7 @@ const Home = ({ logOut, userId, loginWithGoogle, name, isAnon }) => {
         /********************************/
 
         e.target.elements.boardName.value = ''
+        e.target.elements.endingProjectDate.value = ''
 
     }
 
@@ -45,17 +47,19 @@ const Home = ({ logOut, userId, loginWithGoogle, name, isAnon }) => {
             .delete()
     }
 
-    return boards !== null ? ( 
-    <BrowserRouter >
-        <Route exact path ='/'>
-            <BoardList deleteBoard ={deleteBoard} logOut={logOut} boards ={boards} addNewBoard={addNewBoard} name={name} /> 
-        </Route>
+    return boards !== null ? (
+         <BrowserRouter>
+                <Route exact path='/'>
+                    <BoardList deleteBoard={deleteBoard} logOut={logOut} boards={boards} addNewBoard={addNewBoard} name={name}/>
+                </Route>
 
-        <Route path = '/board/:boardId' >
-            <Kanban userId = {userId}/> </Route>
-        </BrowserRouter>
+                <Route path='/board/:boardId'>
+                    <Kanban userId={userId} />
+                </Route>
 
-    ) : <div className = "spinner h-screen w-screen" />
+            </BrowserRouter>
+
+    ) : <div className="spinner h-screen w-screen" />
 }
 
 export default Home

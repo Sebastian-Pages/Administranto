@@ -162,7 +162,11 @@ const Kanban = ({userId}) => {
                     
                     <main className="pb-2 h-screen w-screen">
                     <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-20'>
-                    <img className='p-5' src={companyLogo} alt='logo'/>
+                    <span>
+                        <img className='p-5 inline' src={companyLogo} alt='logo'/>
+                        <p className="inline">ENDING DATE : </p>
+                        <input className="inline" type="text" defaultValue={boardEndingProjectDate} />
+                    </span>
                     </div>
                         <div className='flex flex-col h-full'>
                             <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
@@ -170,10 +174,10 @@ const Kanban = ({userId}) => {
                                     <span className='text-xl'>
                                         <Link to='/' className=' p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Boards </Link>
                                         <input type="text" defaultValue={boardName} className='p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
-                                        <div className='flex items-center'>
+                                        {/* <div className='flex items-center'>
                                             <p>ENDING DATE :  </p>
                                             <input type="text" defaultValue={boardEndingProjectDate} />
-                                        </div>
+                                        </div> */}
                                         <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint</button>
                                         <input type="text" defaultValue={boardName} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <input type="text" defaultValue={boardName} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
