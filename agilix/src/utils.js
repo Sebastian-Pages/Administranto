@@ -1,6 +1,6 @@
 import { db } from './firebase/fbConfig'
 
-import { Low, Medium, High, Pink, Orange, Yellow, Green, Blue } from './components/Icons'
+import { Pink, Orange, Yellow, Green, Blue } from './components/Icons'
 
 export const extractPriority = (priority) => {
     switch (priority) {

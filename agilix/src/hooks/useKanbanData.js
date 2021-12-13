@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react'
 import { db } from '../firebase/fbConfig'
 
-const useKanban = (userId, boardId) => {
+const useKanban = (userId, boardId, sprintId) => {
     const [tasks, setTasks] = useState(null)
     const [columns, setColumns] = useState(null)
     const [final, setFinal] = useState(null)
+    const [sprints, setSprints] = useState(null)
     const [boardName, setBoardName] = useState('')
     const [boardEndingProjectDate, setBoardEndingProjectDate] = useState('')
 
 
     useEffect(() => {
-        return db.collection(`users/${userId}/boards/${boardId}/tasks`)
+        return db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
             .onSnapshot(snap => {
                 const documents = []
                 snap.forEach(d => {
@@ -35,9 +36,26 @@ const useKanban = (userId, boardId) => {
             .then(d => setBoardEndingProjectDate(d.data().endingDate))
     }, [userId, boardId])
 
+    // useEffect(() => {
+    //     return db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}`)
+    //         .doc(boardId)
+    //         .get()
+    //         .then(d => setBoardEndingProjectDate(d.data().endingDate))
+    // }, [userId, boardId])
 
     useEffect(() => {
-        return db.collection(`users/${userId}/boards/${boardId}/columns`)
+        return db.collection(`users/${userId}/boards/${boardId}/sprints`)
+            .onSnapshot(snap => {
+                const documents = []
+                snap.forEach(d => {
+                    documents.push({ id: d.id, ...d.data() })
+                })
+                setSprints(documents)
+            })
+    }, [userId, boardId])
+
+    useEffect(() => {
+        return db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
             .onSnapshot(snap => {
                 const documents = []
                 snap.forEach(d => {
@@ -67,7 +85,7 @@ const useKanban = (userId, boardId) => {
     }, [tasks, columns])
 
 
-    return { initialData: final, setInitialData: setFinal, boardName , boardEndingProjectDate }
+    return { initialData: final, setInitialData: setFinal, boardName , boardEndingProjectDate,sprints }
 
 }
 
