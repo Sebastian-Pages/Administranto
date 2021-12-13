@@ -85,7 +85,7 @@ const useKanban = (userId, boardId, sprintId) => {
     }, [tasks, columns])
 
 
-    return { initialData: final, setInitialData: setFinal, boardName , boardEndingProjectDate,sprints }
+    return { initialData: final, setInitialData: setFinal, boardName, boardEndingProjectDate ,sprints }
 
 }
 

@@ -6,7 +6,7 @@ import useSprints from '../hooks/useSprints'
 import BoardList from '../components/BoardList'
 
 import Sprint from './Sprint'
-import RealKanban from './RealKanban'
+import Kanban from './Kanban'
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -84,8 +84,8 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
                     <Sprint logOut={logOut} boards={boards} userId={userId} addSprint={addSprint}/>
                 </Route>
 
-                <Route path='RealKanban/:boardId/:sprintId'>
-                    <RealKanban userId={userId} />
+                <Route path='kanban/:boardId/:sprintId'>
+                    <Kanban userId={userId} />
                 </Route>
 
             </BrowserRouter>
