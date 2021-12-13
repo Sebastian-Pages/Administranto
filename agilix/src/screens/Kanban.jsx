@@ -20,7 +20,7 @@ const Kanban = ({userId}) => {
     
     const {boardId} = useParams()
     const [modal, setModal] = useState(false)
-    const {initialData, setInitialData, boardName} = useKanbanData(userId, boardId)
+    const {initialData, setInitialData, boardName , boardEndingProjectDate} = useKanbanData(userId, boardId)
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
 
@@ -145,6 +145,10 @@ const Kanban = ({userId}) => {
                                     <span className='text-xl'>
                                         <Link to='/' className=' p-2 text-3xl text-purple-600 font-black border-4 rounded-l-lg border-purple-500 hover:text-purple-300 py-3'>Boards </Link>
                                         <input type="text" defaultValue={boardName} className='p-2 text-3xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-500 ring-offset-1 py-3 w-1/2 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <div className='flex items-center'>
+                                            <p>ENDING DATE :  </p>
+                                            <input type="text" defaultValue={boardEndingProjectDate} />
+                                        </div>
                                     </span> 
                                     <div className='flex flex-wrap items-center sm:space-x-9'>
                                         {/* <div className="flex items-center mt-2 sm:mt-0 ">
