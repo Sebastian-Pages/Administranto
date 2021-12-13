@@ -94,13 +94,20 @@ const Kanban = ({userId}) => {
         }
 
         else {
-            const newColumnOrder = Array.from(initialData.columnOrder)
-            newColumnOrder.splice(source.index, 1)
-            newColumnOrder.splice(destination.index, 0, draggableId)
-            setInitialData({...initialData, columnOrder: newColumnOrder})
-            db.collection(`users/${userId}/boards/${boardId}/columns`)
-                .doc('columnOrder')
-                .update({order: newColumnOrder})
+            if (source.index===0 || destination.index===0)
+            {
+                return
+            }
+            else{
+                const newColumnOrder = Array.from(initialData.columnOrder)
+                newColumnOrder.splice(source.index, 1)
+                newColumnOrder.splice(destination.index, 0, draggableId)
+                setInitialData({...initialData, columnOrder: newColumnOrder})
+                db.collection(`users/${userId}/boards/${boardId}/columns`)
+                    .doc('columnOrder')
+                    .update({order: newColumnOrder})
+            }
+
         }
     }
 
@@ -117,6 +124,24 @@ const Kanban = ({userId}) => {
             .update({order: firebase.firestore.FieldValue.arrayUnion(newColumnName)})
 
         e.target.elements.newCol.value = ''    
+    }
+
+    const addSprint = (e) => {
+        e.preventDefault()
+        const newColumnName = e.target.elements.newCol.value   
+        db.collection(`users/${userId}/boards/${boardId}/columns`)
+            .doc(newColumnName)
+            .set({title: newColumnName, taskIds: []})
+
+        db.collection(`users/${userId}/boards/${boardId}/columns`)
+            .doc('columnOrder')
+            .update({order: firebase.firestore.FieldValue.arrayUnion(newColumnName)})
+
+        e.target.elements.newCol.value = ''    
+    }
+
+    const startSprint= (e) => {
+        console.log('')
     }
 
     const changeBoardName = debounce((ev) => {
@@ -143,8 +168,13 @@ const Kanban = ({userId}) => {
                             <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
                                 <div className='flex flex-wrap justify-between items-center'>
                                     <span className='text-xl'>
-                                        <Link to='/' className=' p-2 text-3xl text-purple-600 font-black border-4 rounded-l-lg border-purple-500 hover:text-purple-300 py-3'>Boards </Link>
-                                        <input type="text" defaultValue={boardName} className='p-2 text-3xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-500 ring-offset-1 py-3 w-1/2 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <Link to='/' className=' p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Boards </Link>
+                                        <input type="text" defaultValue={boardName} className='p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        
+                                        <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint</button>
+                                        <input type="text" defaultValue={boardName} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <input type="text" defaultValue={boardName} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</button>
                                     </span> 
                                     <div className='flex flex-wrap items-center sm:space-x-9'>
                                         {/* <div className="flex items-center mt-2 sm:mt-0 ">
@@ -174,6 +204,7 @@ const Kanban = ({userId}) => {
                                                 initialData?.columnOrder.map((col, i) => {
                                                     const column = initialData?.columns[col]
                                                     const tasks = column.taskIds?.map(t => t)
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} />
                                                     return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} />
                                                 }) 
                                             }
