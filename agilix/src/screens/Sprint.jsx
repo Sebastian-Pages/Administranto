@@ -20,7 +20,7 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
     
     const {boardId} = useParams()
     const [modal, setModal] = useState(false)
-    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints} = useKanbanData(userId, boardId,null)
+    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState} = useKanbanData(userId, boardId,null)
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
 
