@@ -33,8 +33,6 @@ const Kanban = ({userId}) => {
 
         if(result.type === 'task')  {
 
-            	
-
             const startColumn = initialData.columns[source.droppableId]    
             const endColumn = initialData.columns[destination.droppableId]    
 
@@ -60,37 +58,72 @@ const Kanban = ({userId}) => {
                 return
             }
 
-
-            const startTaskIDs = Array.from(startColumn.taskIds)
-            startTaskIDs.splice(source.index, 1)
-            const newStart = {
-                ...startColumn, taskIds: startTaskIDs
-            }
-
-
-            const finishTaskIDs = Array.from(endColumn.taskIds)
-            finishTaskIDs.splice(destination.index, 0, draggableId)
-            const newFinish = {
-                ...endColumn, taskIds: finishTaskIDs
-            }
+            console.log(endColumn.taskIds.length+1);
+            if(endColumn.max){
+                if ( endColumn.taskIds.length < endColumn.max ){
+                    const startTaskIDs = Array.from(startColumn.taskIds)
+                    startTaskIDs.splice(source.index, 1)
+                    const newStart = {
+                        ...startColumn, taskIds: startTaskIDs
+                    }
 
 
-            const newState = {
-                ...initialData, 
-                columns: {
-                    ...initialData.columns,
-                    [startColumn.id]: newStart,
-                    [endColumn.id]: newFinish
+                    const finishTaskIDs = Array.from(endColumn.taskIds)
+                    finishTaskIDs.splice(destination.index, 0, draggableId)
+                    const newFinish = {
+                        ...endColumn, taskIds: finishTaskIDs
+                    }
+
+
+                    const newState = {
+                        ...initialData, 
+                        columns: {
+                            ...initialData.columns,
+                            [startColumn.id]: newStart,
+                            [endColumn.id]: newFinish
+                        }
+                    }
+
+                    setInitialData(newState)
+
+                    db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newStart.id)
+                        .update({taskIds: startTaskIDs})
+
+                    db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newFinish.id)
+                        .update({taskIds: finishTaskIDs})
                 }
+            }else{
+                const startTaskIDs = Array.from(startColumn.taskIds)
+                    startTaskIDs.splice(source.index, 1)
+                    const newStart = {
+                        ...startColumn, taskIds: startTaskIDs
+                    }
+
+
+                    const finishTaskIDs = Array.from(endColumn.taskIds)
+                    finishTaskIDs.splice(destination.index, 0, draggableId)
+                    const newFinish = {
+                        ...endColumn, taskIds: finishTaskIDs
+                    }
+
+
+                    const newState = {
+                        ...initialData, 
+                        columns: {
+                            ...initialData.columns,
+                            [startColumn.id]: newStart,
+                            [endColumn.id]: newFinish
+                        }
+                    }
+
+                    setInitialData(newState)
+
+                    db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newStart.id)
+                        .update({taskIds: startTaskIDs})
+
+                    db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newFinish.id)
+                        .update({taskIds: finishTaskIDs})
             }
-
-            setInitialData(newState)
-
-            db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newStart.id)
-                .update({taskIds: startTaskIDs})
-
-            db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newFinish.id)
-                .update({taskIds: finishTaskIDs})
         }
 
         else {
@@ -117,7 +150,7 @@ const Kanban = ({userId}) => {
         const newColumnName = e.target.elements.newCol.value   
         db.collection(`users/${userId}/boards/${boardId}/columns`)
             .doc(newColumnName)
-            .set({title: newColumnName, taskIds: []})
+            .set({title: newColumnName, taskIds: [], max: 999})
 
         db.collection(`users/${userId}/boards/${boardId}/columns`)
             .doc('columnOrder')
@@ -218,8 +251,8 @@ const Kanban = ({userId}) => {
                                                 initialData?.columnOrder.map((col, i) => {
                                                     const column = initialData?.columns[col]
                                                     const tasks = column.taskIds?.map(t => t)
-                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} />
-                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} />
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
                                                 }) 
                                             }
                                             {provided.placeholder}

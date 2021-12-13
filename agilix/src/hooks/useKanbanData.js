@@ -41,7 +41,7 @@ const useKanban = (userId, boardId) => {
             .onSnapshot(snap => {
                 const documents = []
                 snap.forEach(d => {
-                    documents.push({ id: d.id, ...d.data() })
+                    documents.push({ id: d.id, max: d.max, ...d.data()})
                 })
                 setColumns(documents)
             })
