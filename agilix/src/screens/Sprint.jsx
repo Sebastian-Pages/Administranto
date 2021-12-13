@@ -51,11 +51,12 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
                         {/* ICI ON MET LES SPTINS */}
                         {/* {console.log("s: ",sprints)} */}
                      
-                        {sprints && sprints.map(b => 
+                        {sprints && sprints.map(s => 
+    
                             <div>
-                                <div className='bg-white text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full sm:w-auto' key={b.id}>
-                                    <div className="flex items-center justify-between">
-                                        <Link to={`/kanban/${boardId}/${b.id}`}><h2 className='text-lg sm:text-2xl text-gray-700 hover:text-gray-900'>{b.name}</h2></Link>
+                                <div className={`${s.state===0 ? 'bg-pink' : ''} ${s.state===2 ? 'bg-red' : ''} text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full sm:w-auto`} key={s.id}>
+                                    <div className="flex items-center justify-between">                  
+                                        <Link to={`/kanban/${boardId}/${s.id}`}><h2 className='text-lg sm:text-2xl text-gray-700 hover:text-gray-900'>{s.name}</h2></Link>
                                         <div  className='text-red-500 ml-6 cursor-pointer hover:text-red-700'>
                                             
                                         </div>

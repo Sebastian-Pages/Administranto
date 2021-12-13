@@ -28,6 +28,19 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
         e.target.elements.boardName.value = ''
         e.target.elements.endingProjectDate.value = ''
 
+        const uid2 = uuidv4()
+        db.collection(`users/${userId}/boards/${uid}/sprints`)
+            .doc(uid2)
+            .set({name: "New Name" , endingDate: "1", state:0})
+        const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
+        db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
+            .doc('columnOrder')
+            .set(columnOrder)
+        const productBacklog = { taskIds: [], title: 'ProductBacklog' }
+        db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
+            .doc('productBacklog')
+            .set(productBacklog)
+
     }
 
     const addSprint = (e,bid) => {
@@ -38,7 +51,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
 
         db.collection(`users/${userId}/boards/${bid}/sprints`)
             .doc(uid)
-            .set({name: e.target.elements.boardName.value , endingDate: e.target.elements.endingProjectDate.value})
+            .set({name: e.target.elements.boardName.value , endingDate: e.target.elements.endingProjectDate.value, state:0})
         
         /**** est Déplacer dans add Sprint ***********/
         const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
