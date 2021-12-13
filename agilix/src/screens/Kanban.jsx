@@ -184,96 +184,96 @@ const Kanban = ({userId}) => {
             .update({name: ev})
     }, 7000);
 
-    return (<div>Hi</div>)
-	// return (
-	// 	<>
-    //         {initialData ? 
-    //             (
-    //             <>
-    //                 <Modal modal={modal} setModal={setModal} ariaText='Add a new task'>
-    //                     <AddTask boardId={boardId} userId={userId} allCols={initialData.columnOrder} close={()=>setModal(false)} />
-    //                 </Modal>
+    
+	return (
+		<>
+            {initialData ? 
+                (
+                <>
+                    <Modal modal={modal} setModal={setModal} ariaText='Add a new task'>
+                        <AddTask boardId={boardId} userId={userId} allCols={initialData.columnOrder} close={()=>setModal(false)} />
+                    </Modal>
                     
-    //                 <main className="pb-2 h-screen w-screen">
-    //                 <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-20'>
-    //                 <span>
-    //                     <img className='p-5 inline' src={companyLogo} alt='logo'/>
-    //                     <p className="inline">ENDING DATE : </p>
-    //                     <input className="inline" type="text" defaultValue={boardEndingProjectDate} />
-    //                 </span>
-    //                 </div>
-    //                     <div className='flex flex-col h-full'>
-    //                         <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
-    //                             <div className='flex flex-wrap justify-between items-center'>
-    //                                 <span className='text-xl'>
-    //                                     <Link to='/' className=' p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Boards </Link>
-    //                                     <input type="text" defaultValue={boardName} className='p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
-    //                                     {/* <div className='flex items-center'>
-    //                                         <p>ENDING DATE :  </p>
-    //                                         <input type="text" defaultValue={boardEndingProjectDate} />
-    //                                     </div> */}
-    //                                     <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint</button>
-    //                                     <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
-    //                                     <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
-    //                                     <Link to='/RealKanban'className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
+                    <main className="pb-2 h-screen w-screen">
+                    <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-20'>
+                    <span>
+                        <img className='p-5 inline' src={companyLogo} alt='logo'/>
+                        <p className="inline">ENDING DATE : </p>
+                        <input className="inline" type="text" defaultValue={boardEndingProjectDate} />
+                    </span>
+                    </div>
+                        <div className='flex flex-col h-full'>
+                            <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
+                                <div className='flex flex-wrap justify-between items-center'>
+                                    <span className='text-xl'>
+                                        <Link to='/' className=' p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Boards </Link>
+                                        <input type="text" defaultValue={boardName} className='p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        {/* <div className='flex items-center'>
+                                            <p>ENDING DATE :  </p>
+                                            <input type="text" defaultValue={boardEndingProjectDate} />
+                                        </div> */}
+                                        <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint</button>
+                                        <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <Link to='/RealKanban'className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
                                         
-    //                                     {/* <Link to='/' className=' p-2 text-3xl text-purple-600 font-black border-4 rounded-l-lg border-purple-500 hover:text-purple-300 py-3'>Boards </Link>
-    //                                     <input type="text" defaultValue={boardName} className='p-2 text-3xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-500 ring-offset-1 py-3 w-1/2 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
-    //                                     <div className='flex items-center'>
-    //                                         <p>ENDING DATE :  </p>
-    //                                         <input type="text" defaultValue={boardEndingProjectDate} />
-    //                                     </div> */}
-    //                                 </span> 
-    //                                 <div className='flex flex-wrap items-center sm:space-x-9'>
-    //                                     {/* <div className="flex items-center mt-2 sm:mt-0 ">
-    //                                         <h3 className='text-gray-500 mr-2'>Show Priority: </h3>
-    //                                         <div className='space-x-1 text-blue-900 flex bg-indigo-50 rounded-sm'>
-    //                                             {filters.map(f => <div key={f} className={`px-3  border-black py-1 hover:bg-blue-600 hover:text-blue-50 cursor-pointer capitalize ${filter === f ? 'bg-blue-600 text-blue-50' : ''}`} onClick={() => setFilter(f==='all' ? null : f)}>{f}</div>)}
-    //                                             {filter ? <div className='px-2 py-1 cursor-pointer hover:text-blue-700 rounded-sm' onClick={() => setFilter(null)}>All</div> : null}
-    //                                         </div>
-    //                                     </div>
-    //                                     <div className='flex items-center text-blue-900 hover:bg-blue-600 hover:text-blue-50 bg-indigo-50 rounded-sm px-2 py-1 mr-3 hidden sm:flex'>
-    //                                         <Github />
-    //                                         <a href='https://github.com/drkPrince/agilix' target='blank'>Github</a>
-    //                                     </div> */}
-    //                                     <div className='text-white bg-gradient-to-br from-primary via-indigo-600 to-blue-600 transform hover:scale-110 transition-all duration-300 rounded-full p-2 sm:p-1 fixed bottom-6 right-6 sm:static' onClick={()=>setModal(true)}>
-    //                                         <Add />
-    //                                     </div>
-    //                                 </div>
-    //                             </div>
-    //                         </header>
+                                        {/* <Link to='/' className=' p-2 text-3xl text-purple-600 font-black border-4 rounded-l-lg border-purple-500 hover:text-purple-300 py-3'>Boards </Link>
+                                        <input type="text" defaultValue={boardName} className='p-2 text-3xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-500 ring-offset-1 py-3 w-1/2 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <div className='flex items-center'>
+                                            <p>ENDING DATE :  </p>
+                                            <input type="text" defaultValue={boardEndingProjectDate} />
+                                        </div> */}
+                                    </span> 
+                                    <div className='flex flex-wrap items-center sm:space-x-9'>
+                                        {/* <div className="flex items-center mt-2 sm:mt-0 ">
+                                            <h3 className='text-gray-500 mr-2'>Show Priority: </h3>
+                                            <div className='space-x-1 text-blue-900 flex bg-indigo-50 rounded-sm'>
+                                                {filters.map(f => <div key={f} className={`px-3  border-black py-1 hover:bg-blue-600 hover:text-blue-50 cursor-pointer capitalize ${filter === f ? 'bg-blue-600 text-blue-50' : ''}`} onClick={() => setFilter(f==='all' ? null : f)}>{f}</div>)}
+                                                {filter ? <div className='px-2 py-1 cursor-pointer hover:text-blue-700 rounded-sm' onClick={() => setFilter(null)}>All</div> : null}
+                                            </div>
+                                        </div>
+                                        <div className='flex items-center text-blue-900 hover:bg-blue-600 hover:text-blue-50 bg-indigo-50 rounded-sm px-2 py-1 mr-3 hidden sm:flex'>
+                                            <Github />
+                                            <a href='https://github.com/drkPrince/agilix' target='blank'>Github</a>
+                                        </div> */}
+                                        <div className='text-white bg-gradient-to-br from-primary via-indigo-600 to-blue-600 transform hover:scale-110 transition-all duration-300 rounded-full p-2 sm:p-1 fixed bottom-6 right-6 sm:static' onClick={()=>setModal(true)}>
+                                            <Add />
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
                             
                             
-    //                         <DragDropContext onDragEnd={onDragEnd}>
-    //                             <Droppable droppableId='allCols' type='column' direction='horizontal'>
-    //                                 {provided => 
-    //                                     <div {...provided.droppableProps} ref={provided.innerRef} className="grid overflow-x-auto h-full items-start pt-3 md:pt-2 mx-1 md:mx-6 auto-cols-220 md:auto-cols-270 grid-flow-col" style={{height: '90%'}}>
-    //                                         {
-    //                                             initialData?.columnOrder.map((col, i) => {
-    //                                                 const column = initialData?.columns[col]
-    //                                                 const tasks = column.taskIds?.map(t => t)
-    //                                                 return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
-    //                                                 return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
-    //                                             }) 
-    //                                         }
-    //                                         {provided.placeholder}
-    //                                         <form onSubmit={addCol} autoComplete='off' className='ml-2'>
-    //                                             <input maxLength='20' className='truncate bg-transparent placeholder-purple-500 text-indigo-800 bg-indigo-50 px-2 outline-none py-1 rounded-lg ring-2 focus:ring-indigo-500' type="text" name='newCol' placeholder='Add a new column' />
-    //                                         </form>
-    //                                     </div>
-    //                                 }
-    //                             </Droppable>
-    //                         </DragDropContext>
-    //                     </div>
-    //                 </main>
+                            <DragDropContext onDragEnd={onDragEnd}>
+                                <Droppable droppableId='allCols' type='column' direction='horizontal'>
+                                    {provided => 
+                                        <div {...provided.droppableProps} ref={provided.innerRef} className="grid overflow-x-auto h-full items-start pt-3 md:pt-2 mx-1 md:mx-6 auto-cols-220 md:auto-cols-270 grid-flow-col" style={{height: '90%'}}>
+                                            {
+                                                initialData?.columnOrder.map((col, i) => {
+                                                    const column = initialData?.columns[col]
+                                                    const tasks = column.taskIds?.map(t => t)
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
+                                                }) 
+                                            }
+                                            {provided.placeholder}
+                                            <form onSubmit={addCol} autoComplete='off' className='ml-2'>
+                                                <input maxLength='20' className='truncate bg-transparent placeholder-purple-500 text-indigo-800 bg-indigo-50 px-2 outline-none py-1 rounded-lg ring-2 focus:ring-indigo-500' type="text" name='newCol' placeholder='Add a new column' />
+                                            </form>
+                                        </div>
+                                    }
+                                </Droppable>
+                            </DragDropContext>
+                        </div>
+                    </main>
 
-    //                 </>
-    //             )
-    //             :
-    //             <div className="spinner h-screen w-screen" />
-    //         }
-    //     </>
-    // )
+                    </>
+                )
+                :
+                <div className="spinner h-screen w-screen" />
+            }
+        </>
+    )
 }
 
 export default Kanban

@@ -84,7 +84,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
                     <Sprint logOut={logOut} boards={boards} userId={userId} addSprint={addSprint}/>
                 </Route>
 
-                <Route path='kanban/:boardId/:sprintId'>
+                <Route path='/kanban/:boardId/:sprintId'>
                     <Kanban userId={userId} />
                 </Route>
 
