@@ -25,43 +25,42 @@ const Kanban = ({userId}) => {
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
 
-   
-	const onDragEnd = (result) => {
+    const onDragEnd = (result) => {
 
-        const {destination, source, draggableId} = result
+const {destination, source, draggableId} = result
 
-        if(!destination) return
+if(!destination) return
 
-        if(result.type === 'task')  {
+if(result.type === 'task')  {
 
-            	
+    const startColumn = initialData.columns[source.droppableId]    
+    const endColumn = initialData.columns[destination.droppableId]    
 
-            const startColumn = initialData.columns[source.droppableId]    
-            const endColumn = initialData.columns[destination.droppableId]    
+    if(startColumn === endColumn){
+        const newTaskIds = Array.from(endColumn.taskIds)
 
-            if(startColumn === endColumn){
-                const newTaskIds = Array.from(endColumn.taskIds)
-
-                newTaskIds.splice(source.index, 1)
-                newTaskIds.splice(destination.index, 0, draggableId)
+        newTaskIds.splice(source.index, 1)
+        newTaskIds.splice(destination.index, 0, draggableId)
 
 
-                const newColumn = {
-                    ...endColumn, taskIds: newTaskIds
-                }
+        const newColumn = {
+            ...endColumn, taskIds: newTaskIds
+        }
 
-                const newState = {
-                    ...initialData, 
-                    columns: {...initialData.columns, [endColumn.id]: newColumn}
-                }
+        const newState = {
+            ...initialData, 
+            columns: {...initialData.columns, [endColumn.id]: newColumn}
+        }
 
-                setInitialData(newState)
-                db.collection(`users/${userId}/boards/${boardId}/columns`).doc(startColumn.id)
-                	.update({taskIds: newTaskIds})
-                return
-            }
+        setInitialData(newState)
+        db.collection(`users/${userId}/boards/${boardId}/columns`).doc(startColumn.id)
+            .update({taskIds: newTaskIds})
+        return
+    }
 
-
+    console.log(endColumn.taskIds.length+1);
+    if(endColumn.max){
+        if ( endColumn.taskIds.length < endColumn.max ){
             const startTaskIDs = Array.from(startColumn.taskIds)
             startTaskIDs.splice(source.index, 1)
             const newStart = {
@@ -93,24 +92,58 @@ const Kanban = ({userId}) => {
             db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newFinish.id)
                 .update({taskIds: finishTaskIDs})
         }
-
-        else {
-            if (source.index===0 || destination.index===0)
-            {
-                return
-            }
-            else{
-                const newColumnOrder = Array.from(initialData.columnOrder)
-                newColumnOrder.splice(source.index, 1)
-                newColumnOrder.splice(destination.index, 0, draggableId)
-                setInitialData({...initialData, columnOrder: newColumnOrder})
-                db.collection(`users/${userId}/boards/${boardId}/columns`)
-                    .doc('columnOrder')
-                    .update({order: newColumnOrder})
+    }else{
+        const startTaskIDs = Array.from(startColumn.taskIds)
+            startTaskIDs.splice(source.index, 1)
+            const newStart = {
+                ...startColumn, taskIds: startTaskIDs
             }
 
-        }
+
+            const finishTaskIDs = Array.from(endColumn.taskIds)
+            finishTaskIDs.splice(destination.index, 0, draggableId)
+            const newFinish = {
+                ...endColumn, taskIds: finishTaskIDs
+            }
+
+
+            const newState = {
+                ...initialData, 
+                columns: {
+                    ...initialData.columns,
+                    [startColumn.id]: newStart,
+                    [endColumn.id]: newFinish
+                }
+            }
+
+            setInitialData(newState)
+
+            db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newStart.id)
+                .update({taskIds: startTaskIDs})
+
+            db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newFinish.id)
+                .update({taskIds: finishTaskIDs})
     }
+}
+
+else {
+    if (source.index===0 || destination.index===0)
+    {
+        return
+    }
+    else{
+        const newColumnOrder = Array.from(initialData.columnOrder)
+        newColumnOrder.splice(source.index, 1)
+        newColumnOrder.splice(destination.index, 0, draggableId)
+        setInitialData({...initialData, columnOrder: newColumnOrder})
+        db.collection(`users/${userId}/boards/${boardId}/columns`)
+            .doc('columnOrder')
+            .update({order: newColumnOrder})
+    }
+
+}
+}
+
 
 
     const addCol = (e) => {
@@ -219,8 +252,8 @@ const Kanban = ({userId}) => {
                                                 initialData?.columnOrder.map((col, i) => {
                                                     const column = initialData?.columns[col]
                                                     const tasks = column.taskIds?.map(t => t)
-                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} />
-                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} />
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
                                                 }) 
                                             }
                                             {provided.placeholder}
@@ -240,7 +273,7 @@ const Kanban = ({userId}) => {
                 <div className="spinner h-screen w-screen" />
             }
         </>
-	)
+    )
 }
 
 export default Kanban

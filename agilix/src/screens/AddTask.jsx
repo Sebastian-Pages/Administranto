@@ -51,12 +51,12 @@ const AddTask = ({boardId, userId, close, allCols}) =>
 				           
 						</div>
 
-						<div className="mt-8 sm:mt-0 sm:ml-12">
+						{/* <div className="mt-8 sm:mt-0 sm:ml-12">
 							<label className='text-gray-500 block sm:inline' htmlFor="column">Select a column: </label>
 							<select name="column" required className='select'>
 								{allCols.map(c => <option className='option' value={c} key={c}>{c}</option>)}
 							</select>
-						</div>
+						</div> */}
 					</div>
 
 				</div>
