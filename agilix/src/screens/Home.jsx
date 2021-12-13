@@ -21,7 +21,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
 
         db.collection(`users/${userId}/boards`)
             .doc(uid)
-            .set({name: e.target.elements.boardName.value})
+            .set({name: e.target.elements.boardName.value , endingDate: e.target.elements.endingProjectDate.value})
 
         const columnOrder = {id: 'columnOrder', order: []}
 
@@ -29,7 +29,8 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
             .doc('columnOrder')
             .set(columnOrder)
 
-        e.target.elements.boardName.value = ''   
+        e.target.elements.boardName.value = ''
+        e.target.elements.endingProjectDate.value = ''
 
     }
 
