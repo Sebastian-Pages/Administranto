@@ -108,28 +108,29 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
         
         // console.log("foreach: ",element)
         
-        
-        // db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/`)
-        //     .doc(startColumn.id)
-        //     .update({taskIds: newTaskIds})
+        //ça na pas marcher
+        // Object.entries(tasks).map(task => {
+        // db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/tasks`)
+        //     .doc(task[0])
+        //     .update(task[1]) // ici update n'ajoute pas
+        // });
 
+        Object.entries(tasks).map(task => {
+            addTask2 (bid, uid,task[0],task[1].title, task[1].priority , task[1].description,task[1].dateAdded) 
+        });
     }
+
+    const addTask2 = (bId, sId,taskId,title, priority , description,dateAdded) => {
+        db.collection(`users/${userId}/boards/${bId}/sprints/${sId}/tasks`)
+        	.doc(taskId)
+        	.set({title,  priority , description, todos: [], dateAdded })
+    }
+
 
     const deleteBoard = (id) => {
         db.collection(`users/${userId}/boards`)
             .doc(id)
             .delete()
-    }
-
-    const addNewSprint = (e) => { 
-    }
-
-    const gotoSprint= (e) => {
-
-    }
-
-    const viewSprint= (e) => {
-
     }
 
     return boards !== null ? (

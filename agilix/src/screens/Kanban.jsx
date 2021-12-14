@@ -176,8 +176,11 @@ const Kanban = ({logOut,userId,addSprint2}) => {
     }*/
 
     const startSprint= () => {
-        if(sprintState===2){
-            console.log('test fct: ',initialData.tasks)
+        if(sprintState===1){
+            // console.log('test fct: ',initialData.tasks)
+            Object.entries(initialData.tasks).map(task => {
+                console.log("start sprint: ",task[0],task[1])
+            });
             // console.log('test fct: ',{ taskIds: [], title: 'ProductBacklog' ,max:null,id:"productBacklog"})
             addSprint2(boardId,initialData.columns.productBacklog,initialData.tasks)
         }
@@ -186,6 +189,7 @@ const Kanban = ({logOut,userId,addSprint2}) => {
             .doc(sprintId)
             .update({state: sprintState+1})}
         console.log('State:', sprintState)
+        window.location.reload();
 
         
     }
