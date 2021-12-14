@@ -46,12 +46,12 @@ const useKanban = (userId, boardId, sprintId) => {
     }, [userId, boardId])
 
     //bug quand je le met :()
-    // useEffect(() => {
-    //     return db.collection(`users/${userId}/boards/${boardId}/sprints`)
-    //         .doc(sprintId)
-    //         .get()
-    //         .then(d => setSprintState(d.data().state))
-    // }, [userId, boardId])
+    useEffect(() => {
+        return db.collection(`users/${userId}/boards/${boardId}/sprints`)
+            .doc(sprintId)
+            .get()
+            .then(d => setSprintState(d.data().state))
+    }, [userId, boardId])
 
     // useEffect(() => {
     //     return db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}`)

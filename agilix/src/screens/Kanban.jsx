@@ -21,7 +21,7 @@ const Kanban = ({logOut,userId}) => {
     const {boardId} = useParams()
     const {sprintId} = useParams()
     const [modal, setModal] = useState(false)
-    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState , sprintName} = useKanbanData(userId, boardId,sprintId)
+    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState } = useKanbanData(userId, boardId,sprintId)
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
 
@@ -175,7 +175,8 @@ const Kanban = ({logOut,userId}) => {
     }*/
 
     const startSprint= (e) => {
-        console.log('')
+        // sprints.map(s=>console.log('start sprint', s.id))
+        console.log('start sprint', sprintState)
     }
 
     const changeBoardName = debounce((ev) => {
@@ -214,7 +215,7 @@ const Kanban = ({logOut,userId}) => {
                                             <p>ENDING DATE :  </p>
                                             <input type="text" defaultValue={boardEndingProjectDate} />
                                         </div> */}
-                                        <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint</button>
+                                        <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint1</button>
                                         <input type="text" defaultValue={"sprintName"} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <Link to={`/board/${boardId}`}className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
