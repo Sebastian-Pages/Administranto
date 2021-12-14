@@ -16,7 +16,7 @@ import useKanbanData from '../hooks/useKanbanData'
 import {debounce} from '../utils'
 
 
-const Kanban = ({userId}) => {
+const Kanban = ({logOut,userId}) => {
     
     const {boardId} = useParams()
     const {sprintId} = useParams()
@@ -201,6 +201,7 @@ const Kanban = ({userId}) => {
                         
                         <p className="inline">ENDING DATE : </p>
                         <input className="inline" type="text" defaultValue={boardEndingProjectDate} />
+                        <button className='px-3 border border-purple-800 hover:bg-purple-700 hover:text-white text-purple-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
                     </span>
                     </div>
                         <div className='flex flex-col h-full'>
