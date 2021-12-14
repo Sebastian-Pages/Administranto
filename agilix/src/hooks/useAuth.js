@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { firebase, db } from '../firebase/fbConfig'
 
-import {createBoardForAnons} from '../utils'
+//import {createBoardForAnons} from '../utils'
 
 const useAuth = () => 
 {
@@ -19,13 +19,13 @@ const useAuth = () =>
         }
     }
 
-    const loginAnonymously = () => {
-        firebase.auth().signInAnonymously()
-            .then((user) => { 
-                console.log('Welcome Anon')
-                createBoardForAnons(user.user.uid)
-        })
-    }
+    // const loginAnonymously = () => {
+    //     firebase.auth().signInAnonymously()
+    //         .then((user) => { 
+    //             console.log('Welcome Anon')
+    //             createBoardForAnons(user.user.uid)
+    //     })
+    // }
 
     const logOut = () => {
         firebase.auth().signOut()
@@ -42,7 +42,7 @@ const useAuth = () =>
         })
     }, [user])
 
-    return [user, loginWithGoogle, logOut, error, loginAnonymously]
+    return [user, loginWithGoogle, logOut, error]
 }
 
 

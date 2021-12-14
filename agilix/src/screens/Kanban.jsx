@@ -16,12 +16,12 @@ import useKanbanData from '../hooks/useKanbanData'
 import {debounce} from '../utils'
 
 
-const Kanban = ({userId}) => {
+const Kanban = ({logOut,userId}) => {
     
     const {boardId} = useParams()
     const {sprintId} = useParams()
     const [modal, setModal] = useState(false)
-    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState} = useKanbanData(userId, boardId,sprintId)
+    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState , sprintName} = useKanbanData(userId, boardId,sprintId)
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
 
@@ -52,12 +52,12 @@ const Kanban = ({userId}) => {
             }
 
             setInitialData(newState)
-            db.collection(`users/${userId}/boards/${boardId}/columns`).doc(startColumn.id)
+            db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(startColumn.id)
                 .update({taskIds: newTaskIds})
             return
         }
 
-        console.log(endColumn.taskIds.length+1);
+        //console.log(endColumn.taskIds.length+1);
         if(endColumn.max){
             if ( endColumn.taskIds.length < endColumn.max ){
                 const startTaskIDs = Array.from(startColumn.taskIds)
@@ -85,10 +85,10 @@ const Kanban = ({userId}) => {
 
                 setInitialData(newState)
 
-                db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newStart.id)
+                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
                     .update({taskIds: startTaskIDs})
 
-                db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newFinish.id)
+                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
                     .update({taskIds: finishTaskIDs})
             }
         }else{
@@ -117,10 +117,10 @@ const Kanban = ({userId}) => {
 
                 setInitialData(newState)
 
-                db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newStart.id)
+                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
                     .update({taskIds: startTaskIDs})
 
-                db.collection(`users/${userId}/boards/${boardId}/columns`).doc(newFinish.id)
+                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
                     .update({taskIds: finishTaskIDs})
         }
     }
@@ -135,7 +135,7 @@ const Kanban = ({userId}) => {
             newColumnOrder.splice(source.index, 1)
             newColumnOrder.splice(destination.index, 0, draggableId)
             setInitialData({...initialData, columnOrder: newColumnOrder})
-            db.collection(`users/${userId}/boards/${boardId}/columns`)
+            db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
                 .doc('columnOrder')
                 .update({order: newColumnOrder})
         }
@@ -148,30 +148,31 @@ const Kanban = ({userId}) => {
     const addCol = (e) => {
         e.preventDefault()
         const newColumnName = e.target.elements.newCol.value   
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
             .doc(newColumnName)
             .set({title: newColumnName, taskIds: []})
 
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
             .doc('columnOrder')
             .update({order: firebase.firestore.FieldValue.arrayUnion(newColumnName)})
 
         e.target.elements.newCol.value = ''    
     }
 
-    const addSprint = (e) => {
+    //TO DO
+    /*const addSprint = (e) => {
         e.preventDefault()
         const newColumnName = e.target.elements.newCol.value   
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints`)
             .doc(newColumnName)
             .set({title: newColumnName, taskIds: []})
 
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints`)
             .doc('columnOrder')
             .update({order: firebase.firestore.FieldValue.arrayUnion(newColumnName)})
 
         e.target.elements.newCol.value = ''    
-    }
+    }*/
 
     const startSprint= (e) => {
         console.log('')
@@ -190,7 +191,7 @@ const Kanban = ({userId}) => {
                 (
                 <>
                     <Modal modal={modal} setModal={setModal} ariaText='Add a new task'>
-                        <AddTask boardId={boardId} userId={userId} allCols={initialData.columnOrder} close={()=>setModal(false)} />
+                        <AddTask boardId={boardId} userId={userId} allCols={initialData.columnOrder} sprintId={sprintId} close={()=>setModal(false)} />
                     </Modal>
                     
                     <main className="pb-2 h-screen w-screen">
@@ -200,20 +201,21 @@ const Kanban = ({userId}) => {
                         
                         <p className="inline">ENDING DATE : </p>
                         <input className="inline" type="text" defaultValue={boardEndingProjectDate} />
+                        <button className='px-3 border border-purple-800 hover:bg-purple-700 hover:text-white text-purple-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
                     </span>
                     </div>
                         <div className='flex flex-col h-full'>
                             <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
                                 <div className='flex flex-wrap justify-between items-center'>
                                     <span className='text-xl'>
-                                    <Link to='/' className='inline p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Boards </Link>
+                                    <Link to='/' className='inline p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Project Menu</Link>
                                     <input type="text" defaultValue={boardName} className='inline p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         {/* <div className='flex items-center'>
                                             <p>ENDING DATE :  </p>
                                             <input type="text" defaultValue={boardEndingProjectDate} />
                                         </div> */}
                                         <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint</button>
-                                        <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <input type="text" defaultValue={"sprintName"} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <Link to={`/board/${boardId}`}className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
                                         
@@ -236,8 +238,9 @@ const Kanban = ({userId}) => {
                                             <Github />
                                             <a href='https://github.com/drkPrince/agilix' target='blank'>Github</a>
                                         </div> */}
-                                        <div className='text-white bg-gradient-to-br from-primary via-indigo-600 to-blue-600 transform hover:scale-110 transition-all duration-300 rounded-full p-2 sm:p-1 fixed bottom-6 right-6 sm:static' onClick={()=>setModal(true)}>
-                                            <Add />
+                                        <div className='text-white bg-gradient-to-br from-primary via-purple-600 to-indigo-600 transform hover:scale-110 transition-all duration-300 rounded-full p-2 sm:p-5 fixed bottom-6 right-6 sm:static' onClick={()=>setModal(true)}>
+                                            <p>Add a new Task</p>
+                                            {/* <Add /> */}
                                         </div>
                                     </div>
                                 </div>
@@ -252,7 +255,7 @@ const Kanban = ({userId}) => {
                                                 initialData?.columnOrder.map((col, i) => {
                                                     const column = initialData?.columns[col]
                                                     const tasks = column.taskIds?.map(t => t)
-                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max}/>
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max} sprintId={sprintId}/>
                                                 }) 
                                             }
                                             {provided.placeholder}

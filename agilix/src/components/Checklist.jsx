@@ -7,7 +7,7 @@ import {useState, useRef} from 'react'
 import {v4 as uuidv4} from 'uuid';
 
 
-const Checklist = ({todos, taskId, boardId, userId}) => {
+const Checklist = ({todos, taskId, boardId, userId , sprintId}) => {
 
 	const [todoList, setList] = useState(todos)
 	const newTaskRef = useRef(null)
@@ -16,7 +16,7 @@ const Checklist = ({todos, taskId, boardId, userId}) => {
 		if(e.key === 'Enter' && e.target.value !== ''){
 			const uid = uuidv4()
 		 	setList([...todoList, {id: uid, task: e.target.value, done: false}])
-			db.collection(`users/${userId}/boards/${boardId}/tasks`)
+			db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
 				.doc(taskId)
 				.update({todos: firebase.firestore.FieldValue.arrayUnion({id: uid, task: e.target.value, done: false})})
 			newTaskRef.current.value = ''	
@@ -28,7 +28,7 @@ const Checklist = ({todos, taskId, boardId, userId}) => {
 		const rest = todoList.filter(t => t.task !== todo.task)
 		toBeChanged.done = !toBeChanged.done
 
-		db.collection(`users/${userId}/boards/${boardId}/tasks`)
+		db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
 			.doc(taskId)
 			.update({todos: [...rest, toBeChanged]})
 	}
@@ -36,7 +36,7 @@ const Checklist = ({todos, taskId, boardId, userId}) => {
 	const deleteSubTask = (taskName) => {
 		const filtered = todoList.filter(t => t.task !== taskName)
 		setList(filtered)
-		db.collection(`users/${userId}/boards/${boardId}/tasks`)
+		db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
 			.doc(taskId)
 			.update({todos: filtered})
 	}
@@ -49,7 +49,7 @@ const Checklist = ({todos, taskId, boardId, userId}) => {
 		newOrder.splice(source.index, 1)
         newOrder.splice(destination.index, 0, toBeMoved)
         setList(newOrder)
-        db.collection(`users/${userId}/boards/${boardId}/tasks`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
 			.doc(taskId)
 			.update({todos: newOrder})
 	}

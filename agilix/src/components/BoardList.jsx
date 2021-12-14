@@ -1,9 +1,10 @@
-
 import { Link } from 'react-router-dom'
 import {useState} from 'react'
 
 import Modal from './Modal'
 import {Exclaim, Bin} from './Icons'
+
+import companyLogo from '../styles/logo-sm.png';
 
 const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) => 
 {
@@ -33,7 +34,13 @@ const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) =>
 
 
 
-    else return (
+    else return (<>
+            <div className='bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-300 h-20'>
+                <span>
+                    <img className='p-5 inline' src={companyLogo} alt='logo'/>
+                    <button className='px-3 border border-purple-800 hover:bg-purple-700 hover:text-white text-purple-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
+                </span>
+            </div>
         <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-screen px-6 py-4 sm:py-20 sm:px-24 '>
             <Modal modal={modal} setModal={setModal} ariaText='Board Delete confirmation'>
                 <div className='md:px-12'>
@@ -51,10 +58,9 @@ const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) =>
             <div className='flex flex-col my-2 '>
                 <div className='flex justify-between'>
                     <h1 className='text-xl sm:text-3xl bg-gradient-to-r from-indigo-500 to-primary bg-clip-text text-transparent'>Welcome, {name ? name.split(' ')[0] : 'Stranger'}</h1>
-                    <button className='px-3 border border-red-800 hover:bg-red-700 hover:text-white text-red-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
                 </div>
                 <div className="my-12 grid justify-items-center bg-white p-16 rounded-lg shadow-md">
-                    <h1 className='text-xl text-purple-600 font-black text-3xl underline' >Your Boards</h1>
+                    <h1 className='text-xl text-purple-600 font-black text-3xl underline p-10' >Your Projects</h1>
                     <div className="flex flex-wrap mt-2">
                         {boards.map(b => 
                             <div className='bg-white text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full sm:w-auto' key={b.id}>
@@ -71,15 +77,15 @@ const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) =>
                 </div>
             </div>
             <form onSubmit={addNewBoard} autoComplete='off' className='my-4 sm:my-8 justify-items-center bg-white p-16 rounded-lg shadow-md'>
-                <label htmlFor="boardName" className='block text-xl text-purple-600 font-black text-3xl underline'>Make a new board</label>
+                <label htmlFor="boardName" className='block text-xl text-purple-600 font-black text-3xl underline p-10'>Make a new project</label>
                 <div className="flex items-center mt-2">
-                    <input required type="text" name='boardName' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' placeholder='Enter a board name' />
+                    <input required type="text" name='boardName' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' placeholder='Enter a project name' />
                     <input required type="date" name='endingProjectDate' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' />
                     <button type='submit' className='bg-purple-600 hover:bg-purple-900 text-purple-50 border border-purple-500 rounded-r-sm px-2 py-1.5' >Add</button>
                 </div>
             </form>
         </div>
-    )
+        </>)
 }
 
 export default BoardList
