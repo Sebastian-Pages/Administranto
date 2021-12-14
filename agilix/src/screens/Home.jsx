@@ -31,7 +31,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
         const uid2 = uuidv4()
         db.collection(`users/${userId}/boards/${uid}/sprints`)
             .doc(uid2)
-            .set({name: "New Name" , endingDate: "1", state:0})
+            .set({name: "New Name" , endingDate: "", startingDate: "", state:0})
 
         const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
 
@@ -47,34 +47,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
 
     }
 
-    const addSprint = (e,bid) => {
-        console.log("add sprint: ",bid)
-
-        e.preventDefault()
-        const uid = uuidv4()
-
-        db.collection(`users/${userId}/boards/${bid}/sprints`)
-            .doc(uid)
-            .set({name: e.target.elements.boardName.value , endingDate: e.target.elements.endingProjectDate.value, state:0})
-        
- 
-        const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
-
-        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
-            .doc('columnOrder')
-            .set(columnOrder)
-
-   
-        const productBacklog = { taskIds: [], title: 'ProductBacklog' }
-
-        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
-            .doc('productBacklog')
-            .set(productBacklog)
-
-
-    }
-
-    const addSprint2 = (bid,productBacklog,tasks) => {
+    const addSprint = (bid,productBacklog,tasks) => {
         console.log("adding sprint to ",bid)
 
         // e.preventDefault()
@@ -82,7 +55,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
 
         db.collection(`users/${userId}/boards/${bid}/sprints`)
             .doc(uid)
-            .set({name: "New Sprint" , endingDate: "", state:0})
+            .set({name: "New Sprint" , endingDate: "", startingDate: "", state:0})
         
  
         const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
@@ -144,7 +117,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
                 </Route>
 
                 <Route path='/kanban/:boardId/:sprintId'>
-                    <Kanban logOut={logOut} userId={userId} addSprint2={addSprint2} />
+                    <Kanban logOut={logOut} userId={userId} addSprint={addSprint} />
                 </Route>
 
             </BrowserRouter>
