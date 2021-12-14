@@ -27,10 +27,9 @@ const Kanban = ({logOut,userId,addSprint2}) => {
 
 
     const onDragEnd = (result) => {
-
         const {destination, source, draggableId} = result
         if(!destination) return
-
+        if(sprintState===2)return
         if(result.type === 'task')  {
 
         const startColumn = initialData.columns[source.droppableId]    
@@ -274,7 +273,7 @@ const Kanban = ({logOut,userId,addSprint2}) => {
                                                 initialData?.columnOrder.map((col, i) => {
                                                     const column = initialData?.columns[col]
                                                     const tasks = column.taskIds?.map(t => t)
-                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max} sprintId={sprintId}/>
+                                                    return <Column column={column} tasks={tasks} allData={initialData} key={column.id} boardId={boardId} userId={userId} filterBy={filter} index={i} max={column.max} sprintId={sprintId} sprintState={sprintState}/>
                                                 }) 
                                             }
                                             {provided.placeholder}

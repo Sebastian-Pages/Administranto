@@ -9,7 +9,7 @@ import {useState, useRef} from 'react'
 import Modal from './Modal'
 
 
-const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max, sprintId }) => {
+const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max, sprintId , sprintState}) => {
 
     const [modal, setModal] = useState(false)
     const [editingCol, setEditing] = useState(false)
@@ -57,6 +57,11 @@ const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max,
             <Draggable draggableId={column.id} index={index} key={column.id}>
                 {provided => 
                     (column.title==="ProductBacklog")?
+                    (sprintState===2)?
+                    <div className='text-white bg-gradient-to-r from-purple-700 via-purple-700 to-pink-400 transform transition-all duration-300 rounded mr-5 p-2 sm:p-5 fixed bottom-6 right-6 sm:static'>
+                        <p>Viewing Old Sprint</p>
+                    {/* <Add /> */}
+                    </div>:
                     <div {...provided.draggableProps} ref={provided.innerRef} className='mr-5'>
                         <div style={{background: '#edf2ff',borderRadius:' 0 0 10px 10px'}}>
                             <div {...provided.dragHandleProps} className='bg-gradient-to-r from-purple-700 via-purple-700 to-pink-400 flex items-center justify-between px-4 py-1 rounded-t-lg'>
@@ -71,19 +76,6 @@ const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max,
                                 }
                             </Droppable>
                         </div>
-                        <Modal modal={modal} setModal={setModal} ariaText='Column Delete confirmation'>
-                            <div className='md:px-12'>
-                                <div className='text-yellow-600 mb-2'>
-                                    <Exclaim />
-                                </div>
-                                <h2 className='text-base md:text-2xl text-gray-900 mb-2'>Are you sure you want to delete this column?</h2>
-                                <h3 className="text-red-600 text-sm md:text-lg">This column and its tasks will be permanently deleted and it cannot be undone.</h3>
-                                <div className="my-8 flex">
-                                    <button className='border border-red-700 text-red-600 px-2 py-1 rounded-sm mr-4 text-sm md:text-base' onClick={()=>deleteCol(column.id, tasks)}>Yes, delete</button>
-                                    <button className='bg-blue-800 text-gray-100 px-2 py-1 rounded-sm text-sm md:text-base' onClick={()=>setModal(false)}>No, go back</button>
-                                </div>
-                            </div>
-                        </Modal>
                     </div>:
                     <div {...provided.draggableProps} ref={provided.innerRef} className='mr-5'>
                         <div style={{background: '#edf2ff',borderRadius:' 0 0 10px 10px'}}>
