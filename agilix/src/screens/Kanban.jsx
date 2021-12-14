@@ -340,7 +340,7 @@ const Kanban = ({logOut,userId,addSprint}) => {
                             <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
                                 <div className='flex flex-wrap justify-between items-center'>
                                     <span className='text-xl'>
-                                    <Link to='/' className='inline p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Project Menu</Link>
+                                    <Link to='/' className='inline p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0' style={{height:'150px'}}>Project Menu</Link>
                                     <input type="text" defaultValue={boardName} className='inline p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         {/* <div className='flex items-center'>
                                             <p>ENDING DATE :  </p>
