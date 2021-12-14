@@ -348,8 +348,8 @@ const Kanban = ({logOut,userId,addSprint}) => {
                                         </div> */}
                                         <button className={`${sprintState===0 ? 'bg-blue-400' : sprintState===1 ? 'bg-green-400' : 'bg-red-400'} ml-4 p-2 text-xl font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3`} onClick={()=>startSprint()}>{sprintState===0 ? "Start Sprint": sprintState===1 ?"End Sprint":"Sprint had Ended"}</button>
                                         <input type="text" defaultValue={sprintName} className={`inline p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-32 h-12 truncate `} onChange={(e)=>changeSprintName(e.target.value)} disabled={sprintState>1}/>
-                                        <input required type="date" defaultValue={startingDate} name='endingDate' className='inline p-2 text-xl text-purple-600 bg-white font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-32 h-12' onChange={(e)=>changeSprintStartingDate(e.target.value)} disabled={sprintState>1}/>
-                                        <input required type="date" defaultValue={endingDate} name='startingDate' className='inline p-2 text-xl text-purple-600 bg-white font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-32 h-12' onChange={(e)=>changeSprintEndingDate(e.target.value)} disabled={sprintState>1}/>
+                                        <input required type="date" defaultValue={startingDate} name='endingDate' className='inline p-2 text-xl text-purple-600 bg-white font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-44 h-12' onChange={(e)=>changeSprintStartingDate(e.target.value)} disabled={sprintState>1}/>
+                                        <input required type="date" defaultValue={endingDate} name='startingDate' className='inline p-2 text-xl text-purple-600 bg-white font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-44 h-12' onChange={(e)=>changeSprintEndingDate(e.target.value)} disabled={sprintState>1}/>
 
                                         {/* <input type="text" defaultValue={"sprintName"} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} /> */}
@@ -374,8 +374,8 @@ const Kanban = ({logOut,userId,addSprint}) => {
                                             <Github />
                                             <a href='https://github.com/drkPrince/agilix' target='blank'>Github</a>
                                         </div> */}
-                                        <div className='ml-4 p-2 text-xl bg-green-500 font-black  rounded-lg  text-white hover:bg-green-300 py-3 transform hover:scale-110 transition-all duration-300 inline ' onClick={()=>setModal(true)}>
-                                            <p className='inline'>Add a new Task </p>
+                                        <div className='ml-4 p-2 mr-16 text-xl bg-green-500 font-black  rounded-lg  text-white hover:bg-green-300 py-3 transform hover:scale-110 transition-all duration-300 inline ' onClick={()=>setModal(true)}>
+                                            <p className='inline '>Add a new Task </p>
                                         </div>
                                     </div>
                                 </div>

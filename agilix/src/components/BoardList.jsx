@@ -63,8 +63,8 @@ const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) =>
                     <h1 className='text-xl text-purple-600 font-black text-3xl underline p-10' >Your Projects</h1>
                     <div className="flex flex-wrap mt-2">
                         {boards.map(b => 
-                            <div className='bg-white text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full sm:w-auto' key={b.id}>
-                                <div className="flex items-center justify-between">
+                            <div className='bg-white text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full sm:w-auto hover:scale-110 transition-all duration-300' key={b.id}>
+                                <div className="flex items-center justify-between ">
                                     <Link to={`/board/${b.id}`}><h2 className='text-lg sm:text-2xl text-gray-700 hover:text-gray-900'>{b.name}</h2></Link>
                                     <div onClick={() => openDeleteModal(b.id)} className='text-red-500 ml-6 cursor-pointer hover:text-red-700'>
                                         <Bin />
@@ -76,12 +76,12 @@ const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) =>
                     </div>
                 </div>
             </div>
-            <form onSubmit={addNewBoard} autoComplete='off' className='my-4 sm:my-8 justify-items-center bg-white p-16 rounded-lg shadow-md'>
-                <label htmlFor="boardName" className='block text-xl text-purple-600 font-black text-3xl underline p-10'>Make a new project</label>
-                <div className="flex items-center mt-2">
-                    <input required type="text" name='boardName' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' placeholder='Enter a project name' />
-                    <input required type="date" name='endingProjectDate' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' />
-                    <button type='submit' className='bg-purple-600 hover:bg-purple-900 text-purple-50 border border-purple-500 rounded-r-sm px-2 py-1.5' >Add</button>
+            <form onSubmit={addNewBoard} autoComplete='off' className='my-4 sm:my-8 justify-items-center bg-white p-16 rounded-lg shadow-md my-12 grid '>
+                <label htmlFor="boardName" className='block text-xl text-purple-600 font-black text-3xl underline p-10 flex '>Make a new project</label>
+                <div className="items-center mt-2 bg-purple-600 rounded-lg">
+                    <input required type="text" name='boardName' className='bg-white border border-gray-500 px-2 py-1.5 rounded-l-lg placeholder-gray-700' placeholder='Enter a project name' />
+                    <input required type="date" name='endingProjectDate' placeholder="222-55-11" className='bg-white border border-gray-500 px-2 py-1.5 placeholder-gray-700' />
+                    <button type='submit' className='bg-purple-600 hover:bg-purple-900 text-purple-50 rounded-r-lg px-2 py-1.5' >Add</button>
                 </div>
             </form>
         </div>
