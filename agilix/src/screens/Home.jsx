@@ -109,9 +109,9 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
         // console.log("foreach: ",element)
         
         
-        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/`)
-            .doc(startColumn.id)
-            .update({taskIds: newTaskIds})
+        // db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/`)
+        //     .doc(startColumn.id)
+        //     .update({taskIds: newTaskIds})
 
     }
 
