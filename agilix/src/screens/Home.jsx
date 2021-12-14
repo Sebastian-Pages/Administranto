@@ -53,20 +53,20 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
             .doc(uid)
             .set({name: e.target.elements.boardName.value , endingDate: e.target.elements.endingProjectDate.value, state:0})
         
-        /**** est Déplacer dans add Sprint ***********/
+ 
         const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
 
         db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
             .doc('columnOrder')
             .set(columnOrder)
 
-        /** Add BackLog  *****************/
+   
         const productBacklog = { taskIds: [], title: 'ProductBacklog' }
 
         db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
             .doc('productBacklog')
             .set(productBacklog)
-        /********************************/
+
 
     }
 
