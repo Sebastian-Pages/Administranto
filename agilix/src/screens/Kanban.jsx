@@ -266,7 +266,19 @@ const Kanban = ({logOut,userId,addSprint2}) => {
             .update({name: ev})
     }, 7000);
 
-    
+    const changeSprintStartingDate = debounce((ev) => {
+        // db.collection(`users/${userId}/boards/${boardId}/sprints/`)
+        //     .doc(sprintId)
+        //     .update({: ev})
+    }, 7000);
+
+    const changeSprintEndingDate = debounce((ev) => {
+        // db.collection(`users/${userId}/boards/${boardId}/sprints/`)
+        //     .doc(sprintId)
+        //     .update({: ev})
+    }, 7000);
+
+
 	return (
 		<>
             {initialData ? 
@@ -297,7 +309,10 @@ const Kanban = ({logOut,userId,addSprint2}) => {
                                             <input type="text" defaultValue={boardEndingProjectDate} />
                                         </div> */}
                                         <button className={`${sprintState===0 ? 'bg-blue-400' : sprintState===1 ? 'bg-green-400' : 'bg-red-400'} ml-4 p-2 text-xl font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3`} onClick={()=>startSprint()}>{sprintState===0 ? "Start Sprint": sprintState===1 ?"End Sprint":"Sprint had Ended"}</button>
-                                        <input type="text" defaultValue={sprintName} className={`inline p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate `} onChange={(e)=>changeSprintName(e.target.value)} disabled={sprintState>1}/>
+                                        <input type="text" defaultValue={sprintName} className={`inline p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-32 h-12 truncate `} onChange={(e)=>changeSprintName(e.target.value)} disabled={sprintState>1}/>
+                                        <input required type="date" name='endingDate' className='inline p-2 text-xl text-purple-600 bg-white font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-32 h-12' onChange={(e)=>changeSprintStartingDate(e.target.value)} disabled={sprintState>1}/>
+                                        <input required type="date" name='startingDate' className='inline p-2 text-xl text-purple-600 bg-white font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-32 h-12' onChange={(e)=>changeSprintEndingDate(e.target.value)} disabled={sprintState>1}/>
+
                                         {/* <input type="text" defaultValue={"sprintName"} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} /> */}
                                         <Link to={`/board/${boardId}`}className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
