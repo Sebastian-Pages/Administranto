@@ -249,7 +249,7 @@ const Kanban = ({logOut,userId,addSprint2}) => {
             .doc(sprintId)
             .update({state: sprintState+1})}
         console.log('State:', sprintState)
-        window.location.reload();
+        // window.location.reload();
 
         
     }
