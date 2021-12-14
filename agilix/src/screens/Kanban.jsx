@@ -238,8 +238,9 @@ const Kanban = ({logOut,userId}) => {
                                             <Github />
                                             <a href='https://github.com/drkPrince/agilix' target='blank'>Github</a>
                                         </div> */}
-                                        <div className='text-white bg-gradient-to-br from-primary via-indigo-600 to-blue-600 transform hover:scale-110 transition-all duration-300 rounded-full p-2 sm:p-1 fixed bottom-6 right-6 sm:static' onClick={()=>setModal(true)}>
-                                            <Add />
+                                        <div className='text-white bg-gradient-to-br from-primary via-purple-600 to-indigo-600 transform hover:scale-110 transition-all duration-300 rounded-full p-2 sm:p-5 fixed bottom-6 right-6 sm:static' onClick={()=>setModal(true)}>
+                                            <p>Add a new Task</p>
+                                            {/* <Add /> */}
                                         </div>
                                     </div>
                                 </div>
