@@ -30,102 +30,163 @@ const Kanban = ({logOut,userId,addSprint2}) => {
         const {destination, source, draggableId} = result
         if(!destination) return
         if(sprintState===2)return
-        if(result.type === 'task')  {
+        if(result.type === 'task') {
+            //sprintState===0
+            const startColumn = initialData.columns[source.droppableId]    
+            const endColumn = initialData.columns[destination.droppableId]    
 
-        const startColumn = initialData.columns[source.droppableId]    
-        const endColumn = initialData.columns[destination.droppableId]    
+            if(sprintState===0){
+                if(startColumn === endColumn){
+                    const newTaskIds = Array.from(endColumn.taskIds)
 
-        if(startColumn === endColumn){
-            const newTaskIds = Array.from(endColumn.taskIds)
-
-            newTaskIds.splice(source.index, 1)
-            newTaskIds.splice(destination.index, 0, draggableId)
+                    newTaskIds.splice(source.index, 1)
+                    newTaskIds.splice(destination.index, 0, draggableId)
 
 
-            const newColumn = {
-                ...endColumn, taskIds: newTaskIds
-            }
+                    const newColumn = {
+                        ...endColumn, taskIds: newTaskIds
+                    }
 
-            const newState = {
-                ...initialData, 
-                columns: {...initialData.columns, [endColumn.id]: newColumn}
-            }
+                    const newState = {
+                        ...initialData, 
+                        columns: {...initialData.columns, [endColumn.id]: newColumn}
+                    }
 
-            setInitialData(newState)
-            db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(startColumn.id)
-                .update({taskIds: newTaskIds})
-            return
-        }
-
-        //console.log(endColumn.taskIds.length+1);
-        if(endColumn.max){
-            if ( endColumn.taskIds.length < endColumn.max ){
-                const startTaskIDs = Array.from(startColumn.taskIds)
-                startTaskIDs.splice(source.index, 1)
-                const newStart = {
-                    ...startColumn, taskIds: startTaskIDs
+                    setInitialData(newState)
+                    db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(startColumn.id)
+                        .update({taskIds: newTaskIds})
+                    return
                 }
 
+                console.log(endColumn.taskIds.length+1);
+                if(endColumn.max){
+                    if ( endColumn.taskIds.length < endColumn.max ){
+                        const startTaskIDs = Array.from(startColumn.taskIds)
+                        startTaskIDs.splice(source.index, 1)
+                        const newStart = {
+                            ...startColumn, taskIds: startTaskIDs
+                        }
 
-                const finishTaskIDs = Array.from(endColumn.taskIds)
-                finishTaskIDs.splice(destination.index, 0, draggableId)
-                const newFinish = {
-                    ...endColumn, taskIds: finishTaskIDs
-                }
+
+                        const finishTaskIDs = Array.from(endColumn.taskIds)
+                        finishTaskIDs.splice(destination.index, 0, draggableId)
+                        const newFinish = {
+                            ...endColumn, taskIds: finishTaskIDs
+                        }
 
 
-                const newState = {
-                    ...initialData, 
-                    columns: {
-                        ...initialData.columns,
-                        [startColumn.id]: newStart,
-                        [endColumn.id]: newFinish
+                        const newState = {
+                            ...initialData, 
+                            columns: {
+                                ...initialData.columns,
+                                [startColumn.id]: newStart,
+                                [endColumn.id]: newFinish
+                            }
+                        }
+
+                        setInitialData(newState)
+
+                        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
+                            .update({taskIds: startTaskIDs})
+
+                        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
+                            .update({taskIds: finishTaskIDs})
                     }
                 }
+            //sprintState===1 
+            }else{
+                if(startColumn === endColumn){
+                    const newTaskIds = Array.from(endColumn.taskIds)
 
-                setInitialData(newState)
+                    newTaskIds.splice(source.index, 1)
+                    newTaskIds.splice(destination.index, 0, draggableId)
 
-                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
-                    .update({taskIds: startTaskIDs})
 
-                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
-                    .update({taskIds: finishTaskIDs})
-            }
-        }else{
-            const startTaskIDs = Array.from(startColumn.taskIds)
-                startTaskIDs.splice(source.index, 1)
-                const newStart = {
-                    ...startColumn, taskIds: startTaskIDs
+                    const newColumn = {
+                        ...endColumn, taskIds: newTaskIds
+                    }
+
+                    const newState = {
+                        ...initialData, 
+                        columns: {...initialData.columns, [endColumn.id]: newColumn}
+                    }
+
+                    setInitialData(newState)
+                    db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(startColumn.id)
+                        .update({taskIds: newTaskIds})
+                    return
                 }
 
+                //console.log(endColumn.taskIds.length+1);
+                if(endColumn.max){
+                    if ( endColumn.taskIds.length < endColumn.max ){
+                        const startTaskIDs = Array.from(startColumn.taskIds)
+                        startTaskIDs.splice(source.index, 1)
+                        const newStart = {
+                            ...startColumn, taskIds: startTaskIDs
+                        }
 
-                const finishTaskIDs = Array.from(endColumn.taskIds)
-                finishTaskIDs.splice(destination.index, 0, draggableId)
-                const newFinish = {
-                    ...endColumn, taskIds: finishTaskIDs
-                }
+
+                        const finishTaskIDs = Array.from(endColumn.taskIds)
+                        finishTaskIDs.splice(destination.index, 0, draggableId)
+                        const newFinish = {
+                            ...endColumn, taskIds: finishTaskIDs
+                        }
 
 
-                const newState = {
-                    ...initialData, 
-                    columns: {
-                        ...initialData.columns,
-                        [startColumn.id]: newStart,
-                        [endColumn.id]: newFinish
+                        const newState = {
+                            ...initialData, 
+                            columns: {
+                                ...initialData.columns,
+                                [startColumn.id]: newStart,
+                                [endColumn.id]: newFinish
+                            }
+                        }
+
+                        setInitialData(newState)
+
+                        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
+                            .update({taskIds: startTaskIDs})
+
+                        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
+                            .update({taskIds: finishTaskIDs})
+                    }   
+                }else{
+                    if ( destination.droppableId ==="productBacklog" || source.droppableId ==="productBacklog" ){}else{
+                        const startTaskIDs = Array.from(startColumn.taskIds)
+                        startTaskIDs.splice(source.index, 1)
+                        const newStart = {
+                            ...startColumn, taskIds: startTaskIDs
+                        }
+
+
+                        const finishTaskIDs = Array.from(endColumn.taskIds)
+                        finishTaskIDs.splice(destination.index, 0, draggableId)
+                        const newFinish = {
+                            ...endColumn, taskIds: finishTaskIDs
+                        }
+
+
+                        const newState = {
+                            ...initialData, 
+                            columns: {
+                                ...initialData.columns,
+                                [startColumn.id]: newStart,
+                                [endColumn.id]: newFinish
+                            }
+                        }
+
+                        setInitialData(newState)
+
+                        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
+                            .update({taskIds: startTaskIDs})
+
+                        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
+                            .update({taskIds: finishTaskIDs})
                     }
                 }
-
-                setInitialData(newState)
-
-                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
-                    .update({taskIds: startTaskIDs})
-
-                db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
-                    .update({taskIds: finishTaskIDs})
-        }
-    }
-
-    else {
+            }
+        }else {
         if (source.index===0 || destination.index===0)
         {
             return
