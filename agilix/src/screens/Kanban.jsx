@@ -322,15 +322,20 @@ const Kanban = ({logOut,userId,addSprint2}) => {
                     </Modal>
                     
                     <main className="pb-2 h-screen w-screen">
-                    <div className='bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-300 h-20'>
-                    <span>
-                        <img className='p-5 inline' src={companyLogo} alt='logo'/>
-                        
-                        <p className="inline">ENDING DATE : </p>
-                        <input className="inline" type="text" defaultValue={boardEndingProjectDate} />
-                        <button className='px-3 border border-purple-800 hover:bg-purple-700 hover:text-white text-purple-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
-                    </span>
+                    <div className='bg-gradient-to-r from-pink-400 via-orange-300 to-yellow-300 h-20 '>
+                        <div className='content-end'>
+                            <img className='p-5 inline float-left' src={companyLogo} alt='logo'/>
+                     
+                            <button className='m-6 inline float-right border border-purple-800 hover:bg-purple-700 hover:text-white text-purple-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
+                        </div>
+                        <div className="  p-8">
+                                <p className="inline text-lg ml-32 w-32">Project ends on </p>
+                                <p className="inline ">{boardEndingProjectDate} </p>
+                            </div>
                     </div>
+
+                        <input className="inline" />
+       
                         <div className='flex flex-col h-full'>
                             <header className='bg-white z-10 text-sm sm:text-base py-5 mx-3 md:mx-6'>
                                 <div className='flex flex-wrap justify-between items-center'>
@@ -348,7 +353,7 @@ const Kanban = ({logOut,userId,addSprint2}) => {
 
                                         {/* <input type="text" defaultValue={"sprintName"} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
                                         <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} /> */}
-                                        <Link to={`/board/${boardId}`}className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
+                                        <Link to={`/board/${boardId}`} className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
                                         
                                         {/* <Link to='/' className=' p-2 text-3xl text-purple-600 font-black border-4 rounded-l-lg border-purple-500 hover:text-purple-300 py-3'>Boards </Link>
                                         <input type="text" defaultValue={boardName} className='p-2 text-3xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-500 ring-offset-1 py-3 w-1/2 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
@@ -369,9 +374,8 @@ const Kanban = ({logOut,userId,addSprint2}) => {
                                             <Github />
                                             <a href='https://github.com/drkPrince/agilix' target='blank'>Github</a>
                                         </div> */}
-                                        <div className='text-white bg-gradient-to-br from-primary via-purple-600 to-indigo-600 transform hover:scale-110 transition-all duration-300 rounded-full p-2 sm:p-5 fixed bottom-6 right-6 sm:static' onClick={()=>setModal(true)}>
-                                            <p>Add a new Task</p>
-                                            {/* <Add /> */}
+                                        <div className='ml-4 p-2 text-xl bg-green-500 font-black  rounded-lg  text-white hover:bg-green-300 py-3 transform hover:scale-110 transition-all duration-300 inline ' onClick={()=>setModal(true)}>
+                                            <p className='inline'>Add a new Task </p>
                                         </div>
                                     </div>
                                 </div>

@@ -31,15 +31,15 @@ const BoardList = ({ logOut, boards, addNewBoard, deleteBoard, name }) =>
                 </div>
             )
     }
-
+    // flex items-stretch 
 
 
     else return (<>
-            <div className='bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-300 h-20'>
-                <span>
-                    <img className='p-5 inline' src={companyLogo} alt='logo'/>
-                    <button className='px-3 border border-purple-800 hover:bg-purple-700 hover:text-white text-purple-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
-                </span>
+            <div className='bg-gradient-to-r from-pink-400 via-orange-300 to-yellow-300 h-20 '>
+                <div className='content-end'>
+                    <img className='p-5 inline float-left ' src={companyLogo} alt='logo'/>
+                    <button className='m-6 inline float-right border border-purple-800 hover:bg-purple-700 hover:text-white text-purple-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
+                </div>
             </div>
         <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-screen px-6 py-4 sm:py-20 sm:px-24 '>
             <Modal modal={modal} setModal={setModal} ariaText='Board Delete confirmation'>
