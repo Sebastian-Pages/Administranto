@@ -58,9 +58,10 @@ const Kanban = ({logOut,userId,addSprint2}) => {
                     return
                 }
 
-                console.log(endColumn.taskIds.length+1);
+                //console.log(endColumn.taskIds.length+1);
                 if(endColumn.max){
                     if ( endColumn.taskIds.length < endColumn.max ){
+                        console.log("test")
                         const startTaskIDs = Array.from(startColumn.taskIds)
                         startTaskIDs.splice(source.index, 1)
                         const newStart = {
@@ -92,9 +93,41 @@ const Kanban = ({logOut,userId,addSprint2}) => {
                         db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
                             .update({taskIds: finishTaskIDs})
                     }
+                }else{
+                    const startTaskIDs = Array.from(startColumn.taskIds)
+                    startTaskIDs.splice(source.index, 1)
+                    const newStart = {
+                        ...startColumn, taskIds: startTaskIDs
+                    }
+
+
+                    const finishTaskIDs = Array.from(endColumn.taskIds)
+                    finishTaskIDs.splice(destination.index, 0, draggableId)
+                    const newFinish = {
+                        ...endColumn, taskIds: finishTaskIDs
+                    }
+
+
+                    const newState = {
+                        ...initialData, 
+                        columns: {
+                            ...initialData.columns,
+                            [startColumn.id]: newStart,
+                            [endColumn.id]: newFinish
+                        }
+                    }
+
+                    setInitialData(newState)
+
+                    db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newStart.id)
+                        .update({taskIds: startTaskIDs})
+
+                    db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`).doc(newFinish.id)
+                        .update({taskIds: finishTaskIDs})
                 }
             //sprintState===1 
             }else{
+                //console.log("STATE NI 2 NI 1")
                 if(startColumn === endColumn){
                     const newTaskIds = Array.from(endColumn.taskIds)
 
