@@ -1,6 +1,5 @@
 
-
-import {useState} from 'react'
+import {useState,useCallback} from 'react'
 import {useParams} from 'react-router-dom'
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 
@@ -16,14 +15,16 @@ import useKanbanData from '../hooks/useKanbanData'
 import {debounce} from '../utils'
 
 
-const Kanban = ({logOut,userId}) => {
+const Kanban = ({logOut,userId,addSprint2}) => {
     
     const {boardId} = useParams()
     const {sprintId} = useParams()
     const [modal, setModal] = useState(false)
-    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState } = useKanbanData(userId, boardId,sprintId)
+    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState,sprintName } = useKanbanData(userId, boardId,sprintId)
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
+
+
 
     const onDragEnd = (result) => {
 
@@ -174,14 +175,30 @@ const Kanban = ({logOut,userId}) => {
         e.target.elements.newCol.value = ''    
     }*/
 
-    const startSprint= (e) => {
-        // sprints.map(s=>console.log('start sprint', s.id))
-        console.log('start sprint', sprintState)
+    const startSprint= () => {
+        if(sprintState===2){
+            console.log('test fct: ',initialData.tasks)
+            // console.log('test fct: ',{ taskIds: [], title: 'ProductBacklog' ,max:null,id:"productBacklog"})
+            addSprint2(boardId,initialData.columns.productBacklog,initialData.tasks)
+        }
+        if (sprintState<2){
+        db.collection(`users/${userId}/boards/${boardId}/sprints/`)
+            .doc(sprintId)
+            .update({state: sprintState+1})}
+        console.log('State:', sprintState)
+
+        
     }
 
     const changeBoardName = debounce((ev) => {
         db.collection(`users/${userId}/boards`)
             .doc(boardId)
+            .update({name: ev})
+    }, 7000);
+
+    const changeSprintName = debounce((ev) => {
+        db.collection(`users/${userId}/boards/${boardId}/sprints/`)
+            .doc(sprintId)
             .update({name: ev})
     }, 7000);
 
@@ -215,9 +232,10 @@ const Kanban = ({logOut,userId}) => {
                                             <p>ENDING DATE :  </p>
                                             <input type="text" defaultValue={boardEndingProjectDate} />
                                         </div> */}
-                                        <button className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3' onClick={startSprint}>Start Sprint1</button>
-                                        <input type="text" defaultValue={"sprintName"} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
-                                        <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <button className={`${sprintState===0 ? 'bg-blue-400' : sprintState===1 ? 'bg-green-400' : 'bg-red-400'} ml-4 p-2 text-xl font-black border-4 rounded-l-lg border-purple-600 text-white hover:bg-purple-400 py-3`} onClick={()=>startSprint()}>{sprintState===0 ? "Start Sprint": sprintState===1 ?"End Sprint":"Sprint had Ended"}</button>
+                                        <input type="text" defaultValue={sprintName} className={`inline p-2 text-xl text-purple-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-1 py-2 w-48 h-12 truncate `} onChange={(e)=>changeSprintName(e.target.value)} disabled={sprintState>1}/>
+                                        {/* <input type="text" defaultValue={"sprintName"} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} />
+                                        <input type="text" defaultValue={""} className='p-2 text-xl text-grey-600 font-black ring-4 rounded-r-lg ring-purple-600 ring-offset-0 py-3 w-48 truncate' onChange={(e)=>changeBoardName(e.target.value)} /> */}
                                         <Link to={`/board/${boardId}`}className=' ml-4 p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3'>View Sprints</Link>
                                         
                                         {/* <Link to='/' className=' p-2 text-3xl text-purple-600 font-black border-4 rounded-l-lg border-purple-500 hover:text-purple-300 py-3'>Boards </Link>

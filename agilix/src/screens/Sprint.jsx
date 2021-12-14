@@ -20,9 +20,28 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
     
     const {boardId} = useParams()
     const [modal, setModal] = useState(false)
-    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState} = useKanbanData(userId, boardId,null)
+    const {initialData, setInitialData, boardName , boardEndingProjectDate, sprints,sprintState, sprintName} = useKanbanData(userId, boardId,null)
     const [filter, setFilter] = useState(null)
     const filters = ['high', 'medium', 'low']
+
+    // sert plus à rien mais le code peu etre utile
+    // function NewSprint(props) {
+    //     if (sprints!==null)
+    //         console.log("aaa: ",sprints.filter(state=>state===0))
+    //     const isLoggedIn = props.isLoggedIn;
+    //     if (isLoggedIn) {
+    //       return (
+    //   <form onSubmit={(e) => addSprint(e,boardId)} autoComplete='off' className='my-4 sm:my-8 justify-items-center bg-white p-16 rounded-lg shadow-md'>
+    //       <label htmlFor="boardName" className='block text-xl text-purple-600 font-black text-3xl underline'>Start a New Sprint</label>
+    //       <div className="flex items-center mt-2">
+    //           <input required type="text" name='boardName' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' placeholder='Enter a sprint name' />
+    //           <input required type="date" name='endingProjectDate' className='bg-transparent border border-gray-500 px-2 py-1.5 rounded-l-sm placeholder-gray-700' />
+    //           <button type='submit' className='bg-purple-600 hover:bg-purple-900 text-purple-50 border border-purple-500 rounded-r-sm px-2 py-1.5' >Add</button>
+    //       </div>
+    //   </form>);
+    //     }
+    //     return (<div></div>);
+    //   }
 
 	if(navigator.onLine !== true)
     {
@@ -58,7 +77,7 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
                         {sprints && sprints.map(s => 
     
                             <div>
-                                <div className={`${s.state===0 ? 'bg-pink-200' : ''} ${s.state===1 ? 'bg-green-200' : ''} ${s.state===2 ? 'bg-red-100' : ''} bg-pink text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full `} key={s.id}>
+                                <div className={`${s.state===0 ? 'bg-blue-100' : ''} ${s.state===1 ? 'bg-green-200' : ''} ${s.state===2 ? 'bg-red-200' : ''} bg-pink text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full `} key={s.id}>
                                     <div className="flex items-center justify-between">                  
                                         <Link to={`/kanban/${boardId}/${s.id}`}><h2 className='text-lg sm:text-2xl text-gray-700 hover:text-gray-900'>{s.name}</h2></Link>
                                         <div  className='text-red-500 ml-6 cursor-pointer hover:text-red-700'>
@@ -73,6 +92,7 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
                     </div>
                 </div>
             </div>
+            
             {/* <form onSubmit={(e) => addSprint(e,boardId)} autoComplete='off' className='my-4 sm:my-8 justify-items-center bg-white p-16 rounded-lg shadow-md'>
                 <label htmlFor="boardName" className='block text-xl text-purple-600 font-black text-3xl underline'>Start a New Sprint</label>
                 <div className="flex items-center mt-2">

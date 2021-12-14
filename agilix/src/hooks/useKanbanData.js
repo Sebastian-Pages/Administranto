@@ -12,7 +12,9 @@ const useKanban = (userId, boardId, sprintId) => {
     const [sprintState, setSprintState] = useState(null)
 
 
+
     useEffect(() => {
+        if (sprintId!==null){
         return db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
             .onSnapshot(snap => {
                 const documents = []
@@ -21,6 +23,7 @@ const useKanban = (userId, boardId, sprintId) => {
                 })
                 setTasks(documents)
             })
+        }
     }, [userId, boardId])
 
 
@@ -31,13 +34,6 @@ const useKanban = (userId, boardId, sprintId) => {
             .then(d => setBoardName(d.data().name))
     }, [userId, boardId])
 
-    // useEffect(() => {
-    //     return db.collection(`users/${userId}/boards/${boardId}/sprints`)
-    //         .doc(sprintId)
-    //         .get()
-    //         .then(d => setSprintName(d.data().name))
-    // }, [userId, boardId])
-
     useEffect(() => {
         return db.collection(`users/${userId}/boards`)
             .doc(boardId)
@@ -45,20 +41,24 @@ const useKanban = (userId, boardId, sprintId) => {
             .then(d => setBoardEndingProjectDate(d.data().endingDate))
     }, [userId, boardId])
 
-    //bug quand je le met :()
+    //bug quand je le met :() mais plus mtn !
     useEffect(() => {
+        if (sprintId!==null){
         return db.collection(`users/${userId}/boards/${boardId}/sprints`)
             .doc(sprintId)
             .get()
             .then(d => setSprintState(d.data().state))
+        }
     }, [userId, boardId])
 
-    // useEffect(() => {
-    //     return db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}`)
-    //         .doc(boardId)
-    //         .get()
-    //         .then(d => setBoardEndingProjectDate(d.data().endingDate))
-    // }, [userId, boardId])
+    useEffect(() => {
+        if (sprintId!==null){
+        return db.collection(`users/${userId}/boards/${boardId}/sprints`)
+            .doc(sprintId)
+            .get()
+            .then(d => setSprintName(d.data().name))
+        }
+    }, [userId, boardId])
 
     useEffect(() => {
         return db.collection(`users/${userId}/boards/${boardId}/sprints`)
@@ -102,7 +102,7 @@ const useKanban = (userId, boardId, sprintId) => {
     }, [tasks, columns])
 
 
-    return { initialData: final, setInitialData: setFinal, boardName, boardEndingProjectDate ,sprints ,sprintState}
+    return { initialData: final, setInitialData: setFinal, boardName, boardEndingProjectDate ,sprints ,sprintState, sprintName}
 
 }
 

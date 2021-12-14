@@ -32,11 +32,15 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
         db.collection(`users/${userId}/boards/${uid}/sprints`)
             .doc(uid2)
             .set({name: "New Name" , endingDate: "1", state:0})
+
         const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
+
         db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
             .doc('columnOrder')
             .set(columnOrder)
-        const productBacklog = { taskIds: [], title: 'ProductBacklog' }
+
+        const productBacklog = { taskIds: [], title: 'ProductBacklog' ,max:null,id:"productBacklog"}
+        
         db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
             .doc('productBacklog')
             .set(productBacklog)
@@ -70,6 +74,47 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
 
     }
 
+    const addSprint2 = (bid,productBacklog,tasks) => {
+        console.log("adding sprint to ",bid)
+
+        // e.preventDefault()
+        const uid = uuidv4()
+
+        db.collection(`users/${userId}/boards/${bid}/sprints`)
+            .doc(uid)
+            .set({name: "New Sprint" , endingDate: "", state:0})
+        
+ 
+        const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
+
+        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
+            .doc('columnOrder')
+            .set(columnOrder)
+
+        // const productBacklog = { taskIds: [], title: 'ProductBacklog' }
+        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
+            .doc('productBacklog')
+            .set(productBacklog)
+
+
+        // Atention on garde tous les items mais comme ils sont affiché quand la bonne col
+        // ca va marcher mais c'est pas du tout
+        // il fait filtrer mais balec
+
+        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/tasks`)
+            .doc(uid)
+            .set({title:"a", description:"a" ,priority:"a" , todos: [], dateAdded: 0 })
+        
+        
+        // console.log("foreach: ",element)
+        
+        
+        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/`)
+            .doc(startColumn.id)
+            .update({taskIds: newTaskIds})
+
+    }
+
     const deleteBoard = (id) => {
         db.collection(`users/${userId}/boards`)
             .doc(id)
@@ -98,7 +143,7 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
                 </Route>
 
                 <Route path='/kanban/:boardId/:sprintId'>
-                    <Kanban logOut={logOut} userId={userId} />
+                    <Kanban logOut={logOut} userId={userId} addSprint2={addSprint2} />
                 </Route>
 
             </BrowserRouter>
