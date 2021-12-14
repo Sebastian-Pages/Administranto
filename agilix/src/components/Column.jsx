@@ -9,37 +9,37 @@ import {useState, useRef} from 'react'
 import Modal from './Modal'
 
 
-const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max }) => {
+const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max, sprintId }) => {
 
     const [modal, setModal] = useState(false)
     const [editingCol, setEditing] = useState(false)
     const colInput = useRef(null)
 
     const deleteCol = (colId, tasks) => {
-        db.collection(`users/${userId}/boards/${boardId}/columns`)        
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)        
             .doc('columnOrder')
             .update({order: firebase.firestore.FieldValue.arrayRemove(colId)})   
 
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
             .doc(colId)
             .delete()
 
         //Extract and delete its tasks
         tasks.forEach(t => {
-            db.collection(`users/${userId}/boards/${boardId}/tasks`)
+            db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
             .doc(t)
             .delete()
         })
     }
 
     const changeColName = debounce((e, colId) => {
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
             .doc(colId)
             .update({title: e.target.value})
     }, 7000)
 
     const changeColMax = debounce((e, colId) => {
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
             .doc(colId)
             .update({max: e.target.value})
     }, 7000)
@@ -65,7 +65,7 @@ const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max 
                             <Droppable droppableId={column.id} type='task'>                          
                                 {(provided, snapshot) => 
                                     <div {...provided.droppableProps} ref={provided.innerRef} className={`shadow-sm h-full py-4 px-2 rounded-b-lg ${snapshot.isDraggingOver ? 'bg-gradient-to-br from-green-400 via-green-200 to-green-100' : ''}`}>
-                                        {tasks.map((t, i) =>  <Task allData={allData} id={t} index={i} key={t} boardId={boardId} userId={userId} columnDetails={column} filterBy={filterBy}/> )}
+                                        {tasks.map((t, i) =>  <Task allData={allData} id={t} index={i} key={t} boardId={boardId} userId={userId} columnDetails={column} filterBy={filterBy} sprintId={sprintId}/> )}
                                         {provided.placeholder}
                                     </div>
                                 }
@@ -98,7 +98,7 @@ const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max 
                             <Droppable droppableId={column.id} type='task'>                          
                                 {(provided, snapshot) => 
                                     <div {...provided.droppableProps} ref={provided.innerRef} className={`shadow-sm h-full py-4 px-2 rounded-b-lg ${snapshot.isDraggingOver ? 'bg-gradient-to-br from-green-400 via-green-200 to-green-100' : ''}`}>
-                                        {tasks.map((t, i) =>  <Task allData={allData} id={t} index={i} key={t} boardId={boardId} userId={userId} columnDetails={column} filterBy={filterBy}/> )}
+                                        {tasks.map((t, i) =>  <Task allData={allData} id={t} index={i} key={t} boardId={boardId} userId={userId} columnDetails={column} filterBy={filterBy} sprintId={sprintId}/> )}
                                         {provided.placeholder}
                                     </div>
                                 }

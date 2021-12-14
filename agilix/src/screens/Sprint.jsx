@@ -37,7 +37,12 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
 
 
 
-    else return (
+    else return (<>
+        <div className='bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-300 h-20'>
+                <span>
+                    <img className='p-5 inline' src={companyLogo} alt='logo'/>
+                </span>
+            </div>
         <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-screen px-6 py-4 sm:py-20 sm:px-24 '>
             <div className='flex flex-col my-2 '>
                 <div className='flex justify-between'>
@@ -46,7 +51,7 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
                     <button className='px-3 border border-red-800 hover:bg-red-700 hover:text-white text-red-800 px-2 py-1 rounded-sm text-sm sm:text-base' onClick={logOut}>Log out</button>
                 </div>
                 <div className="my-12 grid justify-items-center bg-white p-16 rounded-lg shadow-md">
-                    <h1 className='text-xl text-purple-600 font-black text-3xl underline' >Your Sprints</h1>
+                    <h1 className='text-xl text-purple-600 font-black text-3xl underline p-10' >Your Sprints</h1>
                     <div className="flex flex-wrap mt-2">
                         {/* ICI ON MET LES SPTINS */}
                         {/* {console.log("s: ",sprints)} */}
@@ -78,7 +83,7 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
                 </div>
             </form> */}
         </div>
-    )
+        </>)
 }
 
 export default Sprint

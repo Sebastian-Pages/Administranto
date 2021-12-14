@@ -2,6 +2,7 @@ import companyLogo from '../styles/logo.png';
 
 const Login = ({ loginWithGoogle, signInAnon }) => {
     return (<>
+    
         <div className = 'bg-purple-600 w-full h-10' > </div> 
         <div className = 'bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-300 w-full h-2/3 rounded-b-lg' >
             <img className = 'p-20 pl-24'src = { companyLogo } alt = 'logo' />

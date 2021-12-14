@@ -9,7 +9,7 @@ import Modal from '../components/Modal'
 import {Exclaim} from '../components/Icons'
 
 
-const TaskDetails = ({taskDetails, boardId, userId, columnDetails, closeModal}) => {
+const TaskDetails = ({taskDetails, boardId, userId, columnDetails, closeModal , sprintId}) => {
 
 	const [updatedTitle, setTitle] = useState(taskDetails.title)
 	const [updatedPriority, setPriority] = useState(taskDetails.priority)
@@ -21,7 +21,7 @@ const TaskDetails = ({taskDetails, boardId, userId, columnDetails, closeModal}) 
 	const updateTask = (e) => {
 		e.preventDefault()
 		closeModal()
-		db.collection(`users/${userId}/boards/${boardId}/tasks`)
+		db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
 			.doc(taskDetails.id)
 			.update({title: updatedTitle, priority: updatedPriority, description: updatedDesc})
 	}
@@ -29,10 +29,10 @@ const TaskDetails = ({taskDetails, boardId, userId, columnDetails, closeModal}) 
 	const deleteTask = (e) => {
 		setModal(false)
 		closeModal()
-		db.collection(`users/${userId}/boards/${boardId}/columns`)	
+		db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)	
 			.doc(columnDetails.id)
 			.update({taskIds: firebase.firestore.FieldValue.arrayRemove(taskDetails.id)})
-		db.collection(`users/${userId}/boards/${boardId}/tasks`)
+		db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
 			.doc(taskDetails.id)
 			.delete()
 	}
@@ -68,7 +68,7 @@ const TaskDetails = ({taskDetails, boardId, userId, columnDetails, closeModal}) 
 
 						<div>
 							<label className='text-gray-500 uppercase tracking-wide text-xs sm:text-sm  block'>Checklist:</label>
-							<Checklist todos={taskDetails.todos} taskId={taskDetails.id} boardId={boardId} userId={userId} />
+							<Checklist todos={taskDetails.todos} taskId={taskDetails.id} boardId={boardId} userId={userId} sprintId={sprintId} />
 						</div>
 						
 						<div className="mt-12 w-full">

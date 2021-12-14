@@ -9,7 +9,7 @@ import {Description} from './Icons'
 import {useState} from 'react'
 
 
-const Task = ({ allData, id, index, boardId, userId, columnDetails, filterBy }) => {
+const Task = ({ allData, id, index, boardId, userId, columnDetails, filterBy,sprintId }) => {
 
 
 	const [modal, setModal] = useState(false)
@@ -28,7 +28,7 @@ const Task = ({ allData, id, index, boardId, userId, columnDetails, filterBy }) 
         <div className={`${matched ? '' : 'opacity-10'}`}>
 
         	<Modal modal={modal} setModal={setModal} ariaText='Task Details'>
-        		<TaskDetails taskDetails={theTask} closeModal={()=>setModal(false)} boardId={boardId} userId={userId} columnDetails={columnDetails} />
+        		<TaskDetails taskDetails={theTask} closeModal={()=>setModal(false)} boardId={boardId} userId={userId} columnDetails={columnDetails} sprintId={sprintId} />
         	</Modal> 
 
 	        <Draggable draggableId={id} index={index}>

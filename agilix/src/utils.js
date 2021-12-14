@@ -44,7 +44,7 @@ export const debounce = (callback, wait) => {
     }
 }
 
-
+{/*
 export const createBoardForAnons = (userId) => {
     const tasks = [{
             id: '1',
@@ -140,4 +140,4 @@ export const createBoardForAnons = (userId) => {
             .doc(t.id)
             .set(t)
     })
-}
+} */}

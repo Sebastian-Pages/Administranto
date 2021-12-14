@@ -3,24 +3,25 @@ import {useState} from 'react'
 import {db, firebase} from '../firebase/fbConfig'
 import {v4 as uuidv4} from 'uuid';
 
-const AddTask = ({boardId, userId, close, allCols}) => 
+const AddTask = ({boardId, userId, close, allCols , sprintId}) => 
 {
 	const [description, setDescription] = useState(null)
 
 	const addTask = (e) => {
         e.preventDefault()
-
+		console.log(e)
         const uid = uuidv4()
         const title = e.target.elements.newTaskTitle.value
         const priority = e.target.elements.priority.value
-        const column = e.target.elements.column.value
+        //const column = e.target.elements.column.value
 
-        db.collection(`users/${userId}/boards/${boardId}/tasks`)
+
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/tasks`)
         	.doc(uid)
         	.set({title,  priority , description, todos: [], dateAdded: firebase.firestore.FieldValue.serverTimestamp() })
 
-        db.collection(`users/${userId}/boards/${boardId}/columns`)
-        	.doc(column)
+        db.collection(`users/${userId}/boards/${boardId}/sprints/${sprintId}/columns`)
+        	.doc("productBacklog")
         	.update({taskIds: firebase.firestore.FieldValue.arrayUnion(uid)})
 
         close()	
