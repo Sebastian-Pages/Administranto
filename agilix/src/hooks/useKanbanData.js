@@ -8,6 +8,8 @@ const useKanban = (userId, boardId, sprintId) => {
     const [sprints, setSprints] = useState(null)
     const [boardName, setBoardName] = useState('')
     const [sprintName, setSprintName] = useState('')
+    const [startingDate, setStaringDate] = useState('')
+    const [endingDate, setEndingDate] = useState('')
     const [boardEndingProjectDate, setBoardEndingProjectDate] = useState('')
     const [sprintState, setSprintState] = useState(null)
 
@@ -59,6 +61,24 @@ const useKanban = (userId, boardId, sprintId) => {
             .then(d => setSprintName(d.data().name))
         }
     }, [userId, boardId])
+    
+    useEffect(() => {
+        if (sprintId!==null){
+        return db.collection(`users/${userId}/boards/${boardId}/sprints`)
+            .doc(sprintId)
+            .get()
+            .then(d => setStaringDate(d.data().startingDate))
+        }
+    }, [userId, boardId])
+
+    useEffect(() => {
+        if (sprintId!==null){
+        return db.collection(`users/${userId}/boards/${boardId}/sprints`)
+            .doc(sprintId)
+            .get()
+            .then(d => setEndingDate(d.data().endingDate))
+        }
+    }, [userId, boardId])
 
     useEffect(() => {
         return db.collection(`users/${userId}/boards/${boardId}/sprints`)
@@ -102,7 +122,7 @@ const useKanban = (userId, boardId, sprintId) => {
     }, [tasks, columns])
 
 
-    return { initialData: final, setInitialData: setFinal, boardName, boardEndingProjectDate ,sprints ,sprintState, sprintName}
+    return { initialData: final, setInitialData: setFinal, boardName, boardEndingProjectDate ,sprints ,sprintState, sprintName,startingDate,endingDate}
 
 }
 
