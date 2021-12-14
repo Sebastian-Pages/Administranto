@@ -66,6 +66,8 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
         <div className='bg-gradient-to-br from-pink-200 via-orange-100 to-yellow-100 h-screen px-6 py-4 sm:py-20 sm:px-24 '>
             <div className='flex flex-col my-2 '>
                 <div className='flex justify-between'>
+                <Link to='/' className='inline p-2 text-xl bg-purple-600 font-black border-4 rounded-lg border-purple-600 text-white hover:bg-purple-400 py-3 ring-1 rounded-l-lg ring-purple-600 ring-offset-0'>Project Menu</Link>
+
                     {/* <h1 className='text-xl sm:text-3xl bg-gradient-to-r from-indigo-500 to-primary bg-clip-text text-transparent'>Project: {boards.map(b => b.id==boardId ? b.name : b}</h1> */}
                 </div>
                 <div className="my-12 grid justify-items-center bg-white p-16 rounded-lg shadow-md">
@@ -76,8 +78,8 @@ const Sprint = ({logOut, boards,userId ,addSprint}) => {
                      
                         {sprints && sprints.map(s => 
     
-                            <div>
-                                <div className={`${s.state===0 ? 'bg-blue-100' : ''} ${s.state===1 ? 'bg-green-200' : ''} ${s.state===2 ? 'bg-red-200' : ''} bg-pink text-gray-700 mb-3 mr-4 py-4 px-6 rounded-lg shadow-md w-full `} key={s.id}>
+                            <div className='m-4'>
+                                <div className={`${s.state===0 ? 'bg-blue-100' : ''} ${s.state===1 ? 'bg-green-200' : ''} ${s.state===2 ? 'bg-red-200' : ''} bg-pink text-gray-700 mb-3 m-4 py-4 px-6 rounded-lg shadow-md w-full `} key={s.id}>
                                     <div className="flex items-center justify-between">                  
                                         <Link to={`/kanban/${boardId}/${s.id}`}><h2 className='text-lg sm:text-2xl text-gray-700 hover:text-gray-900'>{s.name}</h2></Link>
                                         <div  className='text-red-500 ml-6 cursor-pointer hover:text-red-700'>
