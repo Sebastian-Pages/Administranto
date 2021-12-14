@@ -7,6 +7,7 @@ const useKanban = (userId, boardId, sprintId) => {
     const [final, setFinal] = useState(null)
     const [sprints, setSprints] = useState(null)
     const [boardName, setBoardName] = useState('')
+    const [sprintName, setSprintName] = useState('')
     const [boardEndingProjectDate, setBoardEndingProjectDate] = useState('')
     const [sprintState, setSprintState] = useState(null)
 
@@ -29,6 +30,13 @@ const useKanban = (userId, boardId, sprintId) => {
             .get()
             .then(d => setBoardName(d.data().name))
     }, [userId, boardId])
+
+    // useEffect(() => {
+    //     return db.collection(`users/${userId}/boards/${boardId}/sprints`)
+    //         .doc(sprintId)
+    //         .get()
+    //         .then(d => setSprintName(d.data().name))
+    // }, [userId, boardId])
 
     useEffect(() => {
         return db.collection(`users/${userId}/boards`)
