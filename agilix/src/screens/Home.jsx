@@ -33,17 +33,32 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
             .doc(uid2)
             .set({name: "New Name" , endingDate: "", startingDate: "", state:0})
 
-        const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
+        const columnOrder = {id: 'columnOrder', order: ['productBacklog','afaire','enCours','termine']}
 
         db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
             .doc('columnOrder')
             .set(columnOrder)
 
         const productBacklog = { taskIds: [], title: 'ProductBacklog' ,max:null,id:"productBacklog"}
+        const afaire= {title: 'À Faire', taskIds: [],max:null,id:"afaire"}
+        const enCours= {title: 'En Cours', taskIds: [],max:null,id:"enCours"}
+        const termine= {title: 'Terminé', taskIds: [],max:null,id:"termine"}
         
         db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
             .doc('productBacklog')
             .set(productBacklog)
+        
+        db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
+            .doc('afaire')
+            .set(afaire)
+
+        db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
+            .doc('enCours')
+            .set(enCours)
+
+        db.collection(`users/${userId}/boards/${uid}/sprints/${uid2}/columns`)
+            .doc('termine')
+            .set(termine)
 
     }
 
@@ -58,11 +73,26 @@ const Home = ({logOut, userId, loginWithGoogle, name, isAnon}) =>
             .set({name: "New Sprint" , endingDate: "", startingDate: "", state:0})
         
  
-        const columnOrder = {id: 'columnOrder', order: ['productBacklog']}
+        const columnOrder = {id: 'columnOrder', order: ['productBacklog','afaire','enCours','termine']}
+        const afaire= {title: 'À Faire', taskIds: [],max:null,id:"afaire"}
+        const enCours= {title: 'En Cours', taskIds: [],max:null,id:"enCours"}
+        const termine= {title: 'Terminé', taskIds: [],max:null,id:"termine"}
 
         db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
             .doc('columnOrder')
             .set(columnOrder)
+
+            db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
+            .doc('afaire')
+            .set(afaire)
+
+        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
+            .doc('enCours')
+            .set(enCours)
+
+        db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)
+            .doc('termine')
+            .set(termine)
 
         // const productBacklog = { taskIds: [], title: 'ProductBacklog' }
         db.collection(`users/${userId}/boards/${bid}/sprints/${uid}/columns`)

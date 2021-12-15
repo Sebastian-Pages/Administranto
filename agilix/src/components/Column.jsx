@@ -65,7 +65,7 @@ const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max,
                     <div {...provided.draggableProps} ref={provided.innerRef} className='mr-5'>
                         <div style={{background: '#edf2ff',borderRadius:' 0 0 10px 10px'}}>
                             <div {...provided.dragHandleProps} className='bg-gradient-to-r from-purple-700 via-purple-700 to-pink-400 flex items-center justify-between px-4 py-1 rounded-t-lg'>
-                               <h2 className={`p-2 text-blue-100 truncate font-black text-3xl`}>{column.title} </h2>
+                               <h2 className={`p-2 text-blue-100 truncate font-black text-xl`}>{column.title} </h2>
                             </div>
                             <Droppable droppableId={column.id} type='task'>                          
                                 {(provided, snapshot) => 
@@ -81,9 +81,9 @@ const Column = ({ column, tasks, allData, boardId, userId, filterBy, index, max,
                         <div style={{background: '#edf2ff',borderRadius:' 0 0 10px 10px'}}>
                             <div {...provided.dragHandleProps} className='bg-gradient-to-r from-purple-700 via-purple-700 to-pink-400 flex items-center justify-between px-4 py-1 rounded-t-lg'>
                                <input ref={colInput} className={`sm:text-xl text-blue-700 text-lg px-2 w-10/12 ${editingCol ? '' : 'hidden'}`} onBlur={()=>setEditing(false)} type="text" defaultValue={column.title} onChange={(e)=>changeColName(e, column.id)} />
-                               <h2 className={`p-2 text-blue-100 truncate font-black text-3xl ${editingCol ? 'hidden' : ''}`} onClick={moveToInp}>{column.title} </h2>
-                               <input ref={colInput} className={`text-purple-700 bg-purple text-lg px-2 w-7 rounded-lg ${editingCol ? 'hidden' : ''} `} onBlur={()=>setEditing(false)} type="int" defaultValue={column.max} onChange={(e)=>changeColMax(e, column.id)} />
-                                <div className={`text-blue-700 hover:text-blue-50 cursor-pointer ${editingCol ? 'hidden' : ''}`} onClick={()=>setModal(true)}>
+                               <h2 className={`p-2 text-blue-100 truncate font-black text-xl ${editingCol ? 'hidden' : ''}`} onClick={moveToInp}>{column.title} </h2>
+                               <input ref={colInput} className={`text-purple-700 bg-purple text-lg px-2 w-7 rounded-lg ${editingCol ? 'hidden' : ''} `} onBlur={()=>setEditing(false)} type="int" disabled={sprintState>1} defaultValue={column.max} onChange={(e)=>changeColMax(e, column.id)} />
+                                <div className={`text-blue-700 hover:text-blue-50 cursor-pointer ${editingCol ? 'hidden' : ''}${sprintState>1 ? 'hidden' : ''}`} onClick={()=>setModal(true)}>
                                     <Bin />
                                 </div>
                             </div>

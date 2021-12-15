@@ -395,7 +395,7 @@ const Kanban = ({logOut,userId,addSprint}) => {
                                             }
                                             {provided.placeholder}
                                             <form onSubmit={addCol} autoComplete='off' className='ml-2'>
-                                                <input maxLength='20' className='truncate bg-transparent placeholder-purple-500 text-indigo-800 bg-indigo-50 px-2 outline-none py-1 rounded-lg ring-2 focus:ring-indigo-500' type="text" name='newCol' placeholder='Add a new column' />
+                                                <input maxLength='20' className='truncate bg-transparent placeholder-purple-500 text-indigo-800 bg-indigo-50 px-2 outline-none py-1 rounded-lg ring-2 focus:ring-indigo-500' type="text" name='newCol' disabled={sprintState>1} placeholder='Add a new column' />
                                             </form>
                                         </div>
                                     }
